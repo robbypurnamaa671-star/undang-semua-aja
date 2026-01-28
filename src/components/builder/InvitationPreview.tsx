@@ -47,19 +47,40 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
     >
       {/* Cover Section */}
       <section 
-        className="min-h-[400px] flex flex-col items-center justify-center text-center p-6 relative"
+        className="min-h-[400px] flex flex-col items-center justify-center text-center p-6 relative overflow-hidden"
         style={{ 
-          background: `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` 
+          background: invitation.coverImage 
+            ? undefined 
+            : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` 
         }}
       >
-        {/* Decorative Top */}
-        <div 
-          className="absolute top-4 left-1/2 -translate-x-1/2 w-16 h-1 rounded-full"
-          style={{ backgroundColor: template.colorScheme.primary }}
-        />
+        {/* Cover Image Background */}
+        {invitation.coverImage && (
+          <>
+            <img 
+              src={invitation.coverImage} 
+              alt="Cover" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div 
+              className="absolute inset-0"
+              style={{ 
+                background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` 
+              }}
+            />
+          </>
+        )}
         
-        {/* Event Icon */}
-        <span className="text-5xl mb-4">{eventConfig.icon}</span>
+        {/* Content (positioned above background) */}
+        <div className="relative z-10">
+          {/* Decorative Top */}
+          <div 
+            className="absolute -top-2 left-1/2 -translate-x-1/2 w-16 h-1 rounded-full"
+            style={{ backgroundColor: template.colorScheme.primary }}
+          />
+          
+          {/* Event Icon */}
+          <span className="text-5xl mb-4 block">{eventConfig.icon}</span>
         
         {/* Title */}
         <h2 
@@ -83,13 +104,14 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
           style={{ backgroundColor: template.colorScheme.primary }}
         />
         
-        {/* Save the Date */}
-        <p 
-          className="text-sm"
-          style={{ color: template.colorScheme.primary }}
-        >
-          {formatDate(invitation.eventDate)}
-        </p>
+          {/* Save the Date */}
+          <p 
+            className="text-sm"
+            style={{ color: template.colorScheme.primary }}
+          >
+            {formatDate(invitation.eventDate)}
+          </p>
+        </div>
       </section>
       
       {/* Event Details Section */}
@@ -153,6 +175,32 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
           )}
         </div>
       </section>
+      
+      {/* Gallery Section */}
+      {invitation.galleryImages.length > 0 && (
+        <section className="p-6 pt-0">
+          <h3 
+            className="font-serif text-lg font-semibold mb-4 text-center"
+            style={{ color: template.colorScheme.primary }}
+          >
+            Galeri Foto
+          </h3>
+          <div className="grid grid-cols-2 gap-2">
+            {invitation.galleryImages.map((url, index) => (
+              <div 
+                key={url} 
+                className="aspect-square rounded-lg overflow-hidden"
+              >
+                <img 
+                  src={url} 
+                  alt={`Gallery ${index + 1}`} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
       
       {/* Message Section */}
       {invitation.message && (
