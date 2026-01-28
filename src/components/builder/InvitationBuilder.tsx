@@ -7,6 +7,8 @@ import { Template } from "@/lib/templates";
 import { InvitationData } from "@/lib/invitation";
 import { getEventTypeConfig } from "@/lib/event-types";
 import { InvitationPreview } from "./InvitationPreview";
+import { ImageUpload } from "./ImageUpload";
+import { GalleryUpload } from "./GalleryUpload";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Edit, Share2, Smartphone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -158,6 +160,23 @@ export function InvitationBuilder({ template, invitation, onInvitationChange }: 
                 onChange={(e) => updateField("locationMapUrl", e.target.value)}
               />
             </div>
+            
+            {/* Cover Image */}
+            <ImageUpload
+              label="Foto Cover"
+              value={invitation.coverImage}
+              onChange={(url) => updateField("coverImage", url)}
+              folder="covers"
+              aspectRatio="portrait"
+            />
+            
+            {/* Gallery Images */}
+            <GalleryUpload
+              label="Galeri Foto"
+              value={invitation.galleryImages}
+              onChange={(urls) => updateField("galleryImages", urls)}
+              maxImages={6}
+            />
             
             {/* Message */}
             <div className="space-y-2">
