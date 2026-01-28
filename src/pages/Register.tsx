@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,37 +6,92 @@ import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
+
+const registerSchema = z.object({
+  email: z.string().email("Format email tidak valid"),
+  password: z.string().min(8, "Kata sandi minimal 8 karakter"),
+});
 
 export default function Register() {
   const [searchParams] = useSearchParams();
   const preselectedEvent = searchParams.get("event");
   
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signUp, user, isLoading: authLoading } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate("/dashboard");
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+    
+    // Validate inputs
+    const result = registerSchema.safeParse({ email, password });
+    if (!result.success) {
+      const fieldErrors: { email?: string; password?: string } = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0] === "email") fieldErrors.email = err.message;
+        if (err.path[0] === "password") fieldErrors.password = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
     setIsLoading(true);
     
-    // Simulate registration - will be replaced with Supabase auth
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: "Akun Berhasil Dibuat",
-        description: "Selamat datang di UndanganKu!",
-      });
-      if (preselectedEvent) {
-        navigate(`/create?event=${preselectedEvent}`);
-      } else {
-        navigate("/create");
+    const { error } = await signUp(email, password);
+    
+    setIsLoading(false);
+
+    if (error) {
+      let message = "Terjadi kesalahan saat mendaftar";
+      if (error.message.includes("already registered")) {
+        message = "Email sudah terdaftar. Silakan masuk atau gunakan email lain.";
+      } else if (error.message.includes("Password")) {
+        message = "Kata sandi terlalu lemah. Gunakan kombinasi huruf dan angka.";
       }
-    }, 1000);
+      
+      toast({
+        title: "Gagal Mendaftar",
+        description: message,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Akun Berhasil Dibuat",
+      description: "Selamat datang di UndanganKu!",
+    });
+    
+    if (preselectedEvent) {
+      navigate(`/create?event=${preselectedEvent}`);
+    } else {
+      navigate("/dashboard");
+    }
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
@@ -73,19 +128,6 @@ export default function Register() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="name">Nama Lengkap</Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Nama Anda"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="h-12"
-              />
-            </div>
-            
-            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -94,8 +136,11 @@ export default function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-12"
+                className={`h-12 ${errors.email ? "border-destructive" : ""}`}
               />
+              {errors.email && (
+                <p className="text-sm text-destructive">{errors.email}</p>
+              )}
             </div>
             
             <div className="space-y-2">
@@ -109,7 +154,7 @@ export default function Register() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={8}
-                  className="h-12 pr-12"
+                  className={`h-12 pr-12 ${errors.password ? "border-destructive" : ""}`}
                 />
                 <button
                   type="button"
@@ -119,6 +164,9 @@ export default function Register() {
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-sm text-destructive">{errors.password}</p>
+              )}
             </div>
             
             <Button 

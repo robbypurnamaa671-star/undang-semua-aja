@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,29 +6,84 @@ import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email("Format email tidak valid"),
+  password: z.string().min(6, "Kata sandi minimal 6 karakter"),
+});
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { signIn, user, isLoading: authLoading } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate("/dashboard");
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+    
+    // Validate inputs
+    const result = loginSchema.safeParse({ email, password });
+    if (!result.success) {
+      const fieldErrors: { email?: string; password?: string } = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0] === "email") fieldErrors.email = err.message;
+        if (err.path[0] === "password") fieldErrors.password = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
     setIsLoading(true);
     
-    // Simulate login - will be replaced with Supabase auth
-    setTimeout(() => {
-      setIsLoading(false);
+    const { error } = await signIn(email, password);
+    
+    setIsLoading(false);
+
+    if (error) {
+      let message = "Terjadi kesalahan saat masuk";
+      if (error.message.includes("Invalid login credentials")) {
+        message = "Email atau kata sandi salah";
+      } else if (error.message.includes("Email not confirmed")) {
+        message = "Email belum dikonfirmasi. Silakan cek inbox Anda.";
+      }
+      
       toast({
-        title: "Berhasil Masuk",
-        description: "Selamat datang kembali!",
+        title: "Gagal Masuk",
+        description: message,
+        variant: "destructive",
       });
-      navigate("/dashboard");
-    }, 1000);
+      return;
+    }
+
+    toast({
+      title: "Berhasil Masuk",
+      description: "Selamat datang kembali!",
+    });
+    navigate("/dashboard");
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
@@ -73,16 +128,16 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-12"
+                className={`h-12 ${errors.email ? "border-destructive" : ""}`}
               />
+              {errors.email && (
+                <p className="text-sm text-destructive">{errors.email}</p>
+              )}
             </div>
             
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Kata Sandi</Label>
-                <a href="#" className="text-sm text-primary hover:underline">
-                  Lupa kata sandi?
-                </a>
               </div>
               <div className="relative">
                 <Input
@@ -92,7 +147,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="h-12 pr-12"
+                  className={`h-12 pr-12 ${errors.password ? "border-destructive" : ""}`}
                 />
                 <button
                   type="button"
@@ -102,6 +157,9 @@ export default function Login() {
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-sm text-destructive">{errors.password}</p>
+              )}
             </div>
             
             <Button 

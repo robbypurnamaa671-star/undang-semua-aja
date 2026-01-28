@@ -2,46 +2,26 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Template, getTemplateById } from "@/lib/templates";
-import { InvitationData } from "@/lib/invitation";
 import { getEventTypeConfig } from "@/lib/event-types";
+import { usePublicInvitation } from "@/hooks/use-invitations";
 import { format, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
-import { MapPin, Calendar, Clock, Music, Volume2, VolumeX } from "lucide-react";
+import { MapPin, Calendar, Clock, Volume2, VolumeX, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// Mock invitation data - would come from database
-const mockInvitation: InvitationData = {
-  id: "1",
-  slug: "ahmad-siti",
-  eventType: "wedding",
-  templateId: "wedding-classic-gold",
-  status: "published",
-  isPaid: true,
-  title: "Undangan Pernikahan",
-  names: ["Ahmad Fadillah", "Siti Aisyah"],
-  eventDate: "2024-03-15",
-  eventTime: "10:00",
-  locationName: "Gedung Serbaguna Mawar",
-  locationAddress: "Jl. Mawar No. 123, Jakarta Selatan",
-  locationMapUrl: "https://maps.google.com/?q=-6.2088,106.8456",
-  message: "Dengan memohon rahmat dan ridho Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami. Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.",
-  galleryImages: [],
-};
 
 export default function PublicInvitation() {
   const { slug } = useParams();
+  const { invitation, isLoading, error } = usePublicInvitation(slug || "");
   const [isOpen, setIsOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   
-  // In real app, fetch invitation by slug
-  const invitation = mockInvitation;
-  const template = getTemplateById(invitation.templateId) as Template;
-  const eventConfig = getEventTypeConfig(invitation.eventType);
+  const template = invitation ? getTemplateById(invitation.templateId) as Template : null;
+  const eventConfig = invitation ? getEventTypeConfig(invitation.eventType) : null;
   
   // Countdown timer
   useEffect(() => {
-    if (!invitation.eventDate) return;
+    if (!invitation?.eventDate) return;
     
     const eventDateTime = new Date(`${invitation.eventDate}T${invitation.eventTime || "00:00"}`);
     
@@ -57,7 +37,7 @@ export default function PublicInvitation() {
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
-  }, [invitation.eventDate, invitation.eventTime]);
+  }, [invitation?.eventDate, invitation?.eventTime]);
   
   const formatDate = (dateString: string) => {
     if (!dateString) return "";
@@ -69,6 +49,7 @@ export default function PublicInvitation() {
   };
   
   const displayNames = () => {
+    if (!invitation) return null;
     if (invitation.eventType === "wedding") {
       return (
         <>
@@ -80,11 +61,25 @@ export default function PublicInvitation() {
     }
     return invitation.names[0];
   };
-  
-  if (!invitation || !template) {
+
+  // Loading state
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <p>Undangan tidak ditemukan</p>
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !invitation || !template || !eventConfig) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background p-6 text-center">
+        <span className="text-6xl mb-4">📭</span>
+        <h1 className="font-serif text-2xl font-bold mb-2">Undangan Tidak Ditemukan</h1>
+        <p className="text-muted-foreground">
+          Undangan yang Anda cari tidak ada atau belum dipublikasikan.
+        </p>
       </div>
     );
   }
@@ -103,17 +98,36 @@ export default function PublicInvitation() {
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 overflow-hidden"
             style={{ 
-              background: `linear-gradient(180deg, ${template.colorScheme.secondary}60 0%, ${template.colorScheme.background} 50%, ${template.colorScheme.secondary}60 100%)` 
+              background: invitation.coverImage 
+                ? undefined 
+                : `linear-gradient(180deg, ${template.colorScheme.secondary}60 0%, ${template.colorScheme.background} 50%, ${template.colorScheme.secondary}60 100%)` 
             }}
           >
+            {/* Cover Image Background */}
+            {invitation.coverImage && (
+              <>
+                <img 
+                  src={invitation.coverImage} 
+                  alt="Cover" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div 
+                  className="absolute inset-0"
+                  style={{ 
+                    background: `linear-gradient(180deg, ${template.colorScheme.background}90 0%, ${template.colorScheme.background}70 50%, ${template.colorScheme.background}90 100%)` 
+                  }}
+                />
+              </>
+            )}
+            
             {/* Decorative elements */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-center"
+              className="text-center relative z-10"
             >
               <span className="text-6xl mb-6 block">{eventConfig.icon}</span>
               
@@ -175,15 +189,35 @@ export default function PublicInvitation() {
         
         {/* Hero Section */}
         <section 
-          className="min-h-screen flex flex-col items-center justify-center text-center p-6 relative"
+          className="min-h-screen flex flex-col items-center justify-center text-center p-6 relative overflow-hidden"
           style={{ 
-            background: `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` 
+            background: invitation.coverImage 
+              ? undefined 
+              : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` 
           }}
         >
+          {/* Cover Image Background */}
+          {invitation.coverImage && (
+            <>
+              <img 
+                src={invitation.coverImage} 
+                alt="Cover" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div 
+                className="absolute inset-0"
+                style={{ 
+                  background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` 
+                }}
+              />
+            </>
+          )}
+          
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.6 }}
+            className="relative z-10"
           >
             <span className="text-5xl mb-4 block">{eventConfig.icon}</span>
             
@@ -338,6 +372,40 @@ export default function PublicInvitation() {
             </div>
           </motion.div>
         </section>
+        
+        {/* Gallery Section */}
+        {invitation.galleryImages.length > 0 && (
+          <section className="py-12 px-6">
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              className="max-w-md mx-auto"
+            >
+              <h2 
+                className="font-serif text-xl font-semibold mb-6 text-center"
+                style={{ color: template.colorScheme.primary }}
+              >
+                Galeri Foto
+              </h2>
+              
+              <div className="grid grid-cols-2 gap-3">
+                {invitation.galleryImages.map((url, index) => (
+                  <div 
+                    key={url} 
+                    className="aspect-square rounded-xl overflow-hidden"
+                  >
+                    <img 
+                      src={url} 
+                      alt={`Gallery ${index + 1}`} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </section>
+        )}
         
         {/* Message Section */}
         {invitation.message && (

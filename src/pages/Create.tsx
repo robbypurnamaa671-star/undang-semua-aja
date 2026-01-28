@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -7,6 +7,8 @@ import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template } from "@/lib/templates";
 import { InvitationData, createDefaultInvitation } from "@/lib/invitation";
 import { InvitationBuilder } from "@/components/builder/InvitationBuilder";
+import { useAuth } from "@/contexts/AuthContext";
+import { useInvitations } from "@/hooks/use-invitations";
 
 type Step = "event" | "template" | "builder";
 
@@ -18,8 +20,18 @@ export default function Create() {
   const [selectedEventType, setSelectedEventType] = useState<EventType | null>(preselectedEvent);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   
   const navigate = useNavigate();
+  const { user, isLoading: authLoading } = useAuth();
+  const { createInvitation, updateInvitation, publishInvitation } = useInvitations();
+
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/login");
+    }
+  }, [user, authLoading, navigate]);
   
   const handleEventSelect = (eventType: EventType) => {
     setSelectedEventType(eventType);
@@ -44,8 +56,57 @@ export default function Create() {
       setInvitation(null);
     }
   };
+
+  const handleSaveDraft = async () => {
+    if (!invitation) return;
+    
+    setIsSaving(true);
+    
+    if (invitation.id) {
+      // Update existing
+      await updateInvitation(invitation.id, invitation);
+    } else {
+      // Create new
+      const id = await createInvitation(invitation);
+      if (id) {
+        setInvitation({ ...invitation, id });
+      }
+    }
+    
+    setIsSaving(false);
+  };
+
+  const handlePublish = async () => {
+    if (!invitation) return;
+    
+    setIsSaving(true);
+    
+    if (invitation.id) {
+      // Update and publish existing
+      const success = await publishInvitation(invitation.id);
+      if (success) {
+        navigate("/dashboard");
+      }
+    } else {
+      // Create and publish new
+      const id = await createInvitation({ ...invitation, status: "published" });
+      if (id) {
+        navigate("/dashboard");
+      }
+    }
+    
+    setIsSaving(false);
+  };
   
   const templates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen bg-muted/30">
@@ -232,6 +293,9 @@ export default function Create() {
                 template={selectedTemplate}
                 invitation={invitation}
                 onInvitationChange={setInvitation}
+                onSaveDraft={handleSaveDraft}
+                onPublish={handlePublish}
+                isSaving={isSaving}
               />
             </motion.div>
           )}

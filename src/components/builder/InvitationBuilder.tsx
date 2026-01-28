@@ -11,28 +11,29 @@ import { ImageUpload } from "./ImageUpload";
 import { GalleryUpload } from "./GalleryUpload";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Edit, Share2, Smartphone } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 
 interface InvitationBuilderProps {
   template: Template;
   invitation: InvitationData;
   onInvitationChange: (invitation: InvitationData) => void;
+  onSaveDraft?: () => Promise<void>;
+  onPublish?: () => Promise<void>;
+  isSaving?: boolean;
 }
 
-export function InvitationBuilder({ template, invitation, onInvitationChange }: InvitationBuilderProps) {
+export function InvitationBuilder({ 
+  template, 
+  invitation, 
+  onInvitationChange,
+  onSaveDraft,
+  onPublish,
+  isSaving = false,
+}: InvitationBuilderProps) {
   const [activeTab, setActiveTab] = useState("edit");
-  const { toast } = useToast();
   const eventConfig = getEventTypeConfig(invitation.eventType);
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
-  };
-  
-  const handlePublish = () => {
-    toast({
-      title: "Undangan Siap Dipublikasikan!",
-      description: "Silakan selesaikan pembayaran untuk mempublikasikan undangan Anda.",
-    });
   };
   
   return (
@@ -192,12 +193,21 @@ export function InvitationBuilder({ template, invitation, onInvitationChange }: 
             
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
-              <Button variant="outline" className="flex-1">
-                Simpan Draft
+              <Button 
+                variant="outline" 
+                className="flex-1"
+                onClick={onSaveDraft}
+                disabled={isSaving}
+              >
+                {isSaving ? "Menyimpan..." : "Simpan Draft"}
               </Button>
-              <Button className="flex-1 btn-hero" onClick={handlePublish}>
+              <Button 
+                className="flex-1 btn-hero" 
+                onClick={onPublish}
+                disabled={isSaving}
+              >
                 <Share2 className="w-4 h-4 mr-2" />
-                Publikasikan
+                {isSaving ? "Memproses..." : "Publikasikan"}
               </Button>
             </div>
           </div>

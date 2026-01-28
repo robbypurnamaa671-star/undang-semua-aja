@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      invitations: {
+        Row: {
+          cover_image: string | null
+          created_at: string
+          event_date: string | null
+          event_time: string | null
+          event_type: string
+          gallery_images: string[]
+          id: string
+          is_paid: boolean
+          location_address: string | null
+          location_map_url: string | null
+          location_name: string | null
+          message: string | null
+          names: string[]
+          slug: string
+          status: string
+          template_id: string
+          theme_color: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cover_image?: string | null
+          created_at?: string
+          event_date?: string | null
+          event_time?: string | null
+          event_type: string
+          gallery_images?: string[]
+          id?: string
+          is_paid?: boolean
+          location_address?: string | null
+          location_map_url?: string | null
+          location_name?: string | null
+          message?: string | null
+          names?: string[]
+          slug: string
+          status?: string
+          template_id: string
+          theme_color?: string | null
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cover_image?: string | null
+          created_at?: string
+          event_date?: string | null
+          event_time?: string | null
+          event_type?: string
+          gallery_images?: string[]
+          id?: string
+          is_paid?: boolean
+          location_address?: string | null
+          location_map_url?: string | null
+          location_name?: string | null
+          message?: string | null
+          names?: string[]
+          slug?: string
+          status?: string
+          template_id?: string
+          theme_color?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
