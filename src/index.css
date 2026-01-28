@@ -1,96 +1,127 @@
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/500.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
+/* Indonesian Invitation Builder - Design System */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Warm, elegant color palette inspired by Indonesian celebrations */
+    --background: 40 30% 98%;
+    --foreground: 25 25% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 40 25% 99%;
+    --card-foreground: 25 25% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 40 25% 99%;
+    --popover-foreground: 25 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Golden champagne - celebratory & elegant */
+    --primary: 38 75% 55%;
+    --primary-foreground: 40 30% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Soft rose/blush */
+    --secondary: 350 45% 92%;
+    --secondary-foreground: 350 40% 35%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Cream muted tones */
+    --muted: 40 20% 94%;
+    --muted-foreground: 25 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Soft sage accent */
+    --accent: 145 25% 90%;
+    --accent-foreground: 145 35% 30%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Deep burgundy for emphasis */
+    --destructive: 350 65% 45%;
+    --destructive-foreground: 40 30% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 38 75% 55%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Custom colors for event types */
+    --wedding: 350 55% 60%;
+    --wedding-light: 350 45% 95%;
+    --khitanan: 200 65% 50%;
+    --khitanan-light: 200 45% 95%;
+    --hajatan: 145 45% 45%;
+    --hajatan-light: 145 35% 95%;
+    --birthday: 280 55% 55%;
+    --birthday-light: 280 40% 95%;
+    --family: 30 70% 55%;
+    --family-light: 30 50% 95%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(38 75% 55%) 0%, hsl(350 55% 60%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 80% 60%) 0%, hsl(45 75% 70%) 50%, hsl(38 80% 60%) 100%);
+    --gradient-rose: linear-gradient(135deg, hsl(350 45% 92%) 0%, hsl(350 55% 85%) 100%);
+    --gradient-cream: linear-gradient(180deg, hsl(40 30% 98%) 0%, hsl(40 25% 94%) 100%);
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(25 25% 15% / 0.08);
+    --shadow-medium: 0 8px 30px -4px hsl(25 25% 15% / 0.12);
+    --shadow-elevated: 0 16px 50px -8px hsl(25 25% 15% / 0.15);
+    --shadow-gold: 0 8px 30px -4px hsl(38 75% 55% / 0.25);
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar */
+    --sidebar-background: 40 25% 97%;
+    --sidebar-foreground: 25 25% 15%;
+    --sidebar-primary: 38 75% 55%;
+    --sidebar-primary-foreground: 40 30% 98%;
+    --sidebar-accent: 40 20% 94%;
+    --sidebar-accent-foreground: 25 25% 15%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 38 75% 55%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 25 20% 8%;
+    --foreground: 40 25% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 25 18% 12%;
+    --card-foreground: 40 25% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 25 18% 12%;
+    --popover-foreground: 40 25% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 38 70% 50%;
+    --primary-foreground: 25 20% 8%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 350 30% 20%;
+    --secondary-foreground: 350 40% 85%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 25 15% 18%;
+    --muted-foreground: 40 15% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 145 20% 18%;
+    --accent-foreground: 145 30% 80%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 350 55% 40%;
+    --destructive-foreground: 40 30% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 25 15% 20%;
+    --input: 25 15% 20%;
+    --ring: 38 70% 50%;
+
+    --sidebar-background: 25 18% 10%;
+    --sidebar-foreground: 40 25% 95%;
+    --sidebar-primary: 38 70% 50%;
+    --sidebar-primary-foreground: 25 20% 8%;
+    --sidebar-accent: 25 15% 18%;
+    --sidebar-accent-foreground: 40 25% 95%;
+    --sidebar-border: 25 15% 20%;
+    --sidebar-ring: 38 70% 50%;
   }
 }
 
@@ -100,6 +131,111 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Playfair Display", Georgia, serif;
+  }
+}
+
+@layer components {
+  /* Button variants */
+  .btn-hero {
+    @apply bg-gradient-to-r from-primary to-[hsl(350_55%_60%)] text-primary-foreground 
+           shadow-[var(--shadow-gold)] hover:shadow-[var(--shadow-elevated)] 
+           transition-all duration-300 hover:scale-[1.02];
+  }
+
+  .btn-outline-hero {
+    @apply border-2 border-primary text-primary bg-transparent 
+           hover:bg-primary hover:text-primary-foreground 
+           transition-all duration-300;
+  }
+
+  /* Card variants */
+  .card-elevated {
+    @apply bg-card rounded-xl shadow-[var(--shadow-soft)] 
+           hover:shadow-[var(--shadow-medium)] transition-shadow duration-300;
+  }
+
+  .card-interactive {
+    @apply bg-card rounded-xl shadow-[var(--shadow-soft)] 
+           hover:shadow-[var(--shadow-medium)] hover:scale-[1.02] 
+           transition-all duration-300 cursor-pointer;
+  }
+
+  /* Event type specific styles */
+  .event-wedding {
+    @apply bg-[hsl(var(--wedding-light))] border-[hsl(var(--wedding))];
+  }
+
+  .event-khitanan {
+    @apply bg-[hsl(var(--khitanan-light))] border-[hsl(var(--khitanan))];
+  }
+
+  .event-hajatan {
+    @apply bg-[hsl(var(--hajatan-light))] border-[hsl(var(--hajatan))];
+  }
+
+  .event-birthday {
+    @apply bg-[hsl(var(--birthday-light))] border-[hsl(var(--birthday))];
+  }
+
+  .event-family {
+    @apply bg-[hsl(var(--family-light))] border-[hsl(var(--family))];
+  }
+
+  /* Text styles */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-[hsl(350_55%_60%)];
+  }
+
+  /* Mobile preview frame */
+  .mobile-frame {
+    @apply relative mx-auto w-[375px] h-[667px] bg-background rounded-[3rem] 
+           shadow-[var(--shadow-elevated)] border-8 border-foreground/10
+           overflow-hidden;
+  }
+
+  .mobile-frame::before {
+    content: "";
+    @apply absolute top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-foreground/10 rounded-full;
+  }
+
+  /* Decorative elements */
+  .ornament-line {
+    @apply h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background-size: 200% 100%;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .pattern-batik {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a962' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
 }

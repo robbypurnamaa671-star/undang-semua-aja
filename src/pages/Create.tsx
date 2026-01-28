@@ -1,0 +1,242 @@
+import { useState } from "react";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { eventTypes, EventType } from "@/lib/event-types";
+import { getTemplatesByEventType, Template } from "@/lib/templates";
+import { InvitationData, createDefaultInvitation } from "@/lib/invitation";
+import { InvitationBuilder } from "@/components/builder/InvitationBuilder";
+
+type Step = "event" | "template" | "builder";
+
+export default function Create() {
+  const [searchParams] = useSearchParams();
+  const preselectedEvent = searchParams.get("event") as EventType | null;
+  
+  const [step, setStep] = useState<Step>(preselectedEvent ? "template" : "event");
+  const [selectedEventType, setSelectedEventType] = useState<EventType | null>(preselectedEvent);
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+  const [invitation, setInvitation] = useState<InvitationData | null>(null);
+  
+  const navigate = useNavigate();
+  
+  const handleEventSelect = (eventType: EventType) => {
+    setSelectedEventType(eventType);
+    setStep("template");
+  };
+  
+  const handleTemplateSelect = (template: Template) => {
+    setSelectedTemplate(template);
+    if (selectedEventType) {
+      setInvitation(createDefaultInvitation(selectedEventType, template.id));
+    }
+    setStep("builder");
+  };
+  
+  const handleBack = () => {
+    if (step === "template") {
+      setStep("event");
+      setSelectedEventType(null);
+    } else if (step === "builder") {
+      setStep("template");
+      setSelectedTemplate(null);
+      setInvitation(null);
+    }
+  };
+  
+  const templates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
+  
+  return (
+    <div className="min-h-screen bg-muted/30">
+      {/* Header */}
+      <header className="bg-card border-b border-border sticky top-0 z-50">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            {step !== "event" && (
+              <Button variant="ghost" size="icon" onClick={handleBack}>
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+            )}
+            <Link to="/" className="flex items-center gap-2">
+              <span className="text-2xl">💌</span>
+              <span className="font-serif text-xl font-semibold text-gradient hidden sm:block">UndanganKu</span>
+            </Link>
+          </div>
+          
+          {/* Progress Indicator */}
+          <div className="flex items-center gap-2">
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+              step === "event" ? "bg-primary text-primary-foreground" : "bg-hajatan text-primary-foreground"
+            }`}>
+              {step === "event" ? "1" : <Check className="w-4 h-4" />}
+            </div>
+            <div className="w-8 h-0.5 bg-border" />
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+              step === "template" ? "bg-primary text-primary-foreground" : 
+              step === "builder" ? "bg-hajatan text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}>
+              {step === "builder" ? <Check className="w-4 h-4" /> : "2"}
+            </div>
+            <div className="w-8 h-0.5 bg-border" />
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+              step === "builder" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}>
+              3
+            </div>
+          </div>
+          
+          <Button variant="ghost" asChild>
+            <Link to="/dashboard">Dashboard</Link>
+          </Button>
+        </div>
+      </header>
+      
+      <main className="container mx-auto px-4 py-8">
+        <AnimatePresence mode="wait">
+          {/* Step 1: Event Type Selection */}
+          {step === "event" && (
+            <motion.div
+              key="event"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="text-center mb-12">
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
+                  Pilih <span className="text-gradient">Jenis Acara</span>
+                </h1>
+                <p className="text-muted-foreground text-lg">
+                  Apa acara yang ingin Anda buat undangannya?
+                </p>
+              </div>
+              
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {eventTypes.map((eventType) => (
+                  <motion.button
+                    key={eventType.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleEventSelect(eventType.id)}
+                    className={`card-interactive p-6 text-left border-2 event-${eventType.id}`}
+                  >
+                    <span className="text-4xl mb-3 block">{eventType.icon}</span>
+                    <h3 className="font-serif text-xl font-semibold mb-1">{eventType.nameIndonesian}</h3>
+                    <p className="text-sm text-muted-foreground">{eventType.description}</p>
+                    <div className="mt-4 flex items-center text-primary font-medium">
+                      Pilih <ArrowRight className="w-4 h-4 ml-1" />
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+          
+          {/* Step 2: Template Selection */}
+          {step === "template" && selectedEventType && (
+            <motion.div
+              key="template"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-6xl mx-auto"
+            >
+              <div className="text-center mb-12">
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
+                  Pilih <span className="text-gradient">Template</span>
+                </h1>
+                <p className="text-muted-foreground text-lg">
+                  Pilih desain yang sesuai dengan selera Anda
+                </p>
+              </div>
+              
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {templates.map((template) => (
+                  <motion.button
+                    key={template.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleTemplateSelect(template)}
+                    className="card-interactive text-left overflow-hidden"
+                  >
+                    {/* Template Preview */}
+                    <div 
+                      className="aspect-[3/4] relative flex flex-col items-center justify-center p-6"
+                      style={{ backgroundColor: template.colorScheme.background }}
+                    >
+                      <div 
+                        className="w-16 h-16 rounded-full mb-4 flex items-center justify-center"
+                        style={{ backgroundColor: template.colorScheme.primary + '20' }}
+                      >
+                        <span className="text-3xl">
+                          {eventTypes.find(e => e.id === selectedEventType)?.icon}
+                        </span>
+                      </div>
+                      <h4 
+                        className="font-serif text-xl font-semibold text-center mb-2"
+                        style={{ color: template.colorScheme.text }}
+                      >
+                        {template.name}
+                      </h4>
+                      <p 
+                        className="text-sm text-center opacity-80"
+                        style={{ color: template.colorScheme.text }}
+                      >
+                        {template.description}
+                      </p>
+                      
+                      {/* Color preview */}
+                      <div className="flex gap-2 mt-4">
+                        <div 
+                          className="w-6 h-6 rounded-full border-2 border-white shadow"
+                          style={{ backgroundColor: template.colorScheme.primary }}
+                        />
+                        <div 
+                          className="w-6 h-6 rounded-full border-2 border-white shadow"
+                          style={{ backgroundColor: template.colorScheme.secondary }}
+                        />
+                      </div>
+                      
+                      {template.isPremium && (
+                        <div className="absolute top-3 right-3 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
+                          Premium
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="p-4 bg-card">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{template.name}</span>
+                        <span className="text-primary">Pilih →</span>
+                      </div>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+          
+          {/* Step 3: Builder */}
+          {step === "builder" && selectedTemplate && invitation && (
+            <motion.div
+              key="builder"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <InvitationBuilder 
+                template={selectedTemplate}
+                invitation={invitation}
+                onInvitationChange={setInvitation}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+}
