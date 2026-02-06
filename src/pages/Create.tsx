@@ -7,6 +7,7 @@ import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template } from "@/lib/templates";
 import { InvitationData, createDefaultInvitation } from "@/lib/invitation";
 import { InvitationBuilder } from "@/components/builder/InvitationBuilder";
+import { PaymentDialog } from "@/components/builder/PaymentDialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInvitations } from "@/hooks/use-invitations";
 
@@ -21,6 +22,7 @@ export default function Create() {
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [showPaymentDialog, setShowPaymentDialog] = useState(false);
   
   const navigate = useNavigate();
   const { user, isLoading: authLoading } = useAuth();
@@ -78,24 +80,41 @@ export default function Create() {
 
   const handlePublish = async () => {
     if (!invitation) return;
+    setShowPaymentDialog(true);
+  };
+
+  const handlePublishWithPayment = async (isPaid: boolean) => {
+    if (!invitation) return;
     
     setIsSaving(true);
+    setShowPaymentDialog(false);
+    
+    const publishData = { ...invitation, status: "published" as const, isPaid };
     
     if (invitation.id) {
       // Update and publish existing
-      const success = await publishInvitation(invitation.id);
+      const success = await updateInvitation(invitation.id, { status: "published", isPaid });
       if (success) {
         navigate("/dashboard");
       }
     } else {
       // Create and publish new
-      const id = await createInvitation({ ...invitation, status: "published" });
+      const id = await createInvitation(publishData);
       if (id) {
         navigate("/dashboard");
       }
     }
     
     setIsSaving(false);
+  };
+
+  const handlePaymentSuccess = () => {
+    handlePublishWithPayment(true);
+  };
+
+  const handlePublishFree = () => {
+    handlePublishWithPayment(false);
+    setShowPaymentDialog(false);
   };
   
   const templates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
@@ -300,6 +319,17 @@ export default function Create() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Payment Dialog */}
+        <PaymentDialog
+          open={showPaymentDialog}
+          onOpenChange={(open) => {
+            if (!open) setShowPaymentDialog(false);
+          }}
+          onPaymentSuccess={handlePaymentSuccess}
+          onPublishFree={handlePublishFree}
+          invitationTitle={invitation?.title || invitation?.names[0] || ""}
+        />
       </main>
     </div>
   );
