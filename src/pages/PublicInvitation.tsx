@@ -6,8 +6,9 @@ import { getEventTypeConfig } from "@/lib/event-types";
 import { usePublicInvitation } from "@/hooks/use-invitations";
 import { format, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
-import { MapPin, Calendar, Clock, Volume2, VolumeX, Loader2, Share2 } from "lucide-react";
+import { MapPin, Calendar, Clock, Volume2, VolumeX, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Watermark } from "@/components/invitation/Watermark";
 
 export default function PublicInvitation() {
   const { slug } = useParams();
@@ -128,6 +129,15 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         color: template.colorScheme.text,
       }}
     >
+      {/* Watermark for unpaid invitations */}
+      {!invitation.isPaid && (
+        <Watermark 
+          templateColors={{
+            primary: template.colorScheme.primary,
+            background: template.colorScheme.background,
+          }}
+        />
+      )}
       {/* Cover / Opening */}
       <AnimatePresence>
         {!isOpen && (
