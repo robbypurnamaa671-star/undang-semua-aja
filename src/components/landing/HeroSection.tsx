@@ -7,14 +7,13 @@ import heroBg from "@/assets/hero-bg.jpg";
 export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Image with Overlay */}
+      {/* Background Image - No Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
           src={heroBg} 
           alt="Hero background" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/60" />
       </div>
       
       {/* Decorative Elements */}
@@ -26,7 +25,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center"
+          className="max-w-4xl mx-auto text-center bg-background/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-elevated"
         >
           {/* Badge */}
           <motion.div
