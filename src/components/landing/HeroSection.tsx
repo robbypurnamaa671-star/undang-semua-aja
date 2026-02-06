@@ -14,7 +14,7 @@ export function HeroSection() {
           alt="Hero background" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/60" />
       </div>
       
       {/* Decorative Elements */}
