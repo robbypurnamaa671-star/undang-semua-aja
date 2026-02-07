@@ -164,7 +164,7 @@ export function InvitationBuilder({
             
             {/* Cover Image */}
             <ImageUpload
-              label="Foto Cover"
+              label="Foto Cover (1080 × 1440 px)"
               value={invitation.coverImage}
               onChange={(url) => updateField("coverImage", url)}
               folder="covers"
@@ -173,7 +173,7 @@ export function InvitationBuilder({
             
             {/* Gallery Images */}
             <GalleryUpload
-              label="Galeri Foto"
+              label="Galeri Foto (1080 × 1080 px)"
               value={invitation.galleryImages}
               onChange={(urls) => updateField("galleryImages", urls)}
               maxImages={6}
