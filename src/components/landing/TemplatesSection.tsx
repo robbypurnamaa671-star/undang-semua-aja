@@ -3,7 +3,7 @@ import { templates } from "@/lib/templates";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Crown } from "lucide-react";
+import { ArrowRight, Crown, Lock } from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
@@ -21,8 +21,8 @@ const item = {
 };
 
 export function TemplatesSection() {
-  // Show 6 featured templates
-  const featuredTemplates = templates.slice(0, 6);
+  // Show 8 featured templates (mix of free and premium)
+  const featuredTemplates = templates.slice(0, 8);
   
   return (
     <section id="template" className="py-20 bg-background">
@@ -47,7 +47,7 @@ export function TemplatesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
         >
           {featuredTemplates.map((template) => (
             <motion.div 
@@ -99,18 +99,32 @@ export function TemplatesSection() {
                   </div>
                 </div>
                 
-                {/* Premium Badge */}
+                {/* Premium Lock Overlay */}
                 {template.isPremium && (
-                  <div className="absolute top-3 right-3">
-                    <Badge className="bg-primary text-primary-foreground">
+                  <div className="absolute inset-0 bg-foreground/40 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3">
+                    <div className="w-14 h-14 rounded-full bg-background/90 flex items-center justify-center shadow-lg">
+                      <Lock className="w-7 h-7 text-primary" />
+                    </div>
+                    <Badge className="bg-primary text-primary-foreground shadow-lg">
                       <Crown className="w-3 h-3 mr-1" />
                       Premium
                     </Badge>
                   </div>
                 )}
                 
+                {/* Free Badge */}
+                {!template.isPremium && (
+                  <div className="absolute top-3 right-3">
+                    <Badge variant="outline" className="bg-background/90 text-primary border-primary">
+                      Gratis
+                    </Badge>
+                  </div>
+                )}
+                
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
+                {!template.isPremium && (
+                  <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300" />
+                )}
               </div>
               
               {/* Template Info */}
@@ -122,9 +136,16 @@ export function TemplatesSection() {
                       {template.eventTypes[0]}
                     </p>
                   </div>
-                  <Badge variant="secondary" className="capitalize">
-                    {template.style}
-                  </Badge>
+                  {template.isPremium ? (
+                    <Badge variant="secondary" className="capitalize">
+                      <Lock className="w-3 h-3 mr-1" />
+                      Terkunci
+                    </Badge>
+                  ) : (
+                    <Badge variant="secondary" className="capitalize">
+                      {template.style}
+                    </Badge>
+                  )}
                 </div>
               </div>
             </motion.div>
