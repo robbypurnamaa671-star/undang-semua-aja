@@ -139,6 +139,9 @@ export function ImageUpload({
                 <p className="text-sm font-medium">Klik untuk unggah</p>
                 <p className="text-xs text-muted-foreground">atau drag & drop gambar</p>
                 <p className="text-xs text-muted-foreground mt-1">Maks. 5MB</p>
+                <p className="text-xs text-muted-foreground mt-1 font-medium">
+                  Ukuran ideal: 1080 × 1440 px (3:4)
+                </p>
               </div>
             </>
           )}

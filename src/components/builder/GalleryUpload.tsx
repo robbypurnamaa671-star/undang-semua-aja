@@ -127,7 +127,7 @@ export function GalleryUpload({
       </div>
 
       <p className="text-xs text-muted-foreground">
-        Unggah hingga {maxImages} gambar untuk galeri undangan Anda
+        Unggah hingga {maxImages} gambar • Ukuran ideal: 1080 × 1080 px (1:1)
       </p>
     </div>
   );
