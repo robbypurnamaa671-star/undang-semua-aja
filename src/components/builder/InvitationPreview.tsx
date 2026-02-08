@@ -71,7 +71,7 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
     >
       {/* Background Pattern */}
       <PatternOverlay style={culturalStyle} />
-      <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} />
+      <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} templateId={template.id} />
 
       {/* Cover Section */}
       <section 
