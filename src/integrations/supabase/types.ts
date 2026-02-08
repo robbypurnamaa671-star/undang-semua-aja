@@ -77,6 +77,7 @@ export type Database = {
           title: string
           updated_at: string
           user_id: string
+          whatsapp_number: string | null
         }
         Insert: {
           bank_accounts?: Json[]
@@ -105,6 +106,7 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id: string
+          whatsapp_number?: string | null
         }
         Update: {
           bank_accounts?: Json[]
@@ -133,6 +135,7 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id?: string
+          whatsapp_number?: string | null
         }
         Relationships: []
       }

@@ -1,0 +1,1 @@
+ALTER TABLE public.invitations ADD COLUMN whatsapp_number TEXT DEFAULT NULL;

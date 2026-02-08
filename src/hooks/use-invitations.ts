@@ -29,6 +29,7 @@ export interface DbInvitation {
   closing_message: string | null;
   closing_prayer: string | null;
   music_url: string | null;
+  whatsapp_number: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -70,6 +71,7 @@ export function dbToInvitation(db: DbInvitation): InvitationData {
     closingMessage: db.closing_message || undefined,
     closingPrayer: db.closing_prayer || undefined,
     musicUrl: db.music_url || undefined,
+    whatsappNumber: db.whatsapp_number || undefined,
     createdAt: db.created_at,
     updatedAt: db.updated_at,
   };
@@ -101,6 +103,7 @@ export function invitationToDb(invitation: InvitationData, userId: string) {
     closing_message: invitation.closingMessage || null,
     closing_prayer: invitation.closingPrayer || null,
     music_url: invitation.musicUrl || null,
+    whatsapp_number: invitation.whatsappNumber || null,
   };
 }
 
@@ -207,6 +210,7 @@ export function useInvitations() {
       if (invitation.closingMessage !== undefined) updateData.closing_message = invitation.closingMessage || null;
       if (invitation.closingPrayer !== undefined) updateData.closing_prayer = invitation.closingPrayer || null;
       if (invitation.musicUrl !== undefined) updateData.music_url = invitation.musicUrl || null;
+      if (invitation.whatsappNumber !== undefined) updateData.whatsapp_number = invitation.whatsappNumber || null;
 
       const { error } = await supabase
         .from("invitations")
