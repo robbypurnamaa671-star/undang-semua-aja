@@ -14,13 +14,52 @@ export type Database = {
   }
   public: {
     Tables: {
+      guest_messages: {
+        Row: {
+          created_at: string
+          guest_name: string
+          id: string
+          invitation_id: string
+          is_approved: boolean
+          message: string
+        }
+        Insert: {
+          created_at?: string
+          guest_name: string
+          id?: string
+          invitation_id: string
+          is_approved?: boolean
+          message: string
+        }
+        Update: {
+          created_at?: string
+          guest_name?: string
+          id?: string
+          invitation_id?: string
+          is_approved?: boolean
+          message?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guest_messages_invitation_id_fkey"
+            columns: ["invitation_id"]
+            isOneToOne: false
+            referencedRelation: "invitations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       invitations: {
         Row: {
+          bank_accounts: Json[]
+          closing_message: string | null
+          closing_prayer: string | null
           cover_image: string | null
           created_at: string
           event_date: string | null
           event_time: string | null
           event_type: string
+          events: Json[]
           gallery_images: string[]
           id: string
           is_paid: boolean
@@ -28,21 +67,27 @@ export type Database = {
           location_map_url: string | null
           location_name: string | null
           message: string | null
+          music_url: string | null
           names: string[]
           slug: string
           status: string
           template_id: string
           theme_color: string | null
+          timezone: string
           title: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          bank_accounts?: Json[]
+          closing_message?: string | null
+          closing_prayer?: string | null
           cover_image?: string | null
           created_at?: string
           event_date?: string | null
           event_time?: string | null
           event_type: string
+          events?: Json[]
           gallery_images?: string[]
           id?: string
           is_paid?: boolean
@@ -50,21 +95,27 @@ export type Database = {
           location_map_url?: string | null
           location_name?: string | null
           message?: string | null
+          music_url?: string | null
           names?: string[]
           slug: string
           status?: string
           template_id: string
           theme_color?: string | null
+          timezone?: string
           title?: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          bank_accounts?: Json[]
+          closing_message?: string | null
+          closing_prayer?: string | null
           cover_image?: string | null
           created_at?: string
           event_date?: string | null
           event_time?: string | null
           event_type?: string
+          events?: Json[]
           gallery_images?: string[]
           id?: string
           is_paid?: boolean
@@ -72,16 +123,56 @@ export type Database = {
           location_map_url?: string | null
           location_name?: string | null
           message?: string | null
+          music_url?: string | null
           names?: string[]
           slug?: string
           status?: string
           template_id?: string
           theme_color?: string | null
+          timezone?: string
           title?: string
           updated_at?: string
           user_id?: string
         }
         Relationships: []
+      }
+      rsvp_responses: {
+        Row: {
+          attendance: string
+          created_at: string
+          guest_count: number
+          guest_name: string
+          id: string
+          invitation_id: string
+          message: string | null
+        }
+        Insert: {
+          attendance?: string
+          created_at?: string
+          guest_count?: number
+          guest_name: string
+          id?: string
+          invitation_id: string
+          message?: string | null
+        }
+        Update: {
+          attendance?: string
+          created_at?: string
+          guest_count?: number
+          guest_name?: string
+          id?: string
+          invitation_id?: string
+          message?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rsvp_responses_invitation_id_fkey"
+            columns: ["invitation_id"]
+            isOneToOne: false
+            referencedRelation: "invitations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

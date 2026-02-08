@@ -9,8 +9,11 @@ import { getEventTypeConfig } from "@/lib/event-types";
 import { InvitationPreview } from "./InvitationPreview";
 import { ImageUpload } from "./ImageUpload";
 import { GalleryUpload } from "./GalleryUpload";
+import { EventSessionsEditor } from "./EventSessionsEditor";
+import { BankAccountsEditor } from "./BankAccountsEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, Edit, Share2, Smartphone } from "lucide-react";
+import { Eye, Edit, Share2, Smartphone, Clock, Globe } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface InvitationBuilderProps {
   template: Template;
@@ -31,6 +34,7 @@ export function InvitationBuilder({
 }: InvitationBuilderProps) {
   const [activeTab, setActiveTab] = useState("edit");
   const eventConfig = getEventTypeConfig(invitation.eventType);
+  const isWedding = invitation.eventType === "wedding";
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
@@ -86,7 +90,7 @@ export function InvitationBuilder({
             {/* Names */}
             <div className="space-y-2">
               <Label>{eventConfig.defaultLabels.names}</Label>
-              {invitation.eventType === "wedding" ? (
+              {isWedding ? (
                 <div className="grid grid-cols-2 gap-3">
                   <Input
                     placeholder="Nama Mempelai Pria"
@@ -108,8 +112,8 @@ export function InvitationBuilder({
               )}
             </div>
             
-            {/* Date & Time */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Date, Time & Timezone */}
+            <div className="grid grid-cols-3 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="date">{eventConfig.defaultLabels.dateLabel}</Label>
                 <Input
@@ -128,7 +132,31 @@ export function InvitationBuilder({
                   onChange={(e) => updateField("eventTime", e.target.value)}
                 />
               </div>
+              <div className="space-y-2">
+                <Label className="flex items-center gap-1">
+                  <Globe className="w-3 h-3" />
+                  Zona Waktu
+                </Label>
+                <Select value={invitation.timezone} onValueChange={(v) => updateField("timezone", v)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="WIB">WIB</SelectItem>
+                    <SelectItem value="WITA">WITA</SelectItem>
+                    <SelectItem value="WIT">WIT</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
+
+            {/* Event Sessions (wedding only) */}
+            {isWedding && (
+              <EventSessionsEditor
+                value={invitation.events}
+                onChange={(events) => updateField("events", events)}
+              />
+            )}
             
             {/* Location */}
             <div className="space-y-2">
@@ -179,9 +207,9 @@ export function InvitationBuilder({
               maxImages={6}
             />
             
-            {/* Message */}
+            {/* Message / Sambutan */}
             <div className="space-y-2">
-              <Label htmlFor="message">Pesan / Kata Sambutan</Label>
+              <Label htmlFor="message">Kata Sambutan / Pesan Pembuka</Label>
               <Textarea
                 id="message"
                 placeholder="Tulis pesan atau kata sambutan untuk tamu undangan Anda..."
@@ -189,6 +217,57 @@ export function InvitationBuilder({
                 onChange={(e) => updateField("message", e.target.value)}
                 rows={4}
               />
+            </div>
+
+            {/* Bank Accounts / Digital Envelope */}
+            {isWedding && (
+              <BankAccountsEditor
+                value={invitation.bankAccounts}
+                onChange={(accounts) => updateField("bankAccounts", accounts)}
+              />
+            )}
+
+            {/* Closing Section */}
+            {isWedding && (
+              <div className="space-y-4 pt-4 border-t border-border">
+                <h3 className="font-serif text-lg font-semibold">Penutup</h3>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="closingMessage">Ucapan Terima Kasih</Label>
+                  <Textarea
+                    id="closingMessage"
+                    placeholder="Merupakan suatu kehormatan dan kebahagiaan bagi kami..."
+                    value={invitation.closingMessage || ""}
+                    onChange={(e) => updateField("closingMessage", e.target.value)}
+                    rows={3}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="closingPrayer">Doa / Kutipan Pernikahan</Label>
+                  <Textarea
+                    id="closingPrayer"
+                    placeholder="Kutipan ayat, doa, atau kata-kata indah..."
+                    value={invitation.closingPrayer || ""}
+                    onChange={(e) => updateField("closingPrayer", e.target.value)}
+                    rows={3}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Music URL */}
+            <div className="space-y-2">
+              <Label htmlFor="musicUrl">Musik Latar (opsional)</Label>
+              <Input
+                id="musicUrl"
+                placeholder="URL file musik (mp3) atau link langsung"
+                value={invitation.musicUrl || ""}
+                onChange={(e) => updateField("musicUrl", e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                Musik tidak akan autoplay. Tamu dapat mengaktifkannya secara manual.
+              </p>
             </div>
             
             {/* Actions */}

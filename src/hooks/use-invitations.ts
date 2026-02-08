@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { InvitationData, generateSlug } from "@/lib/invitation";
+import { InvitationData, EventSession, BankAccount, generateSlug } from "@/lib/invitation";
 
 export interface DbInvitation {
   id: string;
@@ -16,6 +16,7 @@ export interface DbInvitation {
   names: string[];
   event_date: string | null;
   event_time: string | null;
+  timezone: string;
   location_name: string | null;
   location_address: string | null;
   location_map_url: string | null;
@@ -23,6 +24,11 @@ export interface DbInvitation {
   cover_image: string | null;
   gallery_images: string[];
   theme_color: string | null;
+  events: any[];
+  bank_accounts: any[];
+  closing_message: string | null;
+  closing_prayer: string | null;
+  music_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -41,6 +47,7 @@ export function dbToInvitation(db: DbInvitation): InvitationData {
     names: db.names,
     eventDate: db.event_date || "",
     eventTime: db.event_time || "",
+    timezone: db.timezone || "WIB",
     locationName: db.location_name || "",
     locationAddress: db.location_address || "",
     locationMapUrl: db.location_map_url || undefined,
@@ -48,6 +55,21 @@ export function dbToInvitation(db: DbInvitation): InvitationData {
     coverImage: db.cover_image || undefined,
     galleryImages: db.gallery_images,
     themeColor: db.theme_color || undefined,
+    events: (db.events || []).map((e: any) => ({
+      name: e.name || '',
+      date: e.date || '',
+      time: e.time || '',
+      endTime: e.endTime || '',
+      location: e.location || '',
+    })) as EventSession[],
+    bankAccounts: (db.bank_accounts || []).map((a: any) => ({
+      bankName: a.bankName || '',
+      accountNumber: a.accountNumber || '',
+      accountHolder: a.accountHolder || '',
+    })) as BankAccount[],
+    closingMessage: db.closing_message || undefined,
+    closingPrayer: db.closing_prayer || undefined,
+    musicUrl: db.music_url || undefined,
     createdAt: db.created_at,
     updatedAt: db.updated_at,
   };
@@ -66,6 +88,7 @@ export function invitationToDb(invitation: InvitationData, userId: string) {
     names: invitation.names,
     event_date: invitation.eventDate || null,
     event_time: invitation.eventTime || null,
+    timezone: invitation.timezone || 'WIB',
     location_name: invitation.locationName || null,
     location_address: invitation.locationAddress || null,
     location_map_url: invitation.locationMapUrl || null,
@@ -73,6 +96,11 @@ export function invitationToDb(invitation: InvitationData, userId: string) {
     cover_image: invitation.coverImage || null,
     gallery_images: invitation.galleryImages,
     theme_color: invitation.themeColor || null,
+    events: invitation.events.map(e => JSON.parse(JSON.stringify(e))),
+    bank_accounts: invitation.bankAccounts.map(a => JSON.parse(JSON.stringify(a))),
+    closing_message: invitation.closingMessage || null,
+    closing_prayer: invitation.closingPrayer || null,
+    music_url: invitation.musicUrl || null,
   };
 }
 
@@ -99,7 +127,7 @@ export function useInvitations() {
 
       if (error) throw error;
 
-      setInvitations((data || []).map((d) => dbToInvitation(d as DbInvitation)));
+      setInvitations((data || []).map((d) => dbToInvitation(d as unknown as DbInvitation)));
     } catch (error: any) {
       console.error("Error fetching invitations:", error);
       toast({
@@ -130,13 +158,13 @@ export function useInvitations() {
       
       const { data, error } = await supabase
         .from("invitations")
-        .insert(dbData)
+        .insert(dbData as any)
         .select()
         .single();
 
       if (error) throw error;
 
-      setInvitations((prev) => [dbToInvitation(data as DbInvitation), ...prev]);
+      setInvitations((prev) => [dbToInvitation(data as unknown as DbInvitation), ...prev]);
       
       toast({
         title: "Berhasil!",
@@ -165,6 +193,7 @@ export function useInvitations() {
       if (invitation.names !== undefined) updateData.names = invitation.names;
       if (invitation.eventDate !== undefined) updateData.event_date = invitation.eventDate || null;
       if (invitation.eventTime !== undefined) updateData.event_time = invitation.eventTime || null;
+      if (invitation.timezone !== undefined) updateData.timezone = invitation.timezone;
       if (invitation.locationName !== undefined) updateData.location_name = invitation.locationName || null;
       if (invitation.locationAddress !== undefined) updateData.location_address = invitation.locationAddress || null;
       if (invitation.locationMapUrl !== undefined) updateData.location_map_url = invitation.locationMapUrl || null;
@@ -173,6 +202,11 @@ export function useInvitations() {
       if (invitation.galleryImages !== undefined) updateData.gallery_images = invitation.galleryImages;
       if (invitation.status !== undefined) updateData.status = invitation.status;
       if (invitation.isPaid !== undefined) updateData.is_paid = invitation.isPaid;
+      if (invitation.events !== undefined) updateData.events = invitation.events.map(e => JSON.parse(JSON.stringify(e)));
+      if (invitation.bankAccounts !== undefined) updateData.bank_accounts = invitation.bankAccounts.map(a => JSON.parse(JSON.stringify(a)));
+      if (invitation.closingMessage !== undefined) updateData.closing_message = invitation.closingMessage || null;
+      if (invitation.closingPrayer !== undefined) updateData.closing_prayer = invitation.closingPrayer || null;
+      if (invitation.musicUrl !== undefined) updateData.music_url = invitation.musicUrl || null;
 
       const { error } = await supabase
         .from("invitations")
@@ -267,7 +301,7 @@ export function usePublicInvitation(slug: string) {
           setError("Undangan tidak ditemukan");
           setInvitation(null);
         } else {
-          setInvitation(dbToInvitation(data as DbInvitation));
+          setInvitation(dbToInvitation(data as unknown as DbInvitation));
         }
       } catch (err: any) {
         console.error("Error fetching public invitation:", err);
