@@ -23,6 +23,9 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
   const eventConfig = getEventTypeConfig(invitation.eventType);
   const culturalStyle = getTemplateCulturalStyle(template.id);
   const isWedding = invitation.eventType === "wedding";
+  const isLamaran = invitation.eventType === "lamaran";
+  const hasTwoNames = isWedding || isLamaran;
+  const features = eventConfig.features;
   
   const decorProps = {
     style: culturalStyle,
@@ -46,9 +49,9 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
   };
   
   const displayNames = () => {
-    if (isWedding) {
-      const name1 = invitation.names[0] || "Nama Mempelai Pria";
-      const name2 = invitation.names[1] || "Nama Mempelai Wanita";
+    if (hasTwoNames) {
+      const name1 = invitation.names[0] || (isWedding ? "Nama Mempelai Pria" : "Nama Pria");
+      const name2 = invitation.names[1] || (isWedding ? "Nama Mempelai Wanita" : "Nama Wanita");
       return `${name1} & ${name2}`;
     }
     return invitation.names[0] || "Nama belum diisi";
@@ -207,7 +210,7 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
       )}
 
       {/* Digital Envelope Preview */}
-      {isWedding && invitation.bankAccounts.length > 0 && invitation.bankAccounts.some(a => a.bankName) && (
+      {features.hasDigitalEnvelope && invitation.bankAccounts.length > 0 && invitation.bankAccounts.some(a => a.bankName) && (
         <section className="p-6 pt-0 relative z-10">
           <Divider {...decorProps} />
           <h3 className="font-serif text-lg font-semibold mb-4 text-center" style={{ color: template.colorScheme.primary }}>
@@ -227,12 +230,12 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
       )}
 
       {/* RSVP & Guest Book Preview */}
-      {isWedding && (
+      {features.hasRSVP && (
         <section className="p-6 pt-0 relative z-10">
           <Divider {...decorProps} />
           <SectionWrapper {...decorProps} className="p-5 text-center">
             <p className="text-xs uppercase tracking-widest mb-2 opacity-60" style={{ color: template.colorScheme.primary }}>
-              Konfirmasi Kehadiran & Ucapan
+              Konfirmasi Kehadiran {features.hasGuestBook ? '& Ucapan' : ''}
             </p>
             <p className="text-sm opacity-70">Tersedia di halaman undangan publik</p>
           </SectionWrapper>

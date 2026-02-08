@@ -613,6 +613,306 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     backgroundPattern: 'linear-gradient(180deg, rgba(245,124,0,0.05) 0%, transparent 40%)',
     sectionRadius: '0.75rem',
   },
+
+  // ══════════════════ AQIQAH TEMPLATES ══════════════════
+
+  'aqiqah-soft-pink': {
+    ...defaultStyle,
+    greeting: 'Bismillahirrahmanirrahim\nAssalamu\'alaikum Wr. Wb.',
+    closingText: 'Semoga Allah SWT memberikan keberkahan pada putra/putri kami',
+    ornamentEmoji: '👶',
+    cornerMotif: 'floral',
+    dividerStyle: 'dotted',
+    borderStyle: 'solid',
+    fontAccent: 'sans',
+    culturalMotifs: ['👶', '🌸', '✿'],
+    backgroundPattern: 'radial-gradient(circle at 80% 20%, rgba(233,30,99,0.04) 0%, transparent 50%)',
+    sectionRadius: '1rem',
+  },
+
+  'aqiqah-islamic-teal': {
+    ...defaultStyle,
+    greeting: 'Bismillahirrahmanirrahim\nDengan mengharap ridho Allah SWT',
+    closingText: 'Jazakumullahu khairan atas doa dan kehadirannya',
+    ornamentEmoji: '☪',
+    cornerMotif: 'islamic',
+    dividerStyle: 'ornate',
+    borderStyle: 'double',
+    fontAccent: 'serif',
+    culturalMotifs: ['☪', '✦', '❁'],
+    backgroundPattern: 'repeating-conic-gradient(rgba(0,105,92,0.03) 0% 25%, transparent 0% 50%) 0 0 / 35px 35px',
+    sectionRadius: '0.5rem',
+  },
+
+  // ══════════════════ TAHLILAN TEMPLATES ══════════════════
+
+  'tahlilan-serene-green': {
+    ...defaultStyle,
+    greeting: 'Innaa lillaahi wa innaa ilaihi raaji\'uun\nAssalamu\'alaikum Wr. Wb.',
+    closingText: 'Semoga amal ibadah almarhum/ah diterima di sisi Allah SWT',
+    ornamentEmoji: '☪',
+    cornerMotif: 'islamic',
+    dividerStyle: 'simple',
+    borderStyle: 'solid',
+    fontAccent: 'serif',
+    culturalMotifs: ['☪', '✦', '·'],
+    backgroundPattern: 'radial-gradient(circle at 50% 50%, rgba(46,125,50,0.04) 0%, transparent 60%)',
+    sectionRadius: '0.5rem',
+  },
+
+  'tahlilan-calm-grey': {
+    ...defaultStyle,
+    greeting: 'Innaa lillaahi wa innaa ilaihi raaji\'uun',
+    closingText: 'Semoga Allah SWT mengampuni dan merahmati almarhum/ah',
+    ornamentEmoji: '·',
+    cornerMotif: 'none',
+    dividerStyle: 'simple',
+    borderStyle: 'solid',
+    fontAccent: 'sans',
+    culturalMotifs: ['·', '—', '·'],
+    backgroundPattern: null,
+    sectionRadius: '0.75rem',
+  },
+
+  // ══════════════════ PENGAJIAN TEMPLATES ══════════════════
+
+  'pengajian-green-gold': {
+    ...defaultStyle,
+    greeting: 'Bismillahirrahmanirrahim\nAssalamu\'alaikum Warahmatullahi Wabarakatuh',
+    closingText: 'Jazakumullahu khairan katsiran',
+    ornamentEmoji: '☪',
+    cornerMotif: 'islamic',
+    dividerStyle: 'ornate',
+    borderStyle: 'double',
+    fontAccent: 'serif',
+    culturalMotifs: ['☪', '✶', '✦'],
+    backgroundPattern: 'repeating-conic-gradient(rgba(27,94,32,0.03) 0% 25%, transparent 0% 50%) 0 0 / 30px 30px',
+    sectionRadius: '0.5rem',
+  },
+
+  'pengajian-royal-blue': {
+    ...defaultStyle,
+    greeting: 'Bismillahirrahmanirrahim\nAssalamu\'alaikum Wr. Wb.',
+    closingText: 'Kehadiran Bapak/Ibu sangat kami harapkan',
+    ornamentEmoji: '🕌',
+    cornerMotif: 'islamic',
+    dividerStyle: 'diamond',
+    borderStyle: 'double',
+    fontAccent: 'serif',
+    culturalMotifs: ['🕌', '☪', '✦'],
+    backgroundPattern: 'radial-gradient(circle at 50% 0%, rgba(21,101,192,0.05) 0%, transparent 50%)',
+    sectionRadius: '0.5rem',
+  },
+
+  // ══════════════════ WISUDA TEMPLATES ══════════════════
+
+  'wisuda-navy-gold': {
+    ...defaultStyle,
+    greeting: 'Dengan penuh kebahagiaan dan rasa syukur',
+    closingText: 'Terima kasih atas doa dan dukungan yang telah diberikan',
+    ornamentEmoji: '🎓',
+    cornerMotif: 'royal',
+    dividerStyle: 'ornate',
+    borderStyle: 'double',
+    fontAccent: 'serif',
+    culturalMotifs: ['🎓', '⚜', '✦'],
+    backgroundPattern: 'repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(26,35,126,0.02) 40px, rgba(26,35,126,0.02) 41px)',
+    sectionRadius: '0.5rem',
+  },
+
+  'wisuda-maroon-classic': {
+    ...defaultStyle,
+    greeting: 'Dengan rasa syukur kepada Tuhan Yang Maha Esa',
+    closingText: 'Dukungan dan doa Anda sangat berarti bagi kami',
+    ornamentEmoji: '📜',
+    cornerMotif: 'floral',
+    dividerStyle: 'ornate',
+    borderStyle: 'double',
+    fontAccent: 'serif',
+    culturalMotifs: ['📜', '❦', '✦'],
+    backgroundPattern: 'radial-gradient(circle at 50% 0%, rgba(123,31,58,0.04) 0%, transparent 50%)',
+    sectionRadius: '0.5rem',
+  },
+
+  // ══════════════════ LAMARAN TEMPLATES ══════════════════
+
+  'lamaran-rose-gold': {
+    ...defaultStyle,
+    greeting: 'Dengan memohon rahmat Tuhan Yang Maha Esa',
+    closingText: 'Merupakan kehormatan bagi kami apabila Bapak/Ibu berkenan hadir memberikan doa restu',
+    ornamentEmoji: '💍',
+    cornerMotif: 'floral',
+    dividerStyle: 'ornate',
+    borderStyle: 'double',
+    fontAccent: 'serif',
+    culturalMotifs: ['💍', '❦', '✿'],
+    backgroundPattern: 'radial-gradient(circle at 20% 80%, rgba(183,110,121,0.05) 0%, transparent 50%)',
+    sectionRadius: '0.75rem',
+  },
+
+  'lamaran-sage-romantic': {
+    ...defaultStyle,
+    greeting: 'Dengan penuh sukacita dan bahagia',
+    closingText: 'Kehadiran Anda akan melengkapi kebahagiaan kami',
+    ornamentEmoji: '🌿',
+    cornerMotif: 'floral',
+    dividerStyle: 'leaf',
+    borderStyle: 'none',
+    fontAccent: 'serif',
+    culturalMotifs: ['🌿', '🍃', '💍'],
+    backgroundPattern: 'radial-gradient(ellipse at 10% 90%, rgba(122,158,126,0.06) 0%, transparent 50%)',
+    sectionRadius: '0.75rem',
+  },
+
+  // ══════════════════ SYUKURAN RUMAH TEMPLATES ══════════════════
+
+  'syukuran-rumah-warm': {
+    ...defaultStyle,
+    greeting: 'Alhamdulillah\nDengan penuh rasa syukur',
+    closingText: 'Kehadiran Bapak/Ibu menjadi berkah tersendiri bagi kami',
+    ornamentEmoji: '🏠',
+    cornerMotif: 'geometric',
+    dividerStyle: 'simple',
+    borderStyle: 'solid',
+    fontAccent: 'sans',
+    culturalMotifs: ['🏠', '✦', '🌟'],
+    backgroundPattern: 'radial-gradient(circle at 50% 50%, rgba(191,54,12,0.04) 0%, transparent 60%)',
+    sectionRadius: '1rem',
+  },
+
+  'syukuran-rumah-green': {
+    ...defaultStyle,
+    greeting: 'Bismillahirrahmanirrahim\nAlhamdulillahi Rabbil \'Alamin',
+    closingText: 'Semoga rumah/usaha ini menjadi berkah bagi kami dan sekitar',
+    ornamentEmoji: '🌿',
+    cornerMotif: 'floral',
+    dividerStyle: 'leaf',
+    borderStyle: 'none',
+    fontAccent: 'serif',
+    culturalMotifs: ['🌿', '🏡', '✿'],
+    backgroundPattern: 'radial-gradient(ellipse at 50% 100%, rgba(56,142,60,0.05) 0%, transparent 50%)',
+    sectionRadius: '0.75rem',
+  },
+
+  // ══════════════════ DUKA CITA TEMPLATES ══════════════════
+
+  'duka-cita-sombre': {
+    ...defaultStyle,
+    greeting: 'Innaa lillaahi wa innaa ilaihi raaji\'uun',
+    closingText: 'Turut berduka cita yang sedalam-dalamnya',
+    ornamentEmoji: '🕊',
+    cornerMotif: 'none',
+    dividerStyle: 'simple',
+    borderStyle: 'solid',
+    fontAccent: 'serif',
+    culturalMotifs: ['🕊', '·', '—'],
+    backgroundPattern: null,
+    sectionRadius: '0.5rem',
+  },
+
+  'duka-cita-white': {
+    ...defaultStyle,
+    greeting: 'Turut Berduka Cita',
+    closingText: 'Semoga almarhum/ah diberikan tempat terbaik di sisi-Nya',
+    ornamentEmoji: '🕊',
+    cornerMotif: 'none',
+    dividerStyle: 'simple',
+    borderStyle: 'none',
+    fontAccent: 'sans',
+    culturalMotifs: ['🕊', '·', '·'],
+    backgroundPattern: null,
+    sectionRadius: '0.75rem',
+  },
+
+  // ══════════════════ BUKBER TEMPLATES ══════════════════
+
+  'bukber-ramadan-gold': {
+    ...defaultStyle,
+    greeting: 'Marhaban Yaa Ramadhan\nAssalamu\'alaikum Wr. Wb.',
+    closingText: 'Semoga ibadah puasa kita diterima. Aamiin.',
+    ornamentEmoji: '🌙',
+    cornerMotif: 'islamic',
+    dividerStyle: 'ornate',
+    borderStyle: 'double',
+    fontAccent: 'serif',
+    culturalMotifs: ['🌙', '☪', '✦'],
+    backgroundPattern: 'linear-gradient(180deg, rgba(249,168,37,0.05) 0%, transparent 30%), linear-gradient(0deg, rgba(46,125,50,0.03) 0%, transparent 30%)',
+    sectionRadius: '0.75rem',
+  },
+
+  'bukber-crescent-blue': {
+    ...defaultStyle,
+    greeting: 'Ramadhan Mubarak\nAssalamu\'alaikum Wr. Wb.',
+    closingText: 'Mari berbuka bersama dan mempererat tali silaturahmi',
+    ornamentEmoji: '🌙',
+    cornerMotif: 'islamic',
+    dividerStyle: 'diamond',
+    borderStyle: 'solid',
+    fontAccent: 'sans',
+    culturalMotifs: ['🌙', '⭐', '✦'],
+    backgroundPattern: 'radial-gradient(circle at 80% 10%, rgba(21,101,192,0.05) 0%, transparent 50%)',
+    sectionRadius: '1rem',
+  },
+
+  // ══════════════════ ARISAN TEMPLATES ══════════════════
+
+  'arisan-fun-coral': {
+    ...defaultStyle,
+    greeting: 'Hai! 👋\nAyo kumpul lagi',
+    closingText: 'Ditunggu kehadirannya ya!',
+    ornamentEmoji: '💰',
+    cornerMotif: 'geometric',
+    dividerStyle: 'dotted',
+    borderStyle: 'solid',
+    fontAccent: 'sans',
+    culturalMotifs: ['💰', '🎉', '✦'],
+    backgroundPattern: 'radial-gradient(circle at 80% 80%, rgba(255,87,34,0.04) 0%, transparent 50%)',
+    sectionRadius: '1.5rem',
+  },
+
+  'arisan-soft-purple': {
+    ...defaultStyle,
+    greeting: 'Halo semuanya! 💜',
+    closingText: 'Sampai jumpa di arisan berikutnya!',
+    ornamentEmoji: '✨',
+    cornerMotif: 'none',
+    dividerStyle: 'dotted',
+    borderStyle: 'none',
+    fontAccent: 'sans',
+    culturalMotifs: ['✨', '💜', '·'],
+    backgroundPattern: 'radial-gradient(circle at 20% 80%, rgba(123,31,162,0.04) 0%, transparent 50%)',
+    sectionRadius: '1.5rem',
+  },
+
+  // ══════════════════ ACARA UMUM TEMPLATES ══════════════════
+
+  'acara-umum-professional': {
+    ...defaultStyle,
+    greeting: 'Dengan hormat',
+    closingText: 'Atas perhatian dan kehadirannya, kami ucapkan terima kasih',
+    ornamentEmoji: '📋',
+    cornerMotif: 'geometric',
+    dividerStyle: 'simple',
+    borderStyle: 'solid',
+    fontAccent: 'sans',
+    culturalMotifs: ['📋', '◇', '·'],
+    backgroundPattern: 'linear-gradient(135deg, rgba(21,101,192,0.03) 0%, transparent 50%)',
+    sectionRadius: '0.75rem',
+  },
+
+  'acara-umum-casual': {
+    ...defaultStyle,
+    greeting: 'Halo! 👋',
+    closingText: 'Ditunggu kehadirannya ya!',
+    ornamentEmoji: '🎯',
+    cornerMotif: 'none',
+    dividerStyle: 'dotted',
+    borderStyle: 'none',
+    fontAccent: 'sans',
+    culturalMotifs: ['🎯', '·', '·'],
+    backgroundPattern: null,
+    sectionRadius: '1rem',
+  },
 };
 
 export function getTemplateCulturalStyle(templateId: string): TemplateCulturalStyle {

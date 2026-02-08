@@ -35,6 +35,9 @@ export function InvitationBuilder({
   const [activeTab, setActiveTab] = useState("edit");
   const eventConfig = getEventTypeConfig(invitation.eventType);
   const isWedding = invitation.eventType === "wedding";
+  const isLamaran = invitation.eventType === "lamaran";
+  const hasTwoNames = isWedding || isLamaran;
+  const features = eventConfig.features;
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
@@ -90,15 +93,15 @@ export function InvitationBuilder({
             {/* Names */}
             <div className="space-y-2">
               <Label>{eventConfig.defaultLabels.names}</Label>
-              {isWedding ? (
+              {hasTwoNames ? (
                 <div className="grid grid-cols-2 gap-3">
                   <Input
-                    placeholder="Nama Mempelai Pria"
+                    placeholder={isWedding ? "Nama Mempelai Pria" : "Nama Pria"}
                     value={invitation.names[0] || ""}
                     onChange={(e) => updateField("names", [e.target.value, invitation.names[1] || ""])}
                   />
                   <Input
-                    placeholder="Nama Mempelai Wanita"
+                    placeholder={isWedding ? "Nama Mempelai Wanita" : "Nama Wanita"}
                     value={invitation.names[1] || ""}
                     onChange={(e) => updateField("names", [invitation.names[0] || "", e.target.value])}
                   />
@@ -150,8 +153,8 @@ export function InvitationBuilder({
               </div>
             </div>
 
-            {/* Event Sessions (wedding only) */}
-            {isWedding && (
+            {/* Event Sessions */}
+            {features.hasEventSessions && (
               <EventSessionsEditor
                 value={invitation.events}
                 onChange={(events) => updateField("events", events)}
@@ -191,21 +194,25 @@ export function InvitationBuilder({
             </div>
             
             {/* Cover Image */}
-            <ImageUpload
-              label="Foto Cover (1080 × 1440 px)"
-              value={invitation.coverImage}
-              onChange={(url) => updateField("coverImage", url)}
-              folder="covers"
-              aspectRatio="portrait"
-            />
+            {features.hasGallery && (
+              <ImageUpload
+                label="Foto Cover (1080 × 1440 px)"
+                value={invitation.coverImage}
+                onChange={(url) => updateField("coverImage", url)}
+                folder="covers"
+                aspectRatio="portrait"
+              />
+            )}
             
             {/* Gallery Images */}
-            <GalleryUpload
-              label="Galeri Foto (1080 × 1080 px)"
-              value={invitation.galleryImages}
-              onChange={(urls) => updateField("galleryImages", urls)}
-              maxImages={6}
-            />
+            {features.hasGallery && (
+              <GalleryUpload
+                label="Galeri Foto (1080 × 1080 px)"
+                value={invitation.galleryImages}
+                onChange={(urls) => updateField("galleryImages", urls)}
+                maxImages={6}
+              />
+            )}
             
             {/* Message / Sambutan */}
             <div className="space-y-2">
@@ -220,7 +227,7 @@ export function InvitationBuilder({
             </div>
 
             {/* Bank Accounts / Digital Envelope */}
-            {isWedding && (
+            {features.hasDigitalEnvelope && (
               <BankAccountsEditor
                 value={invitation.bankAccounts}
                 onChange={(accounts) => updateField("bankAccounts", accounts)}
@@ -228,33 +235,31 @@ export function InvitationBuilder({
             )}
 
             {/* Closing Section */}
-            {isWedding && (
-              <div className="space-y-4 pt-4 border-t border-border">
-                <h3 className="font-serif text-lg font-semibold">Penutup</h3>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="closingMessage">Ucapan Terima Kasih</Label>
-                  <Textarea
-                    id="closingMessage"
-                    placeholder="Merupakan suatu kehormatan dan kebahagiaan bagi kami..."
-                    value={invitation.closingMessage || ""}
-                    onChange={(e) => updateField("closingMessage", e.target.value)}
-                    rows={3}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="closingPrayer">Doa / Kutipan Pernikahan</Label>
-                  <Textarea
-                    id="closingPrayer"
-                    placeholder="Kutipan ayat, doa, atau kata-kata indah..."
-                    value={invitation.closingPrayer || ""}
-                    onChange={(e) => updateField("closingPrayer", e.target.value)}
-                    rows={3}
-                  />
-                </div>
+            <div className="space-y-4 pt-4 border-t border-border">
+              <h3 className="font-serif text-lg font-semibold">Penutup</h3>
+              
+              <div className="space-y-2">
+                <Label htmlFor="closingMessage">Ucapan Penutup</Label>
+                <Textarea
+                  id="closingMessage"
+                  placeholder="Merupakan suatu kehormatan bagi kami..."
+                  value={invitation.closingMessage || ""}
+                  onChange={(e) => updateField("closingMessage", e.target.value)}
+                  rows={3}
+                />
               </div>
-            )}
+
+              <div className="space-y-2">
+                <Label htmlFor="closingPrayer">Doa / Kutipan (opsional)</Label>
+                <Textarea
+                  id="closingPrayer"
+                  placeholder="Kutipan ayat, doa, atau kata-kata..."
+                  value={invitation.closingPrayer || ""}
+                  onChange={(e) => updateField("closingPrayer", e.target.value)}
+                  rows={3}
+                />
+              </div>
+            </div>
 
             {/* WhatsApp Number */}
             <div className="space-y-2">
@@ -271,18 +276,20 @@ export function InvitationBuilder({
             </div>
 
             {/* Music URL */}
-            <div className="space-y-2">
-              <Label htmlFor="musicUrl">Musik Latar (opsional)</Label>
-              <Input
-                id="musicUrl"
-                placeholder="URL file musik (mp3) atau link langsung"
-                value={invitation.musicUrl || ""}
-                onChange={(e) => updateField("musicUrl", e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                Musik tidak akan autoplay. Tamu dapat mengaktifkannya secara manual.
-              </p>
-            </div>
+            {features.hasMusic && (
+              <div className="space-y-2">
+                <Label htmlFor="musicUrl">Musik Latar (opsional)</Label>
+                <Input
+                  id="musicUrl"
+                  placeholder="URL file musik (mp3) atau link langsung"
+                  value={invitation.musicUrl || ""}
+                  onChange={(e) => updateField("musicUrl", e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  Musik tidak akan autoplay. Tamu dapat mengaktifkannya secara manual.
+                </p>
+              </div>
+            )}
             
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
