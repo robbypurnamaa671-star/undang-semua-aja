@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Crown, Lock } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template } from "@/lib/templates";
+import { getTemplateCulturalStyle } from "@/lib/template-styles";
+import { CulturalMotifLine } from "@/components/invitation/TemplateDecorations";
 import { toast } from "sonner";
 import { InvitationData, createDefaultInvitation } from "@/lib/invitation";
 import { InvitationBuilder } from "@/components/builder/InvitationBuilder";
@@ -253,56 +255,90 @@ export default function Create() {
                     }`}
                   >
                     {/* Template Preview */}
-                    <div 
-                      className="aspect-[3/4] relative flex flex-col items-center justify-center p-6"
-                      style={{ backgroundColor: template.colorScheme.background }}
-                    >
-                      <div 
-                        className="w-16 h-16 rounded-full mb-4 flex items-center justify-center"
-                        style={{ backgroundColor: template.colorScheme.primary + '20' }}
-                      >
-                        <span className="text-3xl">
-                          {eventTypes.find(e => e.id === selectedEventType)?.icon}
-                        </span>
-                      </div>
-                      <h4 
-                        className="font-serif text-xl font-semibold text-center mb-2"
-                        style={{ color: template.colorScheme.text }}
-                      >
-                        {template.name}
-                      </h4>
-                      <p 
-                        className="text-sm text-center opacity-80"
-                        style={{ color: template.colorScheme.text }}
-                      >
-                        {template.description}
-                      </p>
-                      
-                      {/* Color preview */}
-                      <div className="flex gap-2 mt-4">
+                    {(() => {
+                      const cs = getTemplateCulturalStyle(template.id);
+                      return (
                         <div 
-                          className="w-6 h-6 rounded-full border-2 border-white shadow"
-                          style={{ backgroundColor: template.colorScheme.primary }}
-                        />
-                        <div 
-                          className="w-6 h-6 rounded-full border-2 border-white shadow"
-                          style={{ backgroundColor: template.colorScheme.secondary }}
-                        />
-                      </div>
-                      
-                      {/* Premium Lock Overlay */}
-                      {template.isPremium && (
-                        <div className="absolute inset-0 bg-foreground/40 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3">
-                          <div className="w-14 h-14 rounded-full bg-background/90 flex items-center justify-center shadow-lg">
-                            <Lock className="w-7 h-7 text-primary" />
+                          className="aspect-[3/4] relative flex flex-col items-center justify-center p-6 overflow-hidden"
+                          style={{ 
+                            backgroundColor: template.colorScheme.background,
+                            ...(cs.backgroundPattern ? { backgroundImage: cs.backgroundPattern } : {}),
+                          }}
+                        >
+                          {/* Corner ornaments */}
+                          {cs.cornerMotif !== 'none' && (
+                            <>
+                              <span className="absolute top-2 left-3 text-base opacity-25 select-none" style={{ color: template.colorScheme.primary }}>
+                                {cs.culturalMotifs[0]}
+                              </span>
+                              <span className="absolute top-2 right-3 text-base opacity-25 select-none" style={{ color: template.colorScheme.primary, transform: 'scaleX(-1)' }}>
+                                {cs.culturalMotifs[0]}
+                              </span>
+                              <span className="absolute bottom-14 left-3 text-base opacity-25 select-none" style={{ color: template.colorScheme.primary, transform: 'scaleY(-1)' }}>
+                                {cs.culturalMotifs[0]}
+                              </span>
+                              <span className="absolute bottom-14 right-3 text-base opacity-25 select-none" style={{ color: template.colorScheme.primary, transform: 'scale(-1,-1)' }}>
+                                {cs.culturalMotifs[0]}
+                              </span>
+                            </>
+                          )}
+
+                          {/* Greeting snippet */}
+                          <p className="text-[9px] text-center opacity-50 mb-2 px-4 line-clamp-2" style={{ color: template.colorScheme.primary }}>
+                            {cs.greeting.split('\n')[0]}
+                          </p>
+
+                          <div 
+                            className="w-14 h-14 rounded-full mb-3 flex items-center justify-center"
+                            style={{ backgroundColor: template.colorScheme.primary + '15' }}
+                          >
+                            <span className="text-2xl">
+                              {eventTypes.find(e => e.id === selectedEventType)?.icon}
+                            </span>
                           </div>
-                          <Badge className="bg-primary text-primary-foreground shadow-lg">
-                            <Crown className="w-3 h-3 mr-1" />
-                            Premium
-                          </Badge>
+                          <h4 
+                            className="font-serif text-lg font-semibold text-center mb-1"
+                            style={{ color: template.colorScheme.text }}
+                          >
+                            {template.name}
+                          </h4>
+                          <p 
+                            className="text-xs text-center opacity-70 px-2 line-clamp-2"
+                            style={{ color: template.colorScheme.text }}
+                          >
+                            {template.description}
+                          </p>
+                          
+                          {/* Cultural motif line */}
+                          <CulturalMotifLine style={cs} primaryColor={template.colorScheme.primary} />
+                          
+                          {/* Color preview */}
+                          <div className="flex gap-2 mt-3">
+                            <div 
+                              className="w-5 h-5 rounded-full border-2 border-white shadow"
+                              style={{ backgroundColor: template.colorScheme.primary }}
+                            />
+                            <div 
+                              className="w-5 h-5 rounded-full border-2 border-white shadow"
+                              style={{ backgroundColor: template.colorScheme.secondary }}
+                            />
+                          </div>
+                          
+                          {/* Premium Lock Overlay */}
+                          {template.isPremium && (
+                            <div className="absolute inset-0 bg-foreground/40 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3">
+                              <div className="w-14 h-14 rounded-full bg-background/90 flex items-center justify-center shadow-lg">
+                                <Lock className="w-7 h-7 text-primary" />
+                              </div>
+                              <Badge className="bg-primary text-primary-foreground shadow-lg">
+                                <Crown className="w-3 h-3 mr-1" />
+                                Premium
+                              </Badge>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
+                      );
+                    })()}
                     
                     <div className="p-4 bg-card">
                       <div className="flex items-center justify-between">
