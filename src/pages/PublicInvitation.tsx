@@ -242,7 +242,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     >
       {/* Background Pattern */}
       <PatternOverlay style={culturalStyle} />
-      <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} />
+      <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} templateId={template.id} />
 
       {/* Watermark for unpaid invitations */}
       {!invitation.isPaid && (
