@@ -61,7 +61,7 @@ export function FeaturesSection() {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            Kenapa <span className="text-gradient">UndanganKu</span>?
+            Kenapa <span className="text-gradient">Undanganlink</span>?
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Semua yang Anda butuhkan untuk membuat undangan digital yang sempurna

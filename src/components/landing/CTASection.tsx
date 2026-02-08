@@ -22,7 +22,7 @@ export function CTASection() {
             Siap Membuat Undangan Digital?
           </h2>
           <p className="text-lg text-primary-foreground/80 mb-10 max-w-2xl mx-auto">
-            Bergabung dengan ribuan keluarga Indonesia yang sudah menggunakan UndanganKu untuk momen spesial mereka.
+            Bergabung dengan ribuan keluarga Indonesia yang sudah menggunakan Undanganlink untuk momen spesial mereka.
           </p>
           <Button 
             asChild 

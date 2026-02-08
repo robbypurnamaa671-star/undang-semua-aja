@@ -38,7 +38,7 @@ function generateICSContent(props: CalendarButtonsProps): string {
 
   return `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//UndanganKu//ID
+PRODID:-//Undanganlink//ID
 BEGIN:VEVENT
 DTSTART;TZID=Asia/Jakarta:${startDate}
 DTEND;TZID=Asia/Jakarta:${endDate}

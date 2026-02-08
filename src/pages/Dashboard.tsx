@@ -94,7 +94,7 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl">💌</span>
-            <span className="font-serif text-xl font-semibold text-gradient">UndanganKu</span>
+            <span className="font-serif text-xl font-semibold text-gradient">Undanganlink</span>
           </Link>
           
           <div className="flex items-center gap-4">

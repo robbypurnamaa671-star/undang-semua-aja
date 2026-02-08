@@ -259,7 +259,7 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
         <ClosingText {...decorProps} />
         <Divider {...decorProps} />
         <p className="text-xs opacity-40 mt-2">
-          Undangan digital oleh UndanganKu
+          Undangan digital oleh Undanganlink
         </p>
       </section>
     </div>

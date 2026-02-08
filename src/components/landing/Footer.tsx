@@ -9,7 +9,7 @@ export function Footer() {
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <span className="text-2xl">💌</span>
-              <span className="font-serif text-xl font-semibold">UndanganKu</span>
+              <span className="font-serif text-xl font-semibold">Undanganlink</span>
             </Link>
             <p className="text-primary-foreground/70 max-w-sm">
               Platform undangan digital Indonesia untuk semua momen spesial Anda. 
@@ -41,7 +41,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="pt-8 border-t border-primary-foreground/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-primary-foreground/50">
-            © 2024 UndanganKu. Hak cipta dilindungi.
+            © 2024 Undanganlink. Hak cipta dilindungi.
           </p>
           <div className="flex items-center gap-4 text-sm text-primary-foreground/50">
             <a href="#" className="hover:text-primary-foreground transition-colors">Syarat & Ketentuan</a>
