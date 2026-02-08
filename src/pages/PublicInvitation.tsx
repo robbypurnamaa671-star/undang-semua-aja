@@ -1,6 +1,6 @@
 import { useParams, useSearchParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Template, getTemplateById } from "@/lib/templates";
 import { getEventTypeConfig } from "@/lib/event-types";
 import { getTemplateCulturalStyle } from "@/lib/template-styles";
@@ -33,11 +33,19 @@ export default function PublicInvitation() {
   const [isMuted, setIsMuted] = useState(true);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   
   const template = invitation ? getTemplateById(invitation.templateId) as Template : null;
   const eventConfig = invitation ? getEventTypeConfig(invitation.eventType) : null;
   const culturalStyle = template ? getTemplateCulturalStyle(template.id) : null;
   const isWedding = invitation?.eventType === "wedding";
+
+  // Parallax scroll for hero section
+  const { scrollY } = useScroll();
+  const heroImageY = useTransform(scrollY, [0, 600], [0, 200]);
+  const heroContentY = useTransform(scrollY, [0, 400], [0, 80]);
+  const heroOpacity = useTransform(scrollY, [0, 350], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 400], [1, 1.1]);
   
   // Audio control
   useEffect(() => {
@@ -169,6 +177,47 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     secondaryColor: template.colorScheme.secondary,
     textColor: template.colorScheme.text,
   };
+
+  // Animation variants for sections
+  const sectionFadeUp = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, y: 0,
+      transition: { duration: 0.7, ease: "easeOut" as const }
+    },
+  };
+
+  const sectionFadeScale = {
+    hidden: { opacity: 0, scale: 0.92 },
+    visible: { 
+      opacity: 1, scale: 1,
+      transition: { duration: 0.6, ease: "easeOut" as const }
+    },
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    },
+  };
+
+  const staggerItem = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, y: 0,
+      transition: { duration: 0.5, ease: "easeOut" as const }
+    },
+  };
+
+  const galleryItem = {
+    hidden: { opacity: 0, scale: 0.85 },
+    visible: { 
+      opacity: 1, scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" as const }
+    },
+  };
   
   return (
     <div 
@@ -280,56 +329,112 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
           )}
         </div>
         
-        {/* Hero Section */}
+        {/* Hero Section with Parallax */}
         <section 
+          ref={heroRef}
           className="min-h-screen flex flex-col items-center justify-center text-center p-6 relative overflow-hidden"
           style={{ background: invitation.coverImage ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` }}
         >
+          {/* Parallax Cover Image */}
           {invitation.coverImage && (
             <>
-              <img src={invitation.coverImage} alt="Cover" className="absolute inset-0 w-full h-full object-cover" />
+              <motion.img 
+                src={invitation.coverImage} 
+                alt="Cover" 
+                className="absolute inset-0 w-full h-full object-cover will-change-transform"
+                style={{ y: heroImageY, scale: heroScale }}
+              />
               <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` }} />
             </>
           )}
 
+          {/* Non-cover parallax gradient */}
+          {!invitation.coverImage && (
+            <motion.div 
+              className="absolute inset-0"
+              style={{ 
+                y: heroImageY,
+                background: `radial-gradient(ellipse at center, ${template.colorScheme.secondary}50 0%, transparent 70%)` 
+              }}
+            />
+          )}
+
           <CornerOrnaments {...decorProps} />
           
+          {/* Parallax Content */}
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-10"
+            style={{ y: heroContentY, opacity: heroOpacity }}
           >
             <GreetingText {...decorProps} />
-            <span className="text-5xl mb-4 block">{eventConfig.icon}</span>
-            <p className="text-xs uppercase tracking-widest mb-4" style={{ color: template.colorScheme.primary }}>
+            <motion.span 
+              className="text-5xl mb-4 block"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.5, type: "spring", stiffness: 200 }}
+            >
+              {eventConfig.icon}
+            </motion.span>
+            <motion.p 
+              className="text-xs uppercase tracking-widest mb-4"
+              style={{ color: template.colorScheme.primary }}
+              initial={{ opacity: 0, letterSpacing: '0.5em' }}
+              animate={{ opacity: 1, letterSpacing: '0.25em' }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+            >
               {eventConfig.defaultLabels.title}
-            </p>
+            </motion.p>
 
             {guestName && (
-              <p className="text-sm mb-3 opacity-70">
+              <motion.p 
+                className="text-sm mb-3 opacity-70"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.7 }}
+                transition={{ delay: 1, duration: 0.5 }}
+              >
                 Kepada Yth. <strong>{decodeURIComponent(guestName)}</strong>
-              </p>
+              </motion.p>
             )}
             
-            <h1 className="font-serif text-3xl font-bold leading-tight mb-6" style={{ color: template.colorScheme.text }}>
+            <motion.h1 
+              className="font-serif text-3xl font-bold leading-tight mb-6" 
+              style={{ color: template.colorScheme.text }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
               {displayNames()}
-            </h1>
+            </motion.h1>
             
             <Divider {...decorProps} />
             
-            <p style={{ color: template.colorScheme.primary }}>
+            <motion.p 
+              style={{ color: template.colorScheme.primary }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
+            >
               {formatDate(invitation.eventDate)}
-            </p>
+            </motion.p>
           </motion.div>
           
+          {/* Scroll indicator with bounce */}
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
+            animate={{ y: [0, 12, 0] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
             className="absolute bottom-8"
+            style={{ opacity: heroOpacity }}
           >
             <div className="w-6 h-10 rounded-full border-2 flex items-start justify-center pt-2" style={{ borderColor: template.colorScheme.primary + '50' }}>
-              <div className="w-1 h-2 rounded-full" style={{ backgroundColor: template.colorScheme.primary }} />
+              <motion.div 
+                className="w-1 h-2 rounded-full"
+                style={{ backgroundColor: template.colorScheme.primary }}
+                animate={{ y: [0, 8, 0], opacity: [1, 0.3, 1] }}
+                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              />
             </div>
           </motion.div>
         </section>
@@ -337,11 +442,31 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         {/* Message / Sambutan */}
         {invitation.message && (
           <section className="py-12 px-6">
-            <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto text-center">
+            <motion.div 
+              variants={sectionFadeScale}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              className="max-w-md mx-auto text-center"
+            >
               <SectionWrapper {...decorProps} className="p-6">
-                <div className="text-4xl mb-4" style={{ color: template.colorScheme.primary }}>"</div>
+                <motion.div 
+                  className="text-4xl mb-4" 
+                  style={{ color: template.colorScheme.primary }}
+                  initial={{ scale: 0, rotate: -20 }}
+                  whileInView={{ scale: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                >"</motion.div>
                 <p className="italic leading-relaxed">{invitation.message}</p>
-                <div className="text-4xl mt-4" style={{ color: template.colorScheme.primary }}>"</div>
+                <motion.div 
+                  className="text-4xl mt-4" 
+                  style={{ color: template.colorScheme.primary }}
+                  initial={{ scale: 0, rotate: 20 }}
+                  whileInView={{ scale: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, type: "spring", stiffness: 200 }}
+                >"</motion.div>
               </SectionWrapper>
             </motion.div>
           </section>
@@ -349,58 +474,83 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         
         {/* Countdown Section */}
         <section className="py-12 px-6">
-          <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto text-center">
+          <motion.div 
+            variants={sectionFadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="max-w-md mx-auto text-center"
+          >
             <h2 className="font-serif text-xl font-semibold mb-6" style={{ color: template.colorScheme.primary }}>
               Menghitung Hari
             </h2>
-            <div className="grid grid-cols-4 gap-2">
+            <motion.div 
+              className="grid grid-cols-4 gap-2"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {[
                 { value: countdown.days, label: "Hari" },
                 { value: countdown.hours, label: "Jam" },
                 { value: countdown.minutes, label: "Menit" },
                 { value: countdown.seconds, label: "Detik" },
               ].map((item, i) => (
-                <div key={i} className="rounded-xl py-4" style={{ backgroundColor: template.colorScheme.secondary + '50' }}>
+                <motion.div 
+                  key={i} 
+                  variants={staggerItem}
+                  className="rounded-xl py-4" 
+                  style={{ backgroundColor: template.colorScheme.secondary + '50' }}
+                >
                   <div className="font-serif text-2xl font-bold" style={{ color: template.colorScheme.primary }}>{item.value}</div>
                   <div className="text-xs opacity-70">{item.label}</div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
         </section>
 
         {/* Event Sessions */}
         {invitation.events.length > 0 && invitation.events.some(e => e.name) && (
           <section className="py-12 px-6">
-            <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto space-y-4">
+            <motion.div
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              className="max-w-md mx-auto space-y-4"
+            >
               <Divider {...decorProps} />
               <h2 className="font-serif text-xl font-semibold text-center mb-6" style={{ color: template.colorScheme.primary }}>
                 Rangkaian Acara
               </h2>
               {invitation.events.filter(e => e.name).map((session, index) => (
-                <SectionWrapper key={index} {...decorProps} className="p-6 text-center">
-                  <h3 className="font-serif text-lg font-semibold mb-3" style={{ color: template.colorScheme.primary }}>
-                    {session.name}
-                  </h3>
-                  {session.date && (
-                    <div className="flex items-center justify-center gap-3 mb-2">
-                      <Calendar className="w-4 h-4" style={{ color: template.colorScheme.primary }} />
-                      <span className="text-sm">{formatDate(session.date)}</span>
-                    </div>
-                  )}
-                  {session.time && (
-                    <div className="flex items-center justify-center gap-3 mb-2">
-                      <Clock className="w-4 h-4" style={{ color: template.colorScheme.primary }} />
-                      <span className="text-sm">{session.time}{session.endTime ? ` - ${session.endTime}` : ''} {invitation.timezone}</span>
-                    </div>
-                  )}
-                  {session.location && (
-                    <div className="flex items-center justify-center gap-3">
-                      <MapPin className="w-4 h-4" style={{ color: template.colorScheme.primary }} />
-                      <span className="text-sm">{session.location}</span>
-                    </div>
-                  )}
-                </SectionWrapper>
+                <motion.div key={index} variants={staggerItem}>
+                  <SectionWrapper {...decorProps} className="p-6 text-center">
+                    <h3 className="font-serif text-lg font-semibold mb-3" style={{ color: template.colorScheme.primary }}>
+                      {session.name}
+                    </h3>
+                    {session.date && (
+                      <div className="flex items-center justify-center gap-3 mb-2">
+                        <Calendar className="w-4 h-4" style={{ color: template.colorScheme.primary }} />
+                        <span className="text-sm">{formatDate(session.date)}</span>
+                      </div>
+                    )}
+                    {session.time && (
+                      <div className="flex items-center justify-center gap-3 mb-2">
+                        <Clock className="w-4 h-4" style={{ color: template.colorScheme.primary }} />
+                        <span className="text-sm">{session.time}{session.endTime ? ` - ${session.endTime}` : ''} {invitation.timezone}</span>
+                      </div>
+                    )}
+                    {session.location && (
+                      <div className="flex items-center justify-center gap-3">
+                        <MapPin className="w-4 h-4" style={{ color: template.colorScheme.primary }} />
+                        <span className="text-sm">{session.location}</span>
+                      </div>
+                    )}
+                  </SectionWrapper>
+                </motion.div>
               ))}
             </motion.div>
           </section>
@@ -408,22 +558,24 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         
         {/* Event Details */}
         <section className="py-12 px-6">
-          <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto space-y-6">
-            <SectionWrapper {...decorProps} className="p-6 text-center">
-              <h3 className="font-serif text-lg font-semibold mb-4" style={{ color: template.colorScheme.primary }}>
-                {eventConfig.defaultLabels.dateLabel}
-              </h3>
-              <div className="flex items-center justify-center gap-3 mb-3">
-                <Calendar className="w-5 h-5" style={{ color: template.colorScheme.primary }} />
-                <span className="font-medium">{formatDate(invitation.eventDate)}</span>
-              </div>
-              <div className="flex items-center justify-center gap-3">
-                <Clock className="w-5 h-5" style={{ color: template.colorScheme.primary }} />
-                <span className="font-medium">{invitation.eventTime} {invitation.timezone} - Selesai</span>
-              </div>
-            </SectionWrapper>
+          <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto space-y-6">
+            <motion.div variants={staggerItem}>
+              <SectionWrapper {...decorProps} className="p-6 text-center">
+                <h3 className="font-serif text-lg font-semibold mb-4" style={{ color: template.colorScheme.primary }}>
+                  {eventConfig.defaultLabels.dateLabel}
+                </h3>
+                <div className="flex items-center justify-center gap-3 mb-3">
+                  <Calendar className="w-5 h-5" style={{ color: template.colorScheme.primary }} />
+                  <span className="font-medium">{formatDate(invitation.eventDate)}</span>
+                </div>
+                <div className="flex items-center justify-center gap-3">
+                  <Clock className="w-5 h-5" style={{ color: template.colorScheme.primary }} />
+                  <span className="font-medium">{invitation.eventTime} {invitation.timezone} - Selesai</span>
+                </div>
+              </SectionWrapper>
+            </motion.div>
             
-            <SectionWrapper {...decorProps} className="p-6 text-center">
+            <motion.div variants={staggerItem}><SectionWrapper {...decorProps} className="p-6 text-center">
               <h3 className="font-serif text-lg font-semibold mb-4" style={{ color: template.colorScheme.primary }}>
                 {eventConfig.defaultLabels.locationLabel}
               </h3>
@@ -446,13 +598,13 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                   Buka Google Maps
                 </a>
               )}
-            </SectionWrapper>
+            </SectionWrapper></motion.div>
           </motion.div>
         </section>
 
         {/* Save to Calendar */}
         <section className="py-8 px-6">
-          <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto text-center">
+          <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto text-center">
             <Divider {...decorProps} />
             <h3 className="font-serif text-lg font-semibold mb-4 flex items-center justify-center gap-2" style={{ color: template.colorScheme.primary }}>
               <CalendarPlus className="w-5 h-5" />
@@ -472,21 +624,33 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
           </motion.div>
         </section>
         
-        {/* Gallery Section */}
+        {/* Gallery Section with staggered items */}
         {invitation.galleryImages.length > 0 && (
           <section className="py-12 px-6">
-            <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto">
+            <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <h2 className="font-serif text-xl font-semibold mb-6 text-center" style={{ color: template.colorScheme.primary }}>
                 Galeri Foto
               </h2>
-              <div className="grid grid-cols-2 gap-3">
+              <motion.div 
+                className="grid grid-cols-2 gap-3"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {invitation.galleryImages.map((url, index) => (
-                  <div key={url} className="aspect-square rounded-xl overflow-hidden">
+                  <motion.div 
+                    key={url} 
+                    variants={galleryItem}
+                    className="aspect-square rounded-xl overflow-hidden"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <img src={url} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover" />
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           </section>
         )}
@@ -494,12 +658,19 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         {/* RSVP Section */}
         {isWedding && invitation.id && (
           <section className="py-12 px-6">
-            <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto">
+            <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
-              <h2 className="font-serif text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2" style={{ color: template.colorScheme.primary }}>
+              <motion.h2 
+                className="font-serif text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2" 
+                style={{ color: template.colorScheme.primary }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
                 <Heart className="w-5 h-5" />
                 Konfirmasi Kehadiran
-              </h2>
+              </motion.h2>
               <SectionWrapper {...decorProps} className="p-6">
                 <RSVPForm
                   invitationId={invitation.id}
@@ -516,12 +687,19 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         {/* Guest Book */}
         {isWedding && invitation.id && (
           <section className="py-12 px-6">
-            <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto">
+            <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
-              <h2 className="font-serif text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2" style={{ color: template.colorScheme.primary }}>
+              <motion.h2 
+                className="font-serif text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2" 
+                style={{ color: template.colorScheme.primary }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
                 <MessageCircle className="w-5 h-5" />
                 Ucapan & Doa
-              </h2>
+              </motion.h2>
               <SectionWrapper {...decorProps} className="p-6">
                 <GuestBook
                   invitationId={invitation.id}
@@ -538,12 +716,19 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         {/* Digital Envelope */}
         {isWedding && invitation.bankAccounts.length > 0 && invitation.bankAccounts.some(a => a.bankName) && (
           <section className="py-12 px-6">
-            <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto">
+            <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
-              <h2 className="font-serif text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2" style={{ color: template.colorScheme.primary }}>
+              <motion.h2 
+                className="font-serif text-xl font-semibold mb-6 text-center flex items-center justify-center gap-2" 
+                style={{ color: template.colorScheme.primary }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
                 <Gift className="w-5 h-5" />
                 Amplop Digital
-              </h2>
+              </motion.h2>
               <DigitalEnvelope
                 bankAccounts={invitation.bankAccounts}
                 primaryColor={template.colorScheme.primary}
@@ -556,21 +741,34 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         
         {/* Closing Section */}
         <section className="py-12 px-6 text-center">
-          <motion.div initial={{ y: 30, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }} className="max-w-md mx-auto">
+          <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
             <Divider {...decorProps} />
 
             {/* Closing message */}
             {invitation.closingMessage && (
-              <p className="text-sm leading-relaxed mb-6 opacity-80">
+              <motion.p 
+                className="text-sm leading-relaxed mb-6 opacity-80"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.8 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+              >
                 {invitation.closingMessage}
-              </p>
+              </motion.p>
             )}
 
             {/* Prayer / Quote */}
             {invitation.closingPrayer && (
-              <SectionWrapper {...decorProps} className="p-5 mb-6">
-                <p className="italic text-sm leading-relaxed opacity-70">{invitation.closingPrayer}</p>
-              </SectionWrapper>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+              >
+                <SectionWrapper {...decorProps} className="p-5 mb-6">
+                  <p className="italic text-sm leading-relaxed opacity-70">{invitation.closingPrayer}</p>
+                </SectionWrapper>
+              </motion.div>
             )}
 
             {/* Thank you */}
@@ -578,17 +776,31 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
             
             <Divider {...decorProps} />
             
-            <p className="font-serif text-lg mb-2" style={{ color: template.colorScheme.primary }}>
+            <motion.p 
+              className="font-serif text-lg mb-2" 
+              style={{ color: template.colorScheme.primary }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+            >
               Terima Kasih
-            </p>
+            </motion.p>
             
             {/* Names & family */}
-            <p className="font-serif font-semibold mb-1" style={{ color: template.colorScheme.text }}>
-              {displayNamesText()}
-            </p>
-            <p className="text-sm opacity-70 mb-6">
-              Beserta keluarga besar
-            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
+              <p className="font-serif font-semibold mb-1" style={{ color: template.colorScheme.text }}>
+                {displayNamesText()}
+              </p>
+              <p className="text-sm opacity-70 mb-6">
+                Beserta keluarga besar
+              </p>
+            </motion.div>
             
             <div className="mt-8 pt-8 border-t" style={{ borderColor: template.colorScheme.primary + '15' }}>
               <p className="text-xs opacity-50">
