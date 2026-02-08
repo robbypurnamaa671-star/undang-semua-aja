@@ -10,6 +10,7 @@ import {
   SectionWrapper, 
   PatternOverlay,
 } from "@/components/invitation/TemplateDecorations";
+import { CulturalIconsOverlay } from "@/components/invitation/CulturalIconsOverlay";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { MapPin, Calendar, Clock, Gift } from "lucide-react";
@@ -70,6 +71,7 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
     >
       {/* Background Pattern */}
       <PatternOverlay style={culturalStyle} />
+      <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} />
 
       {/* Cover Section */}
       <section 

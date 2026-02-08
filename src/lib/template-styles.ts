@@ -16,6 +16,8 @@ export interface TemplateCulturalStyle {
   fontAccent: 'serif' | 'sans' | 'script';
   culturalMotifs: string[];
   backgroundPattern: string | null;
+  /** Cultural icons displayed as subtle background decorations */
+  culturalIcons?: { emoji: string; label: string }[];
 }
 
 const defaultStyle: TemplateCulturalStyle = {
@@ -114,6 +116,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['꧁', '꧂', '❁'],
     backgroundPattern: 'repeating-conic-gradient(rgba(139,105,20,0.03) 0% 25%, transparent 0% 50%) 0 0 / 40px 40px',
     sectionRadius: '0.25rem',
+    culturalIcons: [
+      { emoji: '🏯', label: 'Candi Borobudur' },
+      { emoji: '👘', label: 'Batik' },
+      { emoji: '🎭', label: 'Wayang Kulit' },
+    ],
   },
 
   'wedding-sunda-elegant': {
@@ -128,6 +135,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['❋', '✿', '❁'],
     backgroundPattern: 'radial-gradient(circle at 50% 0%, rgba(46,125,50,0.05) 0%, transparent 60%)',
     sectionRadius: '1rem',
+    culturalIcons: [
+      { emoji: '🎶', label: 'Angklung' },
+      { emoji: '🏔️', label: 'Gunung Tangkuban Parahu' },
+      { emoji: '👘', label: 'Batik Sunda' },
+    ],
   },
 
   'wedding-madura-bold': {
@@ -142,6 +154,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['✦', '◆', '✧'],
     backgroundPattern: 'repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(183,28,28,0.03) 20px, rgba(183,28,28,0.03) 21px)',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '🐂', label: 'Karapan Sapi' },
+      { emoji: '🛶', label: 'Perahu Madura' },
+      { emoji: '👘', label: 'Batik Madura' },
+    ],
   },
 
   'wedding-batak-megah': {
@@ -156,6 +173,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['⊞', '⊟', '◈'],
     backgroundPattern: 'repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(139,0,0,0.02) 30px, rgba(139,0,0,0.02) 31px), repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(139,0,0,0.02) 30px, rgba(139,0,0,0.02) 31px)',
     sectionRadius: '0.25rem',
+    culturalIcons: [
+      { emoji: '🏠', label: 'Rumah Bolon' },
+      { emoji: '🎶', label: 'Gondang Batak' },
+      { emoji: '🧣', label: 'Ulos' },
+    ],
   },
 
   'wedding-minang-indah': {
@@ -170,6 +192,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['▲', '△', '◆'],
     backgroundPattern: 'linear-gradient(60deg, rgba(198,40,40,0.03) 25%, transparent 25%, transparent 75%, rgba(198,40,40,0.03) 75%), linear-gradient(-60deg, rgba(198,40,40,0.03) 25%, transparent 25%, transparent 75%, rgba(198,40,40,0.03) 75%)',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '🏠', label: 'Rumah Gadang' },
+      { emoji: '🗡️', label: 'Keris Minang' },
+      { emoji: '🍽️', label: 'Rendang' },
+    ],
   },
 
   'wedding-betawi-meriah': {
@@ -184,6 +211,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['⊛', '❀', '✿'],
     backgroundPattern: 'radial-gradient(circle at 15% 15%, rgba(230,81,0,0.05) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(230,81,0,0.05) 0%, transparent 40%)',
     sectionRadius: '1rem',
+    culturalIcons: [
+      { emoji: '🎭', label: 'Ondel-ondel' },
+      { emoji: '🎶', label: 'Gambang Kromong' },
+      { emoji: '👕', label: 'Baju Sadariah' },
+    ],
   },
 
   'wedding-bugis-megah': {
@@ -198,6 +230,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['◈', '❖', '✧'],
     backgroundPattern: 'repeating-linear-gradient(135deg, transparent, transparent 40px, rgba(136,14,79,0.02) 40px, rgba(136,14,79,0.02) 41px)',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '⛵', label: 'Perahu Pinisi' },
+      { emoji: '🗡️', label: 'Badik' },
+      { emoji: '📜', label: 'Lontara' },
+    ],
   },
 
   'wedding-banten-klasik': {
@@ -212,6 +249,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['⬡', '⬢', '◇'],
     backgroundPattern: 'radial-gradient(circle at 50% 50%, rgba(93,64,55,0.04) 0%, transparent 70%)',
     sectionRadius: '0.25rem',
+    culturalIcons: [
+      { emoji: '🕌', label: 'Masjid Agung Banten' },
+      { emoji: '🗡️', label: 'Golok' },
+      { emoji: '👘', label: 'Batik Banten' },
+    ],
   },
 
   'wedding-banjar-indah': {
@@ -226,6 +268,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['✦', '❋', '✧'],
     backgroundPattern: 'linear-gradient(180deg, rgba(249,168,37,0.05) 0%, transparent 30%), linear-gradient(0deg, rgba(249,168,37,0.05) 0%, transparent 30%)',
     sectionRadius: '0.75rem',
+    culturalIcons: [
+      { emoji: '🏠', label: 'Rumah Bubungan Tinggi' },
+      { emoji: '🚣', label: 'Jukung' },
+      { emoji: '👘', label: 'Sasirangan' },
+    ],
   },
 
   'wedding-bali-sakral': {
@@ -240,6 +287,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['☸', '❁', '✿'],
     backgroundPattern: 'radial-gradient(circle at 50% 0%, rgba(78,52,46,0.06) 0%, transparent 50%), radial-gradient(circle at 50% 100%, rgba(78,52,46,0.06) 0%, transparent 50%)',
     sectionRadius: '0.25rem',
+    culturalIcons: [
+      { emoji: '🛕', label: 'Pura' },
+      { emoji: '💃', label: 'Tari Kecak' },
+      { emoji: '👘', label: 'Kain Kamen' },
+    ],
   },
 
   'wedding-sasak-anggun': {
@@ -254,6 +306,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['✧', '◇', '❖'],
     backgroundPattern: 'repeating-linear-gradient(45deg, rgba(106,27,154,0.02) 0px, rgba(106,27,154,0.02) 1px, transparent 1px, transparent 20px), repeating-linear-gradient(-45deg, rgba(106,27,154,0.02) 0px, rgba(106,27,154,0.02) 1px, transparent 1px, transparent 20px)',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '🏡', label: 'Bale Tani' },
+      { emoji: '🧣', label: 'Tenun Lombok' },
+      { emoji: '🎶', label: 'Gendang Beleq' },
+    ],
   },
 
   'wedding-aceh-mulia': {
@@ -268,6 +325,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['✦', '✶', '✸'],
     backgroundPattern: 'repeating-conic-gradient(rgba(27,94,32,0.03) 0% 25%, transparent 0% 50%) 0 0 / 30px 30px',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '🕌', label: 'Masjid Raya Baiturrahman' },
+      { emoji: '🗡️', label: 'Rencong' },
+      { emoji: '💃', label: 'Tari Saman' },
+    ],
   },
 
   'wedding-dayak-agung': {
@@ -282,6 +344,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['⟐', '⏣', '⬡'],
     backgroundPattern: 'repeating-linear-gradient(90deg, rgba(216,67,21,0.03) 0px, rgba(216,67,21,0.03) 2px, transparent 2px, transparent 15px)',
     sectionRadius: '0.25rem',
+    culturalIcons: [
+      { emoji: '🗿', label: 'Patung Totem' },
+      { emoji: '🪶', label: 'Hiasan Bulu' },
+      { emoji: '🏠', label: 'Rumah Panjang' },
+    ],
   },
 
   'wedding-makassar-gagah': {
@@ -296,6 +363,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['❖', '◆', '✦'],
     backgroundPattern: 'radial-gradient(circle at 0% 50%, rgba(198,40,40,0.04) 0%, transparent 50%), radial-gradient(circle at 100% 50%, rgba(198,40,40,0.04) 0%, transparent 50%)',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '⛵', label: 'Perahu Phinisi' },
+      { emoji: '🗡️', label: 'Badik' },
+      { emoji: '🧢', label: 'Passapu' },
+    ],
   },
 
   'wedding-melayu-pesona': {
@@ -310,6 +382,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['♛', '❦', '⚜'],
     backgroundPattern: 'linear-gradient(45deg, rgba(251,192,45,0.04) 25%, transparent 25%, transparent 75%, rgba(251,192,45,0.04) 75%), linear-gradient(-45deg, rgba(251,192,45,0.04) 25%, transparent 25%, transparent 75%, rgba(251,192,45,0.04) 75%)',
     sectionRadius: '0.75rem',
+    culturalIcons: [
+      { emoji: '👑', label: 'Tanjak' },
+      { emoji: '🕌', label: 'Masjid Melayu' },
+      { emoji: '🎶', label: 'Zapin' },
+    ],
   },
 
   'wedding-toraja-sakral': {
@@ -324,6 +401,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['▽', '△', '◈'],
     backgroundPattern: 'repeating-linear-gradient(0deg, transparent, transparent 25px, rgba(183,28,28,0.03) 25px, rgba(183,28,28,0.03) 26px), repeating-linear-gradient(90deg, transparent, transparent 25px, rgba(33,33,33,0.03) 25px, rgba(33,33,33,0.03) 26px)',
     sectionRadius: '0.25rem',
+    culturalIcons: [
+      { emoji: '🏠', label: 'Tongkonan' },
+      { emoji: '🐃', label: 'Kerbau' },
+      { emoji: '🗿', label: 'Patung Tau-Tau' },
+    ],
   },
 
   'wedding-ambon-cerah': {
@@ -338,6 +420,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['〰', '≋', '∿'],
     backgroundPattern: 'radial-gradient(ellipse at 50% 100%, rgba(2,119,189,0.06) 0%, transparent 60%)',
     sectionRadius: '1rem',
+    culturalIcons: [
+      { emoji: '🎵', label: 'Tifa' },
+      { emoji: '🎶', label: 'Musik Totobuang' },
+      { emoji: '⚓', label: 'Budaya Bahari' },
+    ],
   },
 
   'wedding-papua-mulia': {
@@ -352,6 +439,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['◈', '⬡', '⏣'],
     backgroundPattern: 'repeating-linear-gradient(60deg, rgba(109,76,65,0.03) 0px, rgba(109,76,65,0.03) 2px, transparent 2px, transparent 12px)',
     sectionRadius: '0.25rem',
+    culturalIcons: [
+      { emoji: '🪶', label: 'Koteka' },
+      { emoji: '🎵', label: 'Tifa Papua' },
+      { emoji: '🏞️', label: 'Pegunungan Papua' },
+    ],
   },
 
   'wedding-tionghoa-harmoni': {
@@ -366,6 +458,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['囍', '福', '❀'],
     backgroundPattern: 'radial-gradient(circle at 10% 10%, rgba(211,47,47,0.05) 0%, transparent 40%), radial-gradient(circle at 90% 90%, rgba(211,47,47,0.05) 0%, transparent 40%)',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '🧧', label: 'Lampion Merah' },
+      { emoji: '🐉', label: 'Barongsai' },
+      { emoji: '🧨', label: 'Imlek' },
+    ],
   },
 
   'wedding-lampung-agung': {
@@ -380,6 +477,11 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     culturalMotifs: ['⬢', '◆', '✧'],
     backgroundPattern: 'repeating-linear-gradient(120deg, transparent, transparent 35px, rgba(141,110,99,0.03) 35px, rgba(141,110,99,0.03) 36px)',
     sectionRadius: '0.5rem',
+    culturalIcons: [
+      { emoji: '👑', label: 'Siger' },
+      { emoji: '👘', label: 'Kain Tapis' },
+      { emoji: '🏠', label: 'Nuwo Sesat' },
+    ],
   },
 
   // ══════════════════ KHITANAN TEMPLATES ══════════════════

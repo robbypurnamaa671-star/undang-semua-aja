@@ -13,6 +13,7 @@ import {
   SectionWrapper, 
   PatternOverlay,
 } from "@/components/invitation/TemplateDecorations";
+import { CulturalIconsOverlay } from "@/components/invitation/CulturalIconsOverlay";
 import { RSVPForm } from "@/components/invitation/RSVPForm";
 import { GuestBook } from "@/components/invitation/GuestBook";
 import { DigitalEnvelope } from "@/components/invitation/DigitalEnvelope";
@@ -241,6 +242,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     >
       {/* Background Pattern */}
       <PatternOverlay style={culturalStyle} />
+      <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} />
 
       {/* Watermark for unpaid invitations */}
       {!invitation.isPaid && (
