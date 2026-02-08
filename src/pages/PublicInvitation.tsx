@@ -834,7 +834,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
             
             <div className="mt-8 pt-8 border-t" style={{ borderColor: template.colorScheme.primary + '15' }}>
               <p className="text-xs opacity-50">
-                💌 Dibuat dengan UndanganKu
+                💌 Dibuat dengan Undanganlink
               </p>
             </div>
           </motion.div>

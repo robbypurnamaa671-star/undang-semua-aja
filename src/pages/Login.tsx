@@ -111,7 +111,7 @@ export default function Login() {
           <div className="text-center mb-8">
             <Link to="/" className="inline-flex items-center gap-2 mb-4">
               <span className="text-3xl">💌</span>
-              <span className="font-serif text-2xl font-semibold text-gradient">UndanganKu</span>
+              <span className="font-serif text-2xl font-semibold text-gradient">Undanganlink</span>
             </Link>
             <h1 className="font-serif text-2xl font-bold">Masuk ke Akun</h1>
             <p className="text-muted-foreground mt-1">Lanjutkan membuat undangan Anda</p>

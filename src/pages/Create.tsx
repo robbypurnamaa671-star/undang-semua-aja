@@ -150,7 +150,7 @@ export default function Create() {
             )}
             <Link to="/" className="flex items-center gap-2">
               <span className="text-2xl">💌</span>
-              <span className="font-serif text-xl font-semibold text-gradient hidden sm:block">UndanganKu</span>
+              <span className="font-serif text-xl font-semibold text-gradient hidden sm:block">Undanganlink</span>
             </Link>
           </div>
           
