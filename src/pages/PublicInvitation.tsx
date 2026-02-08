@@ -39,6 +39,9 @@ export default function PublicInvitation() {
   const eventConfig = invitation ? getEventTypeConfig(invitation.eventType) : null;
   const culturalStyle = template ? getTemplateCulturalStyle(template.id) : null;
   const isWedding = invitation?.eventType === "wedding";
+  const isLamaran = invitation?.eventType === "lamaran";
+  const hasTwoNames = isWedding || isLamaran;
+  const features = eventConfig?.features;
 
   // Parallax scroll for hero section
   const { scrollY } = useScroll();
@@ -102,7 +105,7 @@ export default function PublicInvitation() {
   
   const displayNames = () => {
     if (!invitation) return null;
-    if (isWedding) {
+    if (hasTwoNames) {
       return (
         <>
           <span>{invitation.names[0]}</span>
@@ -116,7 +119,7 @@ export default function PublicInvitation() {
 
   const displayNamesText = () => {
     if (!invitation) return "";
-    if (isWedding) return `${invitation.names[0]} & ${invitation.names[1]}`;
+    if (hasTwoNames) return `${invitation.names[0]} & ${invitation.names[1]}`;
     return invitation.names[0];
   };
   
@@ -496,6 +499,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         )}
         
         {/* Countdown Section */}
+        {features?.hasCountdown && (
         <section className="py-12 px-6">
           <motion.div 
             variants={sectionFadeUp}
@@ -533,6 +537,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
             </motion.div>
           </motion.div>
         </section>
+        )}
 
         {/* Event Sessions */}
         {invitation.events.length > 0 && invitation.events.some(e => e.name) && (
@@ -626,6 +631,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         </section>
 
         {/* Save to Calendar */}
+        {features?.hasCalendar && (
         <section className="py-8 px-6">
           <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto text-center">
             <Divider {...decorProps} />
@@ -646,9 +652,10 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
             />
           </motion.div>
         </section>
+        )}
         
         {/* Gallery Section with staggered items */}
-        {invitation.galleryImages.length > 0 && (
+        {features?.hasGallery && invitation.galleryImages.length > 0 && (
           <section className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
@@ -679,7 +686,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         )}
 
         {/* RSVP Section */}
-        {isWedding && invitation.id && (
+        {features?.hasRSVP && invitation.id && (
           <section className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
@@ -708,7 +715,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         )}
 
         {/* Guest Book */}
-        {isWedding && invitation.id && (
+        {features?.hasGuestBook && invitation.id && (
           <section className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
@@ -737,7 +744,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         )}
 
         {/* Digital Envelope */}
-        {isWedding && invitation.bankAccounts.length > 0 && invitation.bankAccounts.some(a => a.bankName) && (
+        {features?.hasDigitalEnvelope && invitation.bankAccounts.length > 0 && invitation.bankAccounts.some(a => a.bankName) && (
           <section className="py-12 px-6">
             <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
