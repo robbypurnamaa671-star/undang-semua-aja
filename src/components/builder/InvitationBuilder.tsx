@@ -256,6 +256,20 @@ export function InvitationBuilder({
               </div>
             )}
 
+            {/* WhatsApp Number */}
+            <div className="space-y-2">
+              <Label htmlFor="whatsappNumber">Nomor WhatsApp (opsional)</Label>
+              <Input
+                id="whatsappNumber"
+                placeholder="Contoh: 6281234567890"
+                value={invitation.whatsappNumber || ""}
+                onChange={(e) => updateField("whatsappNumber", e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                Tombol WhatsApp melayang di undangan akan mengarah ke nomor ini. Gunakan format internasional tanpa + (contoh: 6281234567890).
+              </p>
+            </div>
+
             {/* Music URL */}
             <div className="space-y-2">
               <Label htmlFor="musicUrl">Musik Latar (opsional)</Label>

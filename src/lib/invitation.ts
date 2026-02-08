@@ -50,6 +50,9 @@ export interface InvitationData {
   musicUrl?: string;
   themeColor?: string;
   
+  // Contact
+  whatsappNumber?: string;
+  
   // Metadata
   createdAt?: string;
   updatedAt?: string;
