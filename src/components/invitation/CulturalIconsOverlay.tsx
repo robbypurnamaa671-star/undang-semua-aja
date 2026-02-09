@@ -13,26 +13,26 @@ interface CulturalIconsOverlayProps {
  * Each position: top%, left%, rotation (deg), scale, opacity.
  */
 const motifPositions = [
-  // Left side
-  { top: 5, left: 2, rotate: -12, scale: 0.8, opacity: 0.06 },
-  { top: 30, left: 4, rotate: 18, scale: 0.6, opacity: 0.05 },
-  { top: 55, left: 1, rotate: -25, scale: 0.7, opacity: 0.05 },
-  { top: 78, left: 5, rotate: 8, scale: 0.65, opacity: 0.04 },
+  // Left side — more visible
+  { top: 3, left: -2, rotate: -12, scale: 1.1, opacity: 0.13 },
+  { top: 25, left: 1, rotate: 18, scale: 0.9, opacity: 0.10 },
+  { top: 50, left: -1, rotate: -25, scale: 1.0, opacity: 0.11 },
+  { top: 75, left: 2, rotate: 8, scale: 0.85, opacity: 0.09 },
   // Right side
-  { top: 12, left: 82, rotate: 22, scale: 0.7, opacity: 0.06 },
-  { top: 42, left: 85, rotate: -15, scale: 0.75, opacity: 0.05 },
-  { top: 65, left: 80, rotate: 30, scale: 0.6, opacity: 0.05 },
-  { top: 88, left: 84, rotate: -8, scale: 0.7, opacity: 0.04 },
-  // Sparse center accents (very subtle)
-  { top: 22, left: 45, rotate: 5, scale: 0.5, opacity: 0.025 },
-  { top: 48, left: 52, rotate: -10, scale: 0.55, opacity: 0.02 },
-  { top: 72, left: 48, rotate: 12, scale: 0.45, opacity: 0.025 },
+  { top: 10, left: 78, rotate: 22, scale: 1.0, opacity: 0.13 },
+  { top: 38, left: 80, rotate: -15, scale: 1.1, opacity: 0.10 },
+  { top: 60, left: 76, rotate: 30, scale: 0.9, opacity: 0.11 },
+  { top: 85, left: 79, rotate: -8, scale: 1.0, opacity: 0.09 },
+  // Sparse center accents (subtler)
+  { top: 18, left: 40, rotate: 5, scale: 0.7, opacity: 0.06 },
+  { top: 45, left: 50, rotate: -10, scale: 0.75, opacity: 0.05 },
+  { top: 70, left: 42, rotate: 12, scale: 0.65, opacity: 0.06 },
 ];
 
 function MotifSVG({ 
   motif, 
   color, 
-  size = 80,
+  size = 110,
 }: { 
   motif: CulturalMotifSVG; 
   color: string; 
@@ -50,18 +50,18 @@ function MotifSVG({
       <path
         d={motif.path}
         fill={color}
-        fillOpacity={0.4}
+        fillOpacity={0.6}
         stroke={color}
-        strokeWidth={1.2}
-        strokeOpacity={0.5}
+        strokeWidth={1.5}
+        strokeOpacity={0.7}
       />
       {motif.path2 && (
         <path
           d={motif.path2}
           fill="none"
           stroke={color}
-          strokeWidth={0.8}
-          strokeOpacity={0.35}
+          strokeWidth={1}
+          strokeOpacity={0.5}
         />
       )}
     </svg>
