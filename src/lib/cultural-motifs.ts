@@ -54,9 +54,10 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
       label: 'Angklung',
     },
     {
-      // Lotus / Padma flower
-      path: 'M50 85 Q50 60 35 50 Q20 55 30 40 Q20 25 40 35 Q45 20 50 15 Q55 20 60 35 Q80 25 70 40 Q80 55 65 50 Q50 60 50 85 Z',
-      label: 'Bunga Padma',
+      // Batik Sunda — interlocking mega mendung cloud-step pattern
+      path: 'M10 50 Q20 30 35 40 Q50 25 65 40 Q80 30 90 50 Q80 70 65 60 Q50 75 35 60 Q20 70 10 50 Z',
+      path2: 'M25 50 Q35 38 50 45 Q65 38 75 50 Q65 62 50 55 Q35 62 25 50 Z',
+      label: 'Batik Sunda',
     },
   ],
 
@@ -90,9 +91,10 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
       label: 'Rumah Bolon',
     },
     {
-      // Gorga pattern — geometric star/cross
-      path: 'M50 15 L58 40 L85 40 L63 55 L72 82 L50 65 L28 82 L37 55 L15 40 L42 40 Z',
-      label: 'Gorga Batak',
+      // Gondang Batak — set of traditional drums (taganing)
+      path: 'M15 30 Q15 22 25 20 Q35 22 35 30 L36 68 Q36 78 25 80 Q14 78 14 68 Z M40 25 Q40 17 50 15 Q60 17 60 25 L61 65 Q61 75 50 77 Q39 75 39 65 Z M65 30 Q65 22 75 20 Q85 22 85 30 L86 68 Q86 78 75 80 Q64 78 64 68 Z',
+      path2: 'M15 30 Q15 36 25 38 Q35 36 35 30 M40 25 Q40 31 50 33 Q60 31 60 25 M65 30 Q65 36 75 38 Q85 36 85 30',
+      label: 'Gondang Batak',
     },
     {
       // Ulos zigzag textile pattern
@@ -136,10 +138,10 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
       label: 'Gambang Kromong',
     },
     {
-      // Five-petal flower — kembang Betawi
-      path: 'M50 15 Q58 30 50 38 Q42 30 50 15 Z M70 30 Q62 45 52 40 Q58 28 70 30 Z M75 55 Q60 52 55 42 Q68 40 75 55 Z M30 30 Q38 45 48 40 Q42 28 30 30 Z M25 55 Q40 52 45 42 Q32 40 25 55 Z',
-      path2: 'M45 40 Q50 35 55 40 Q55 45 50 48 Q45 45 45 40 Z',
-      label: 'Kembang Betawi',
+      // Baju Sadariah — traditional Betawi vest
+      path: 'M35 15 L45 12 L50 10 L55 12 L65 15 L68 20 L70 40 L65 42 L62 80 L55 85 L50 86 L45 85 L38 80 L35 42 L30 40 L32 20 Z',
+      path2: 'M45 12 L45 40 M55 12 L55 40 M42 50 L42 75 M58 50 L58 75',
+      label: 'Baju Sadariah',
     },
   ],
 
@@ -218,10 +220,10 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
       label: 'Tari Kecak',
     },
     {
-      // Frangipani / Jepun flower
-      path: 'M50 20 Q55 35 50 42 Q45 35 50 20 Z M35 32 Q48 38 48 46 Q40 42 35 32 Z M65 32 Q52 38 52 46 Q60 42 65 32 Z M38 55 Q48 48 53 52 Q46 58 38 55 Z M62 55 Q52 48 47 52 Q54 58 62 55 Z',
-      path2: 'M47 42 Q50 38 53 42 Q53 46 50 48 Q47 46 47 42 Z',
-      label: 'Bunga Jepun',
+      // Kain Kamen — traditional Balinese wrapped fabric/sarong
+      path: 'M30 15 L70 15 L72 18 L72 75 Q72 85 60 88 L50 90 L40 88 Q28 85 28 75 L28 18 Z',
+      path2: 'M30 15 L70 15 M32 30 L68 30 M35 45 Q50 52 65 45 M38 60 Q50 66 62 60 M40 75 Q50 80 60 75',
+      label: 'Kain Kamen',
     },
   ],
 
@@ -360,23 +362,25 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
       label: 'Tifa',
     },
     {
-      // Ocean wave — flowing waves
-      path: 'M0 50 Q15 35 30 50 Q45 65 60 50 Q75 35 90 50 Q95 55 100 50 L100 70 Q85 55 70 70 Q55 85 40 70 Q25 55 10 70 L0 70 Z',
-      label: 'Ombak Bahari',
+      // Totobuang — row of small kettle gongs on a frame
+      path: 'M10 55 L10 45 L90 45 L90 55 Z M18 45 Q18 32 25 30 Q32 32 32 45 M38 45 Q38 32 45 30 Q52 32 52 45 M58 45 Q58 32 65 30 Q72 32 72 45 M78 45 Q78 32 85 30 Q92 32 92 45',
+      path2: 'M10 55 L10 65 M90 55 L90 65 M15 65 L85 65',
+      label: 'Musik Totobuang',
     },
     {
-      // Anchor — maritime culture
+      // Anchor — maritime / Budaya Bahari
       path: 'M50 10 Q55 10 55 15 Q55 20 50 20 Q45 20 45 15 Q45 10 50 10 Z M50 20 L50 75 M50 75 Q35 75 30 65 L34 62 Q38 70 50 70 Q62 70 66 62 L70 65 Q65 75 50 75 Z M38 35 L62 35',
-      label: 'Jangkar Bahari',
+      label: 'Budaya Bahari',
     },
   ],
 
   // ── PAPUA ──
   'wedding-papua-mulia': [
     {
-      // Feather headdress — cenderawasih
-      path: 'M50 55 Q42 45 25 20 Q30 22 38 35 Q35 25 28 8 Q38 18 45 40 Q44 25 48 5 Q50 25 52 40 Q58 18 68 8 Q60 25 58 35 Q65 22 72 20 Q55 45 50 55 Z',
-      label: 'Hiasan Bulu Cenderawasih',
+      // Burung Cenderawasih — Bird of Paradise silhouette with flowing tail
+      path: 'M35 20 Q40 15 45 18 Q48 12 50 15 L52 18 Q55 16 58 20 Q60 25 55 30 L50 32 L45 30 Q40 25 35 20 Z M50 32 L48 45 Q45 50 42 55 L40 60 M50 32 L52 45 Q55 50 58 55 L60 60 M48 45 L45 70 Q42 80 35 88 M48 45 L50 72 Q52 82 55 88 M48 45 L42 68 Q38 78 30 85',
+      path2: 'M42 18 Q44 16 46 18 M53 20 L55 18',
+      label: 'Burung Cenderawasih',
     },
     {
       // Tifa Papua drum
@@ -401,15 +405,16 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
       label: 'Lampion Merah',
     },
     {
-      // Dragon head — simplified
-      path: 'M20 50 Q25 30 40 25 Q50 20 55 25 L60 22 L58 30 Q65 28 70 35 Q78 40 80 50 Q82 55 78 58 L70 55 Q68 60 60 58 Q55 62 50 58 Q42 55 35 50 Q28 55 20 50 Z',
-      path2: 'M42 38 L46 36 M55 38 Q58 35 60 38',
-      label: 'Naga',
+      // Barongsai — Chinese lion dance head
+      path: 'M20 45 Q20 20 50 15 Q80 20 80 45 Q82 55 75 60 L70 65 Q65 70 60 68 L55 72 L50 75 L45 72 L40 68 Q35 70 30 65 L25 60 Q18 55 20 45 Z',
+      path2: 'M35 35 Q38 30 42 35 Q40 40 36 40 Z M58 35 Q62 30 65 35 Q64 40 60 40 Z M40 52 Q50 60 60 52 M30 25 L25 15 M70 25 L75 15 M50 18 L50 8',
+      label: 'Barongsai',
     },
     {
-      // Cloud / Awan Cina — stylized cloud
-      path: 'M20 55 Q20 40 35 38 Q32 25 48 28 Q52 18 62 25 Q72 20 75 35 Q88 35 85 50 Q90 60 78 62 Q80 72 65 68 Q55 75 45 68 Q30 72 25 60 Q15 62 20 55 Z',
-      label: 'Awan Megamendung',
+      // Petasan / Firecrackers — Imlek symbol
+      path: 'M42 10 L42 30 Q42 33 45 33 Q48 33 48 30 L48 10 Z M52 10 L52 30 Q52 33 55 33 Q58 33 58 30 L58 10 Z M35 20 L35 40 Q35 43 38 43 Q41 43 41 40 L41 20 Z M59 20 L59 40 Q59 43 62 43 Q65 43 65 40 L65 20 Z',
+      path2: 'M45 33 L45 50 Q45 55 50 55 Q55 55 55 50 L55 33 M38 43 L38 55 Q38 60 42 60 M62 43 L62 55 Q62 60 58 60 M50 55 L50 70 L48 75 L52 75 L50 70',
+      label: 'Petasan Imlek',
     },
   ],
 
