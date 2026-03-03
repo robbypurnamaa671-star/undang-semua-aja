@@ -50,6 +50,9 @@ export interface InvitationData {
   musicUrl?: string;
   themeColor?: string;
   
+  // Guest list for personalized links
+  guestList: string[];
+  
   // Contact
   whatsappNumber?: string;
   
@@ -109,6 +112,7 @@ export const createDefaultInvitation = (eventType: EventType, templateId: string
     bankAccounts: [],
     closingMessage,
     closingPrayer,
+    guestList: [],
   };
 };
 

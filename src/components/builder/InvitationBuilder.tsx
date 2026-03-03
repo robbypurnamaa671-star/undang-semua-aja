@@ -11,6 +11,7 @@ import { ImageUpload } from "./ImageUpload";
 import { GalleryUpload } from "./GalleryUpload";
 import { EventSessionsEditor } from "./EventSessionsEditor";
 import { BankAccountsEditor } from "./BankAccountsEditor";
+import { GuestListEditor } from "./GuestListEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Edit, Share2, Smartphone, Clock, Globe } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -274,6 +275,14 @@ export function InvitationBuilder({
                 Tombol WhatsApp melayang di undangan akan mengarah ke nomor ini. Gunakan format internasional tanpa + (contoh: 6281234567890).
               </p>
             </div>
+
+            {/* Guest List */}
+            <GuestListEditor
+              guestList={invitation.guestList || []}
+              onChange={(list) => updateField("guestList", list)}
+              isPaid={invitation.isPaid}
+              slug={invitation.slug}
+            />
 
             {/* Music URL */}
             {features.hasMusic && (
