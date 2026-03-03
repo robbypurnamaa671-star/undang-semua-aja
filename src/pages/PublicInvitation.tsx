@@ -1,5 +1,5 @@
 import { useParams, useSearchParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Template, getTemplateById } from "@/lib/templates";
 import { getEventTypeConfig } from "@/lib/event-types";
@@ -23,6 +23,7 @@ import { id as idLocale } from "date-fns/locale";
 import { MapPin, Calendar, Clock, Volume2, VolumeX, Loader2, Gift, Heart, MessageCircle, CalendarPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Watermark } from "@/components/invitation/Watermark";
+import { extractYouTubeId } from "@/lib/youtube-audio";
 
 export default function PublicInvitation() {
   const { slug } = useParams();
@@ -34,6 +35,8 @@ export default function PublicInvitation() {
   const [isMuted, setIsMuted] = useState(true);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const ytPlayerRef = useRef<any>(null);
+  const ytContainerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   
   const template = invitation ? getTemplateById(invitation.templateId) as Template : null;
@@ -51,29 +54,80 @@ export default function PublicInvitation() {
   const heroOpacity = useTransform(scrollY, [0, 350], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 400], [1, 1.1]);
   
-  // Audio control
+  // YouTube IFrame API loader
   useEffect(() => {
-    if (invitation?.musicUrl) {
+    if (!invitation?.musicUrl) return;
+    const ytId = extractYouTubeId(invitation.musicUrl);
+    if (!ytId) {
+      // Fallback: direct audio URL
       audioRef.current = new Audio(invitation.musicUrl);
       audioRef.current.loop = true;
       audioRef.current.volume = 0.3;
-    }
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
+      return () => {
+        audioRef.current?.pause();
         audioRef.current = null;
-      }
+      };
+    }
+
+    // Load YT IFrame API if not loaded
+    if (!(window as any).YT) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    }
+
+    const initPlayer = () => {
+      if (!ytContainerRef.current) return;
+      ytPlayerRef.current = new (window as any).YT.Player(ytContainerRef.current, {
+        videoId: ytId,
+        height: "0",
+        width: "0",
+        playerVars: { autoplay: 0, loop: 1, playlist: ytId, controls: 0 },
+        events: {
+          onReady: () => {},
+          onStateChange: (event: any) => {
+            // Loop when ended
+            if (event.data === (window as any).YT.PlayerState.ENDED) {
+              ytPlayerRef.current?.playVideo();
+            }
+          },
+        },
+      });
+    };
+
+    if ((window as any).YT && (window as any).YT.Player) {
+      initPlayer();
+    } else {
+      (window as any).onYouTubeIframeAPIReady = initPlayer;
+    }
+
+    return () => {
+      ytPlayerRef.current?.destroy();
+      ytPlayerRef.current = null;
     };
   }, [invitation?.musicUrl]);
 
+  // Play/pause control
   useEffect(() => {
-    if (!audioRef.current) return;
-    if (isMuted) {
-      audioRef.current.pause();
+    const ytId = invitation?.musicUrl ? extractYouTubeId(invitation.musicUrl) : null;
+    if (ytId) {
+      // YouTube player
+      if (isMuted) {
+        ytPlayerRef.current?.pauseVideo();
+      } else {
+        ytPlayerRef.current?.setVolume(30);
+        ytPlayerRef.current?.playVideo();
+      }
     } else {
-      audioRef.current.play().catch(() => {});
+      // HTML Audio
+      if (!audioRef.current) return;
+      if (isMuted) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(() => {});
+      }
     }
-  }, [isMuted]);
+  }, [isMuted, invitation?.musicUrl]);
   
   // Countdown timer
   useEffect(() => {
@@ -240,6 +294,9 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
           : '"Plus Jakarta Sans", sans-serif',
       }}
     >
+      {/* Hidden YouTube Player Container */}
+      <div ref={ytContainerRef} className="hidden" />
+      
       {/* Background Pattern */}
       <PatternOverlay style={culturalStyle} />
       <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} templateId={template.id} />
