@@ -354,7 +354,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               </p>
               
               <Button
-                onClick={() => setIsOpen(true)}
+                onClick={() => { setIsOpen(true); setIsMuted(false); }}
                 className="px-8 py-6 text-lg rounded-full shadow-lg"
                 style={{ backgroundColor: template.colorScheme.primary, color: template.colorScheme.background }}
               >
