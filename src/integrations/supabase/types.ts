@@ -61,6 +61,7 @@ export type Database = {
           event_type: string
           events: Json[]
           gallery_images: string[]
+          guest_list: string[]
           id: string
           is_paid: boolean
           location_address: string | null
@@ -90,6 +91,7 @@ export type Database = {
           event_type: string
           events?: Json[]
           gallery_images?: string[]
+          guest_list?: string[]
           id?: string
           is_paid?: boolean
           location_address?: string | null
@@ -119,6 +121,7 @@ export type Database = {
           event_type?: string
           events?: Json[]
           gallery_images?: string[]
+          guest_list?: string[]
           id?: string
           is_paid?: boolean
           location_address?: string | null
