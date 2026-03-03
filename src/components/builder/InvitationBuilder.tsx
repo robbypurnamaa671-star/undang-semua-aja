@@ -281,12 +281,12 @@ export function InvitationBuilder({
                 <Label htmlFor="musicUrl">Musik Latar (opsional)</Label>
                 <Input
                   id="musicUrl"
-                  placeholder="URL file musik (mp3) atau link langsung"
+                  placeholder="Paste link YouTube, contoh: https://youtu.be/xxxxx"
                   value={invitation.musicUrl || ""}
                   onChange={(e) => updateField("musicUrl", e.target.value)}
                 />
                 <p className="text-xs text-muted-foreground">
-                  Musik tidak akan autoplay. Tamu dapat mengaktifkannya secara manual.
+                  Paste link YouTube untuk musik latar. Tamu dapat mengaktifkannya secara manual.
                 </p>
               </div>
             )}
