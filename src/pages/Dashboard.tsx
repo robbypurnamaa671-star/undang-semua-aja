@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { Plus, Edit2, Trash2, Eye, Share2, LogOut } from "lucide-react";
+import { Plus, Edit2, Trash2, Eye, Share2, LogOut, Users } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInvitations } from "@/hooks/use-invitations";
 import { useToast } from "@/hooks/use-toast";
@@ -115,12 +115,20 @@ export default function Dashboard() {
             <h1 className="font-serif text-3xl font-bold">Undangan Saya</h1>
             <p className="text-muted-foreground mt-1">Kelola semua undangan digital Anda</p>
           </div>
-          <Button asChild className="btn-hero">
-            <Link to="/create">
-              <Plus className="w-5 h-5 mr-2" />
-              Buat Undangan Baru
-            </Link>
-          </Button>
+          <div className="flex gap-3">
+            <Button variant="outline" asChild>
+              <Link to="/guests">
+                <Users className="w-5 h-5 mr-2" />
+                Manajemen Tamu
+              </Link>
+            </Button>
+            <Button asChild className="btn-hero">
+              <Link to="/create">
+                <Plus className="w-5 h-5 mr-2" />
+                Buat Undangan Baru
+              </Link>
+            </Button>
+          </div>
         </div>
         
         {/* Loading State */}
