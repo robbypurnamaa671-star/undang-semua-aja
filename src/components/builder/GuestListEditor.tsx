@@ -138,14 +138,14 @@ export function GuestListEditor({ guestList, onChange, isPaid, slug }: GuestList
             {guestList.map((name, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between gap-2 px-3 py-2 rounded-md bg-muted/50 group"
+                className="flex items-center justify-between gap-2 px-3 py-2 rounded-md bg-muted/50"
               >
                 <span className="text-sm truncate flex-1">{name}</span>
-                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-1">
                   {slug && (
                     <button
                       onClick={() => copyLink(name)}
-                      className="p-1 rounded hover:bg-muted"
+                      className="p-1.5 rounded-md hover:bg-primary/10 transition-colors"
                       title={`Salin link untuk ${name}`}
                     >
                       <Link className="w-3.5 h-3.5 text-primary" />
@@ -153,7 +153,7 @@ export function GuestListEditor({ guestList, onChange, isPaid, slug }: GuestList
                   )}
                   <button
                     onClick={() => removeGuest(index)}
-                    className="p-1 rounded hover:bg-destructive/10"
+                    className="p-1.5 rounded-md hover:bg-destructive/10 transition-colors"
                     title="Hapus"
                   >
                     <X className="w-3.5 h-3.5 text-destructive" />

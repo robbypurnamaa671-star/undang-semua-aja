@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
+import GuestManagement from "./pages/GuestManagement";
 import PublicInvitation from "./pages/PublicInvitation";
 import NotFound from "./pages/NotFound";
 
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/create" element={<Create />} />
+            <Route path="/guests" element={<GuestManagement />} />
             <Route path="/invite/:slug" element={<PublicInvitation />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
