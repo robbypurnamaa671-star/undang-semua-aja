@@ -18,7 +18,7 @@ export function PricingSection() {
             Harga <span className="text-gradient">Terjangkau</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Bayar hanya untuk undangan yang Anda publikasikan
+            Langganan bulanan dengan harga terjangkau untuk semua fitur premium
           </p>
         </motion.div>
         
@@ -32,26 +32,27 @@ export function PricingSection() {
           <div className="card-elevated overflow-hidden">
             {/* Header */}
             <div className="bg-gradient-to-r from-primary to-wedding p-8 text-center text-primary-foreground">
-              <h3 className="font-serif text-2xl font-bold mb-2">Per Undangan</h3>
+              <h3 className="font-serif text-2xl font-bold mb-2">Premium</h3>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="text-sm opacity-80">Rp</span>
-                <span className="font-serif text-5xl font-bold">50.000</span>
+                <span className="font-serif text-5xl font-bold">12.000</span>
               </div>
-              <p className="mt-2 opacity-80">Sekali bayar, selamanya</p>
+              <p className="mt-2 opacity-80">per bulan</p>
             </div>
             
             {/* Features */}
             <div className="p-8">
               <ul className="space-y-4">
                 {[
-                  "Akses semua template",
+                  "Akses semua template premium",
+                  "Undangan unlimited",
+                  "Tamu unlimited",
                   "Customisasi warna & foto",
-                  "Preview sebelum bayar",
                   "Link undangan permanen",
                   "Tanpa watermark",
                   "Optimized untuk mobile",
                   "Dibagikan via WhatsApp",
-                  "Dukungan pelanggan",
+                  "Dukungan pelanggan prioritas",
                 ].map((feature, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full bg-hajatan/20 flex items-center justify-center flex-shrink-0">
@@ -67,7 +68,7 @@ export function PricingSection() {
                   <Link to="/register">Buat Undangan Sekarang</Link>
                 </Button>
                 <p className="text-center text-sm text-muted-foreground">
-                  Gratis buat dan preview. Bayar saat publikasi.
+                  Gratis buat dan preview. Berlangganan untuk fitur premium.
                 </p>
               </div>
             </div>

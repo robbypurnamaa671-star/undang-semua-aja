@@ -59,7 +59,7 @@ export function PaymentDialog({
           <DialogDescription>
             {paymentComplete
               ? "Undangan Anda siap dibagikan"
-              : `Bayar sekali untuk mempublikasikan "${invitationTitle || "Undangan Anda"}"`}
+              : `Berlangganan premium untuk mempublikasikan "${invitationTitle || "Undangan Anda"}" tanpa watermark`}
           </DialogDescription>
         </DialogHeader>
 
@@ -78,18 +78,19 @@ export function PaymentDialog({
             <div className="rounded-xl border-2 border-primary/20 bg-primary/5 p-6 text-center">
               <div className="flex items-baseline justify-center gap-1 mb-2">
                 <span className="text-sm text-muted-foreground">Rp</span>
-                <span className="font-serif text-4xl font-bold text-primary">50.000</span>
+                <span className="font-serif text-4xl font-bold text-primary">12.000</span>
+                <span className="text-sm text-muted-foreground">/bulan</span>
               </div>
-              <p className="text-sm text-muted-foreground">Sekali bayar, selamanya</p>
+              <p className="text-sm text-muted-foreground">Langganan bulanan, bisa berhenti kapan saja</p>
             </div>
 
             {/* Features */}
             <ul className="space-y-3">
               {[
-                "Link undangan permanen",
+                "Semua template premium",
+                "Undangan & tamu unlimited",
                 "Tanpa watermark",
                 "Share unlimited ke WhatsApp",
-                "Galeri foto unlimited",
               ].map((feature, i) => (
                 <li key={i} className="flex items-center gap-3 text-sm">
                   <div className="w-5 h-5 rounded-full bg-hajatan/20 flex items-center justify-center flex-shrink-0">
@@ -121,7 +122,7 @@ export function PaymentDialog({
                 ) : (
                   <>
                     <CreditCard className="w-5 h-5 mr-2" />
-                    Bayar Sekarang
+                    Berlangganan Rp 12.000/bulan
                   </>
                 )}
               </Button>
@@ -144,7 +145,7 @@ export function PaymentDialog({
 
             <p className="text-xs text-center text-muted-foreground">
               <Sparkles className="w-3 h-3 inline mr-1" />
-              Anda bisa bayar kapan saja untuk menghapus watermark
+              Berlangganan kapan saja untuk menghapus watermark
             </p>
           </div>
         )}
