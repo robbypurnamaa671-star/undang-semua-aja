@@ -27,8 +27,9 @@ import {
   XCircle,
   HelpCircle,
   Link as LinkIcon,
-  LogOut,
   ExternalLink,
+  Download,
+  MessageCircle,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInvitations } from "@/hooks/use-invitations";
@@ -104,6 +105,48 @@ export default function GuestManagement() {
     const all = guestList.map((n) => `${n}: ${getGuestLink(n)}`).join("\n");
     navigator.clipboard.writeText(all);
     toast({ title: "Semua link disalin!", description: `${guestList.length} link berhasil disalin.` });
+  };
+
+  const exportCSV = () => {
+    const headers = ["No", "Nama Tamu", "Status RSVP", "Jumlah Tamu", "Pesan", "Link Personal"];
+    const rows = guestList.map((name, idx) => {
+      const rsvp = getGuestRSVP(name);
+      return [
+        idx + 1,
+        name,
+        rsvp ? attendanceLabel(rsvp.attendance) : "Belum RSVP",
+        rsvp ? rsvp.guest_count : "-",
+        rsvp?.message ? `"${rsvp.message.replace(/"/g, '""')}"` : "-",
+        getGuestLink(name),
+      ].join(",");
+    });
+    // Add uninvited RSVPs
+    uninvitedRSVPs.forEach((r, idx) => {
+      rows.push([
+        guestList.length + idx + 1,
+        r.guest_name,
+        attendanceLabel(r.attendance),
+        r.guest_count,
+        r.message ? `"${r.message.replace(/"/g, '""')}"` : "-",
+        "-",
+      ].join(","));
+    });
+    const csv = [headers.join(","), ...rows].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `daftar-tamu-${selectedInvitation?.title || "undangan"}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "CSV berhasil diunduh!" });
+  };
+
+  const sendWhatsApp = (name: string) => {
+    const link = getGuestLink(name);
+    const invTitle = selectedInvitation?.title || "acara kami";
+    const message = `Assalamualaikum ${name},\n\nKami mengundang Anda untuk menghadiri ${invTitle}.\n\nSilakan buka undangan digital Anda di:\n${link}\n\nTerima kasih 🙏`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   // Match RSVP to guest list
@@ -227,12 +270,20 @@ export default function GuestManagement() {
                   <Users className="w-5 h-5 text-primary" />
                   Daftar Tamu ({guestList.length})
                 </h2>
-                {guestList.length > 0 && selectedInvitation?.slug && (
-                  <Button variant="outline" size="sm" onClick={copyAllLinks}>
-                    <Copy className="w-4 h-4 mr-1" />
-                    Salin Semua Link
-                  </Button>
-                )}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {guestList.length > 0 && (
+                    <Button variant="outline" size="sm" onClick={exportCSV}>
+                      <Download className="w-4 h-4 mr-1" />
+                      Export CSV
+                    </Button>
+                  )}
+                  {guestList.length > 0 && selectedInvitation?.slug && (
+                    <Button variant="outline" size="sm" onClick={copyAllLinks}>
+                      <Copy className="w-4 h-4 mr-1" />
+                      Salin Semua Link
+                    </Button>
+                  )}
+                </div>
               </div>
 
               {guestList.length === 0 ? (
@@ -253,7 +304,7 @@ export default function GuestManagement() {
                         <TableHead>Status RSVP</TableHead>
                         <TableHead className="hidden sm:table-cell">Jumlah</TableHead>
                         <TableHead className="hidden md:table-cell">Pesan</TableHead>
-                        <TableHead className="text-right">Link</TableHead>
+                        <TableHead className="text-right">Aksi</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -281,9 +332,14 @@ export default function GuestManagement() {
                             </TableCell>
                             <TableCell className="text-right">
                               {selectedInvitation?.slug && (
-                                <Button variant="ghost" size="sm" onClick={() => copyLink(name)}>
-                                  <LinkIcon className="w-4 h-4" />
-                                </Button>
+                                <div className="flex items-center justify-end gap-1">
+                                  <Button variant="ghost" size="sm" onClick={() => sendWhatsApp(name)} title="Kirim via WhatsApp">
+                                    <MessageCircle className="w-4 h-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="sm" onClick={() => copyLink(name)} title="Salin link">
+                                    <LinkIcon className="w-4 h-4" />
+                                  </Button>
+                                </div>
                               )}
                             </TableCell>
                           </TableRow>
