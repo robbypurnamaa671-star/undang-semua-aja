@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Crown, Lock } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
-import { getTemplatesByEventType, Template } from "@/lib/templates";
+import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
 import { getTemplateCulturalStyle } from "@/lib/template-styles";
 import { CulturalMotifLine } from "@/components/invitation/TemplateDecorations";
 import { toast } from "sonner";
@@ -13,13 +13,15 @@ import { InvitationData, createDefaultInvitation } from "@/lib/invitation";
 import { InvitationBuilder } from "@/components/builder/InvitationBuilder";
 import { PaymentDialog } from "@/components/builder/PaymentDialog";
 import { useAuth } from "@/contexts/AuthContext";
-import { useInvitations } from "@/hooks/use-invitations";
+import { useInvitations, dbToInvitation, DbInvitation } from "@/hooks/use-invitations";
+import { supabase } from "@/integrations/supabase/client";
 
 type Step = "event" | "template" | "builder";
 
 export default function Create() {
   const [searchParams] = useSearchParams();
   const preselectedEvent = searchParams.get("event") as EventType | null;
+  const editId = searchParams.get("edit");
   
   const [step, setStep] = useState<Step>(preselectedEvent ? "template" : "event");
   const [selectedEventType, setSelectedEventType] = useState<EventType | null>(preselectedEvent);
@@ -27,6 +29,7 @@ export default function Create() {
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [showPaymentDialog, setShowPaymentDialog] = useState(false);
+  const [isLoadingEdit, setIsLoadingEdit] = useState(!!editId);
   
   const navigate = useNavigate();
   const { user, isLoading: authLoading } = useAuth();
@@ -38,6 +41,50 @@ export default function Create() {
       navigate("/login");
     }
   }, [user, authLoading, navigate]);
+
+  // Load existing invitation for editing
+  useEffect(() => {
+    if (!editId || !user) return;
+    
+    const loadInvitation = async () => {
+      setIsLoadingEdit(true);
+      try {
+        const { data, error } = await supabase
+          .from("invitations")
+          .select("*")
+          .eq("id", editId)
+          .eq("user_id", user.id)
+          .single();
+
+        if (error || !data) {
+          toast.error("Undangan tidak ditemukan");
+          navigate("/dashboard");
+          return;
+        }
+
+        const inv = dbToInvitation(data as unknown as DbInvitation);
+        const template = allTemplates.find(t => t.id === inv.templateId);
+        
+        if (!template) {
+          toast.error("Template tidak ditemukan");
+          navigate("/dashboard");
+          return;
+        }
+
+        setInvitation(inv);
+        setSelectedTemplate(template);
+        setSelectedEventType(inv.eventType as EventType);
+        setStep("builder");
+      } catch (err) {
+        toast.error("Gagal memuat undangan");
+        navigate("/dashboard");
+      } finally {
+        setIsLoadingEdit(false);
+      }
+    };
+
+    loadInvitation();
+  }, [editId, user]);
   
   const handleEventSelect = (eventType: EventType) => {
     setSelectedEventType(eventType);
@@ -129,7 +176,7 @@ export default function Create() {
   
   const templates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
 
-  if (authLoading) {
+  if (authLoading || isLoadingEdit) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" />
