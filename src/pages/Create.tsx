@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Crown, Lock } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
+import logo from "@/assets/logo.png";
 import { getTemplateCulturalStyle } from "@/lib/template-styles";
 import { CulturalMotifLine } from "@/components/invitation/TemplateDecorations";
 import { toast } from "sonner";
@@ -196,7 +197,7 @@ export default function Create() {
               </Button>
             )}
             <Link to="/" className="flex items-center gap-2">
-              <span className="text-2xl">💌</span>
+              <img src={logo} alt="Undanganlink" className="h-8 w-8" />
               <span className="font-serif text-xl font-semibold text-gradient hidden sm:block">Undanganlink</span>
             </Link>
           </div>
