@@ -41,7 +41,7 @@ const simpleSections: TemplateSection[] = [
   { id: 'message', type: 'message', enabled: true },
 ];
 
-export const templates: Template[] = [
+const _templates: Template[] = [
   // ── Wedding Templates (1 free, 4 premium) ──
   {
     id: 'wedding-classic-gold',
@@ -1272,18 +1272,38 @@ export const templates: Template[] = [
   },
 ];
 
+// Auto-mark templates: only the first 2 per event type are free, rest are premium
+const FREE_PER_CATEGORY = 2;
+
+function applyPremiumFlags(tpls: Template[]): Template[] {
+  const countByEvent: Record<string, number> = {};
+  return tpls.map((t) => {
+    // Use the first eventType for counting
+    const eventKey = t.eventTypes[0];
+    countByEvent[eventKey] = (countByEvent[eventKey] || 0) + 1;
+    return {
+      ...t,
+      isPremium: countByEvent[eventKey] > FREE_PER_CATEGORY,
+    };
+  });
+}
+
+const processedTemplates = applyPremiumFlags(_templates);
+
+export const templates = processedTemplates;
+
 export const getTemplatesByEventType = (eventType: EventType): Template[] => {
-  return templates.filter((t) => t.eventTypes.includes(eventType));
+  return processedTemplates.filter((t) => t.eventTypes.includes(eventType));
 };
 
 export const getTemplateById = (id: string): Template | undefined => {
-  return templates.find((t) => t.id === id);
+  return processedTemplates.find((t) => t.id === id);
 };
 
 export const getFreeTemplateCount = (eventType: EventType): number => {
-  return templates.filter((t) => t.eventTypes.includes(eventType) && !t.isPremium).length;
+  return processedTemplates.filter((t) => t.eventTypes.includes(eventType) && !t.isPremium).length;
 };
 
 export const getPremiumTemplateCount = (eventType: EventType): number => {
-  return templates.filter((t) => t.eventTypes.includes(eventType) && t.isPremium).length;
+  return processedTemplates.filter((t) => t.eventTypes.includes(eventType) && t.isPremium).length;
 };
