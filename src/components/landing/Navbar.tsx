@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import logo from "@/assets/logo.png";
 
 export function Navbar() {
   return (
@@ -12,7 +13,7 @@ export function Navbar() {
     >
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="text-2xl">💌</span>
+          <img src={logo} alt="Undanganlink" className="h-8 w-8" />
           <span className="font-serif text-xl font-semibold text-gradient">Undanganlink</span>
         </Link>
         
