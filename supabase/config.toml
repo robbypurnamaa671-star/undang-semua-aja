@@ -1,1 +1,7 @@
 project_id = "pypldtluvvngweimcmos"
+
+[functions.doku-create-payment]
+verify_jwt = false
+
+[functions.doku-notification]
+verify_jwt = false
