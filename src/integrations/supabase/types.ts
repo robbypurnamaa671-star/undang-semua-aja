@@ -180,6 +180,51 @@ export type Database = {
           },
         ]
       }
+      subscriptions: {
+        Row: {
+          amount: number
+          created_at: string
+          doku_payment_token: string | null
+          doku_payment_url: string | null
+          expires_at: string | null
+          id: string
+          invoice_number: string
+          paid_at: string | null
+          payment_method: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          doku_payment_token?: string | null
+          doku_payment_url?: string | null
+          expires_at?: string | null
+          id?: string
+          invoice_number: string
+          paid_at?: string | null
+          payment_method?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          doku_payment_token?: string | null
+          doku_payment_url?: string | null
+          expires_at?: string | null
+          id?: string
+          invoice_number?: string
+          paid_at?: string | null
+          payment_method?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

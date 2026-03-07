@@ -15,6 +15,7 @@ import { InvitationBuilder } from "@/components/builder/InvitationBuilder";
 import { PaymentDialog } from "@/components/builder/PaymentDialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInvitations, dbToInvitation, DbInvitation } from "@/hooks/use-invitations";
+import { useSubscription } from "@/hooks/use-subscription";
 import { supabase } from "@/integrations/supabase/client";
 
 type Step = "event" | "template" | "builder";
@@ -35,6 +36,7 @@ export default function Create() {
   const navigate = useNavigate();
   const { user, isLoading: authLoading } = useAuth();
   const { createInvitation, updateInvitation, publishInvitation } = useInvitations();
+  const { createPayment } = useSubscription();
 
   // Redirect if not logged in
   useEffect(() => {
@@ -442,6 +444,7 @@ export default function Create() {
           onPaymentSuccess={handlePaymentSuccess}
           onPublishFree={handlePublishFree}
           invitationTitle={invitation?.title || invitation?.names[0] || ""}
+          createPayment={createPayment}
         />
       </main>
     </div>
