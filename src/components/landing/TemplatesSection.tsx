@@ -27,7 +27,7 @@ export function TemplatesSection() {
   const featuredTemplates = templates.slice(0, 8);
   
   return (
-    <section id="template" className="py-20 bg-background relative z-0 isolate">
+    <section id="template" className="py-20 bg-background">
       <div className="container px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,7 @@ export function TemplatesSection() {
             <motion.div 
               key={template.id} 
               variants={item}
-              className="card-interactive group overflow-hidden"
+              className="card-interactive group overflow-hidden relative"
             >
               {/* Template Preview */}
               {(() => {
