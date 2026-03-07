@@ -27,7 +27,7 @@ export function TemplatesSection() {
   const featuredTemplates = templates.slice(0, 8);
   
   return (
-    <section id="template" className="py-20 bg-background">
+    <section id="template" className="py-20 bg-background relative z-0 isolate">
       <div className="container px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
