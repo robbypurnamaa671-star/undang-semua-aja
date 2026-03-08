@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          author: string
+          content: string
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          meta_description: string | null
+          meta_title: string | null
+          published_at: string | null
+          slug: string
+          status: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug: string
+          status?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          content?: string
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          meta_title?: string | null
+          published_at?: string | null
+          slug?: string
+          status?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       guest_messages: {
         Row: {
           created_at: string
@@ -179,6 +230,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      seo_pages: {
+        Row: {
+          content: string
+          created_at: string
+          faq: Json
+          h1: string | null
+          id: string
+          internal_links: Json
+          keywords: string[]
+          meta_description: string | null
+          meta_title: string | null
+          page_type: string
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          faq?: Json
+          h1?: string | null
+          id?: string
+          internal_links?: Json
+          keywords?: string[]
+          meta_description?: string | null
+          meta_title?: string | null
+          page_type?: string
+          slug: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          faq?: Json
+          h1?: string | null
+          id?: string
+          internal_links?: Json
+          keywords?: string[]
+          meta_description?: string | null
+          meta_title?: string | null
+          page_type?: string
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       subscriptions: {
         Row: {

@@ -21,9 +21,10 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Produk</h4>
             <ul className="space-y-2 text-primary-foreground/70">
-              <li><a href="#template" className="hover:text-primary-foreground transition-colors">Template</a></li>
+              <li><Link to="/templates" className="hover:text-primary-foreground transition-colors">Template</Link></li>
               <li><a href="#harga" className="hover:text-primary-foreground transition-colors">Harga</a></li>
               <li><a href="#fitur" className="hover:text-primary-foreground transition-colors">Fitur</a></li>
+              <li><Link to="/blog" className="hover:text-primary-foreground transition-colors">Blog</Link></li>
             </ul>
           </div>
           
