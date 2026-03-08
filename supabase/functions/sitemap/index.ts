@@ -24,11 +24,21 @@ serve(async () => {
       .select("slug, updated_at")
       .eq("status", "published");
 
-    // SEO pages
-    const { data: seoPages } = await supabase
-      .from("seo_pages")
-      .select("slug, updated_at")
-      .eq("status", "published");
+    // SEO pages – fetch all (may exceed 1000)
+    let seoPages: { slug: string; updated_at: string }[] = [];
+    let seoOffset = 0;
+    const pageSize = 1000;
+    while (true) {
+      const { data } = await supabase
+        .from("seo_pages")
+        .select("slug, updated_at")
+        .eq("status", "published")
+        .range(seoOffset, seoOffset + pageSize - 1);
+      if (!data || data.length === 0) break;
+      seoPages = seoPages.concat(data);
+      if (data.length < pageSize) break;
+      seoOffset += pageSize;
+    }
 
     // Published invitations (public)
     const { data: invitations } = await supabase
