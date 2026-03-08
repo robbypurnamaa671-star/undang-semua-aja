@@ -16,6 +16,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { usePageViewTracker } from "@/hooks/use-page-view-tracker";
 
 export default function DynamicSEOPage() {
   const { seoSlug } = useParams<{ seoSlug: string }>();
@@ -31,6 +32,9 @@ export default function DynamicSEOPage() {
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false));
   }, [seoSlug]);
+
+  // Track page view
+  usePageViewTracker(page?.id, page?.slug);
 
   if (loading) {
     return (
