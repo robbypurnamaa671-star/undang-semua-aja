@@ -1015,6 +1015,21 @@ export const templateCulturalStyles: Record<string, TemplateCulturalStyle> = {
     backgroundPattern: null,
     sectionRadius: '1rem',
   },
+
+  'full-custom': {
+    ...defaultStyle,
+    greeting: 'Dengan memohon rahmat Tuhan Yang Maha Esa',
+    closingText: 'Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir',
+    ornamentEmoji: '✦',
+    cornerMotif: 'none',
+    dividerStyle: 'ornate',
+    borderStyle: 'none',
+    fontAccent: 'serif',
+    culturalMotifs: ['✦', '❖', '✦'],
+    backgroundPattern: null,
+    sectionRadius: '0',
+    patternOverlay: null,
+  },
 };
 
 export function getTemplateCulturalStyle(templateId: string): TemplateCulturalStyle {
