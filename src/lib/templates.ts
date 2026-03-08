@@ -20,7 +20,8 @@ export interface Template {
     text: string;
   };
   sections: TemplateSection[];
-  style: 'classic' | 'modern' | 'minimalist' | 'elegant' | 'rustic';
+  style: 'classic' | 'modern' | 'minimalist' | 'elegant' | 'rustic' | 'custom';
+  isFullCustom?: boolean;
 }
 
 const defaultSections: TemplateSection[] = [
@@ -1269,6 +1270,20 @@ const _templates: Template[] = [
     colorScheme: { primary: '#546e7a', secondary: '#eceff1', background: '#fafafa', text: '#37474f' },
     sections: simpleSections,
     style: 'minimalist',
+  },
+
+  // ── Full Custom Template (available for all event types) ──
+  {
+    id: 'full-custom',
+    name: 'Full Custom',
+    description: 'Desain sepenuhnya kustom — upload gambar background sendiri untuk setiap bagian undangan',
+    eventTypes: ['wedding', 'khitanan', 'hajatan', 'birthday', 'lamaran', 'aqiqah', 'family', 'duka_cita', 'tahlilan', 'pengajian', 'bukber', 'acara_umum'],
+    previewImage: '/templates/full-custom.jpg',
+    isPremium: false,
+    isFullCustom: true,
+    colorScheme: { primary: '#c9a962', secondary: '#f5e6d3', background: '#1a1a1a', text: '#ffffff' },
+    sections: defaultSections,
+    style: 'custom',
   },
 ];
 
