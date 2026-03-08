@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Crown, Lock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Crown } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
 import logo from "@/assets/logo.png";
