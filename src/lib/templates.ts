@@ -1308,7 +1308,8 @@ const processedTemplates = applyPremiumFlags(_templates);
 export const templates = processedTemplates;
 
 export const getTemplatesByEventType = (eventType: EventType): Template[] => {
-  return processedTemplates.filter((t) => t.eventTypes.includes(eventType));
+  const filtered = processedTemplates.filter((t) => t.eventTypes.includes(eventType));
+  return filtered.sort((a, b) => (b.isFullCustom ? 1 : 0) - (a.isFullCustom ? 1 : 0));
 };
 
 export const getTemplateById = (id: string): Template | undefined => {
