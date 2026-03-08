@@ -1,9 +1,48 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Check, CreditCard, Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useSubscription } from "@/hooks/use-subscription";
+import { toast } from "sonner";
 
 export function PricingSection() {
+  const { user } = useAuth();
+  const { isPremium, createPayment } = useSubscription();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubscribe = async () => {
+    if (!user) {
+      navigate("/register");
+      return;
+    }
+
+    if (isPremium) {
+      toast.info("Anda sudah berlangganan premium!");
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      const paymentUrl = await createPayment();
+      if (paymentUrl) {
+        window.open(paymentUrl, "_blank");
+        toast.success("Halaman pembayaran telah dibuka", {
+          description: "Selesaikan pembayaran di tab baru.",
+        });
+      } else {
+        toast.error("Gagal membuat pembayaran");
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      toast.error("Gagal memproses pembayaran");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <section id="harga" className="py-20 bg-background">
       <div className="container px-4">
@@ -64,11 +103,31 @@ export function PricingSection() {
               </ul>
               
               <div className="mt-8 space-y-3">
-                <Button asChild size="lg" className="w-full btn-hero">
-                  <Link to="/register">Buat Undangan Sekarang</Link>
+                <Button 
+                  onClick={handleSubscribe} 
+                  disabled={isProcessing || isPremium}
+                  size="lg" 
+                  className="w-full btn-hero"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Memproses...
+                    </>
+                  ) : isPremium ? (
+                    <>
+                      <Check className="w-5 h-5 mr-2" />
+                      Sudah Premium
+                    </>
+                  ) : (
+                    <>
+                      <CreditCard className="w-5 h-5 mr-2" />
+                      Mulai Berlangganan
+                    </>
+                  )}
                 </Button>
                 <p className="text-center text-sm text-muted-foreground">
-                  Gratis buat dan preview. Berlangganan untuk fitur premium.
+                  Gratis buat dan preview. Berlangganan untuk menghapus watermark.
                 </p>
               </div>
             </div>

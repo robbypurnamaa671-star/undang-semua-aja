@@ -95,12 +95,6 @@ export default function Create() {
   };
   
   const handleTemplateSelect = (template: Template) => {
-    if (template.isPremium) {
-      toast.error("Template Premium 🔒", {
-        description: "Template ini hanya tersedia untuk pengguna premium. Silakan pilih template gratis atau upgrade ke premium.",
-      });
-      return;
-    }
     setSelectedTemplate(template);
     if (selectedEventType) {
       setInvitation(createDefaultInvitation(selectedEventType, template.id));
