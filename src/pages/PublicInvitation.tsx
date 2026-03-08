@@ -590,7 +590,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         
         {/* Countdown Section */}
         {features?.hasCountdown && (
-        <section className="py-12 px-6">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.countdown : undefined} className="py-12 px-6">
           <motion.div 
             variants={sectionFadeUp}
             initial="hidden"
@@ -626,7 +626,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               ))}
             </motion.div>
           </motion.div>
-        </section>
+        </CustomSection>
         )}
 
         {/* Event Sessions */}
