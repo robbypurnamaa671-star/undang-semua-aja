@@ -246,46 +246,119 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     textColor: template.colorScheme.text,
   };
 
-  // Animation variants for sections
-  const sectionFadeUp = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, y: 0,
-      transition: { duration: 0.7, ease: "easeOut" as const }
+  // Animation presets based on template cultural style
+  const animPreset: AnimationPreset = culturalStyle.animationPreset || 'default';
+
+  // ── Section animation variants by preset ──
+  const sectionVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+    default: {
+      hidden: { opacity: 0, y: 50 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+    },
+    celestial: {
+      hidden: { opacity: 0, scale: 0.8, filter: 'blur(8px)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
+    },
+    architectural: {
+      hidden: { opacity: 0, y: 80, rotateX: 15 },
+      visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+    },
+    chromatic: {
+      hidden: { opacity: 0, x: -60, skewY: 3 },
+      visible: { opacity: 1, x: 0, skewY: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+    },
+    elemental: {
+      hidden: { opacity: 0, scale: 0.9, y: 40, rotate: -2 },
+      visible: { opacity: 1, scale: 1, y: 0, rotate: 0, transition: { duration: 0.8, ease: "easeOut", type: "spring", stiffness: 80 } },
     },
   };
 
-  const sectionFadeScale = {
-    hidden: { opacity: 0, scale: 0.92 },
-    visible: { 
-      opacity: 1, scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" as const }
+  const sectionScaleVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+    default: {
+      hidden: { opacity: 0, scale: 0.92 },
+      visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
+    },
+    celestial: {
+      hidden: { opacity: 0, scale: 0.6, rotate: 10 },
+      visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
+    },
+    architectural: {
+      hidden: { opacity: 0, scaleY: 0.7, originY: 1 },
+      visible: { opacity: 1, scaleY: 1, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+    },
+    chromatic: {
+      hidden: { opacity: 0, scale: 1.1, filter: 'saturate(0)' },
+      visible: { opacity: 1, scale: 1, filter: 'saturate(1)', transition: { duration: 0.8, ease: "easeOut" } },
+    },
+    elemental: {
+      hidden: { opacity: 0, y: 60, filter: 'blur(4px)' },
+      visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: "easeOut" } },
     },
   };
+
+  const sectionFadeUp = sectionVariants[animPreset];
+  const sectionFadeScale = sectionScaleVariants[animPreset];
 
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+      transition: { 
+        staggerChildren: animPreset === 'celestial' ? 0.2 : animPreset === 'chromatic' ? 0.12 : 0.15, 
+        delayChildren: 0.1 
+      },
     },
   };
 
-  const staggerItem = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, y: 0,
-      transition: { duration: 0.5, ease: "easeOut" as const }
+  const staggerItemVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+    default: {
+      hidden: { opacity: 0, y: 30 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+    },
+    celestial: {
+      hidden: { opacity: 0, scale: 0.7, filter: 'blur(6px)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    },
+    architectural: {
+      hidden: { opacity: 0, y: 50, rotateX: 10 },
+      visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+    },
+    chromatic: {
+      hidden: { opacity: 0, x: -40 },
+      visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    },
+    elemental: {
+      hidden: { opacity: 0, y: 30, rotate: -3 },
+      visible: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.5, type: "spring", stiffness: 100 } },
     },
   };
 
-  const galleryItem = {
-    hidden: { opacity: 0, scale: 0.85 },
-    visible: { 
-      opacity: 1, scale: 1,
-      transition: { duration: 0.5, ease: "easeOut" as const }
+  const staggerItem = staggerItemVariants[animPreset];
+
+  const galleryVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+    default: {
+      hidden: { opacity: 0, scale: 0.85 },
+      visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
+    },
+    celestial: {
+      hidden: { opacity: 0, scale: 0.5, rotate: 15 },
+      visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+    },
+    architectural: {
+      hidden: { opacity: 0, scaleY: 0, originY: 0.5 },
+      visible: { opacity: 1, scaleY: 1, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+    },
+    chromatic: {
+      hidden: { opacity: 0, filter: 'grayscale(1) blur(4px)' },
+      visible: { opacity: 1, filter: 'grayscale(0) blur(0px)', transition: { duration: 0.7, ease: "easeOut" } },
+    },
+    elemental: {
+      hidden: { opacity: 0, y: 40, scale: 0.9 },
+      visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, type: "spring", stiffness: 100 } },
     },
   };
+
+  const galleryItem = galleryVariants[animPreset];
   
   return (
     <>
