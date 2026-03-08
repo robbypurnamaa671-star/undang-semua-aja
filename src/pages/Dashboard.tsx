@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
-import { Plus, Edit2, Trash2, Eye, Share2, LogOut, Users, Shield, BarChart3, FileText, Mail, TrendingUp } from "lucide-react";
+import { Plus, Edit2, Trash2, Eye, Share2, LogOut, Users, Shield, BarChart3, FileText, Mail } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInvitations } from "@/hooks/use-invitations";
 import { useAdmin } from "@/hooks/use-admin";
@@ -26,7 +26,7 @@ import { AdminStats } from "@/components/admin/AdminStats";
 import { AdminInvitations } from "@/components/admin/AdminInvitations";
 import { AdminBlog } from "@/components/admin/AdminBlog";
 import { AdminUsers } from "@/components/admin/AdminUsers";
-import { AdminSEOAnalytics } from "@/components/admin/AdminSEOAnalytics";
+
 
 const container = {
   hidden: { opacity: 0 },
@@ -147,7 +147,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <TabsList className="grid w-full grid-cols-6 max-w-3xl">
+              <TabsList className="grid w-full grid-cols-5 max-w-3xl">
                 <TabsTrigger value="my-invitations" className="gap-1.5 text-xs sm:text-sm">
                   <Mail className="w-4 h-4 hidden sm:block" />
                   Undangan
@@ -155,10 +155,6 @@ export default function Dashboard() {
                 <TabsTrigger value="admin-overview" className="gap-1.5 text-xs sm:text-sm">
                   <BarChart3 className="w-4 h-4 hidden sm:block" />
                   Statistik
-                </TabsTrigger>
-                <TabsTrigger value="admin-seo" className="gap-1.5 text-xs sm:text-sm">
-                  <TrendingUp className="w-4 h-4 hidden sm:block" />
-                  SEO
                 </TabsTrigger>
                 <TabsTrigger value="admin-invitations" className="gap-1.5 text-xs sm:text-sm">
                   <Mail className="w-4 h-4 hidden sm:block" />
@@ -186,10 +182,6 @@ export default function Dashboard() {
 
               <TabsContent value="admin-overview">
                 <AdminStats />
-              </TabsContent>
-
-              <TabsContent value="admin-seo">
-                <AdminSEOAnalytics />
               </TabsContent>
 
               <TabsContent value="admin-invitations">

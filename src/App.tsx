@@ -37,7 +37,7 @@ const App = () => (
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/templates" element={<TemplateShowcase />} />
-            <Route path="/p/:seoSlug" element={<DynamicSEOPage />} />
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
