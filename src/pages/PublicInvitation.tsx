@@ -631,7 +631,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
 
         {/* Event Sessions */}
         {invitation.events.length > 0 && invitation.events.some(e => e.name) && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.datetime : undefined} className="py-12 px-6">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -671,11 +671,11 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 </motion.div>
               ))}
             </motion.div>
-          </section>
+          </CustomSection>
         )}
         
         {/* Event Details */}
-        <section className="py-12 px-6">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.location : undefined} className="py-12 px-6">
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto space-y-6">
             <motion.div variants={staggerItem}>
               <SectionWrapper {...decorProps} className="p-6 text-center">
