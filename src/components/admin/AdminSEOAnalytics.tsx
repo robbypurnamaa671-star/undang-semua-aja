@@ -150,19 +150,19 @@ export function AdminSEOAnalytics() {
           <CardContent>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={data.daily_views}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis
                   dataKey="date"
                   tickFormatter={(d) => new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "short" })}
-                  stroke="hsl(var(--muted-foreground))"
+                  stroke="#9ca3af"
                   fontSize={12}
                 />
-                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <YAxis stroke="#9ca3af" fontSize={12} />
                 <Tooltip
                   labelFormatter={(d) => new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
-                  contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }}
+                  contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }}
                 />
-                <Line type="monotone" dataKey="views" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="views" stroke="#c8956c" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -180,11 +180,11 @@ export function AdminSEOAnalytics() {
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={data.top_cities.slice(0, 10)} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis type="number" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                  <YAxis dataKey="city" type="category" width={90} stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                  <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }} />
-                  <Bar dataKey="views" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
+                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis type="number" stroke="#9ca3af" fontSize={12} />
+                  <YAxis dataKey="city" type="category" width={90} stroke="#9ca3af" fontSize={12} />
+                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
+                  <Bar dataKey="views" fill="#c8956c" radius={[0, 4, 4, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -206,7 +206,7 @@ export function AdminSEOAnalytics() {
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }} />
+                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -223,11 +223,11 @@ export function AdminSEOAnalytics() {
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={data.top_styles}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="style" stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                  <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
-                  <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }} />
-                  <Bar dataKey="views" fill="hsl(var(--accent))" radius={[4, 4, 0, 0]} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis dataKey="style" stroke="#9ca3af" fontSize={12} />
+                  <YAxis stroke="#9ca3af" fontSize={12} />
+                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
+                  <Bar dataKey="views" fill="#d4a574" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -249,7 +249,7 @@ export function AdminSEOAnalytics() {
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }} />
+                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
