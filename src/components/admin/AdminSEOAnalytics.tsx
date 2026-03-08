@@ -160,9 +160,8 @@ export function AdminSEOAnalytics() {
                 <YAxis stroke="#9ca3af" fontSize={12} />
                 <Tooltip
                   labelFormatter={(d) => new Date(d).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
-                  contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }}
                 />
-                <Line type="monotone" dataKey="views" stroke="#c8956c" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="views" stroke="#c8956c" strokeWidth={2} dot={false} isAnimationActive={false} />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
@@ -183,8 +182,8 @@ export function AdminSEOAnalytics() {
                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                   <XAxis type="number" stroke="#9ca3af" fontSize={12} />
                   <YAxis dataKey="city" type="category" width={90} stroke="#9ca3af" fontSize={12} />
-                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
-                  <Bar dataKey="views" fill="#c8956c" />
+                  <Tooltip />
+                  <Bar dataKey="views" fill="#c8956c" isAnimationActive={false} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -201,12 +200,12 @@ export function AdminSEOAnalytics() {
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
-                  <Pie data={data.top_events} dataKey="views" nameKey="event_type" cx="50%" cy="50%" outerRadius={90} label={({ event_type, percent }) => `${event_type} ${(percent * 100).toFixed(0)}%`}>
+                  <Pie data={data.top_events} dataKey="views" nameKey="event_type" cx="50%" cy="50%" outerRadius={90} isAnimationActive={false} label={({ event_type, percent }) => `${event_type} ${(percent * 100).toFixed(0)}%`}>
                     {data.top_events.map((_, i) => (
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
+                  <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
@@ -226,8 +225,8 @@ export function AdminSEOAnalytics() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                   <XAxis dataKey="style" stroke="#9ca3af" fontSize={12} />
                   <YAxis stroke="#9ca3af" fontSize={12} />
-                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
-                  <Bar dataKey="views" fill="#d4a574" />
+                  <Tooltip />
+                  <Bar dataKey="views" fill="#d4a574" isAnimationActive={false} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -244,12 +243,12 @@ export function AdminSEOAnalytics() {
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
-                  <Pie data={data.device_breakdown} dataKey="views" nameKey="device_type" cx="50%" cy="50%" outerRadius={90} label={({ device_type, percent }) => `${device_type} ${(percent * 100).toFixed(0)}%`}>
+                  <Pie data={data.device_breakdown} dataKey="views" nameKey="device_type" cx="50%" cy="50%" outerRadius={90} isAnimationActive={false} label={({ device_type, percent }) => `${device_type} ${(percent * 100).toFixed(0)}%`}>
                     {data.device_breakdown.map((_, i) => (
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
+                  <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>
