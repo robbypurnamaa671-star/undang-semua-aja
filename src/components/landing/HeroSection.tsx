@@ -42,13 +42,13 @@ export function HeroSection() {
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="text-foreground">Undangan Digital</span>
             <br />
-            <span className="text-gradient">Cantik & Mudah</span>
+            <span className="text-gradient">Pernikahan & Acara Spesial</span>
           </h1>
           
           {/* Subheading */}
           <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Buat undangan pernikahan, khitanan, ulang tahun, dan acara spesial lainnya. 
-            Bagikan lewat WhatsApp dengan mudah.
+            Buat website undangan nikah online, undangan khitanan, ulang tahun, dan acara spesial lainnya. 
+            Bagikan undangan digital lewat WhatsApp dengan mudah dan cepat.
           </p>
           
           {/* CTA Buttons */}
