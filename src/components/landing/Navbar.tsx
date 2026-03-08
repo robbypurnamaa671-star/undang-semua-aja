@@ -27,6 +27,9 @@ export function Navbar() {
           <a href="#harga" className="text-muted-foreground hover:text-foreground transition-colors">
             Harga
           </a>
+          <Link to="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+            Blog
+          </Link>
         </div>
         
         <div className="flex items-center gap-3">
