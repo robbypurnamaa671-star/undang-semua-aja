@@ -14,6 +14,19 @@ export interface BankAccount {
   accountHolder: string;
 }
 
+export interface CustomBackgrounds {
+  cover?: string;
+  names?: string;
+  countdown?: string;
+  datetime?: string;
+  location?: string;
+  gallery?: string;
+  rsvp?: string;
+  guestbook?: string;
+  envelope?: string;
+  closing?: string;
+}
+
 export interface InvitationData {
   id?: string;
   userId?: string;
@@ -49,6 +62,9 @@ export interface InvitationData {
   galleryImages: string[];
   musicUrl?: string;
   themeColor?: string;
+  
+  // Full Custom backgrounds per section
+  customBackgrounds?: CustomBackgrounds;
   
   // Guest list for personalized links
   guestList: string[];
