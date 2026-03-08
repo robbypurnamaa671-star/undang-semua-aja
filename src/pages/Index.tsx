@@ -42,6 +42,7 @@ const Index = () => {
       <FAQSection />
       <CTASection />
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 };
