@@ -39,29 +39,6 @@ export async function fetchRelatedPosts(currentSlug: string, tags: string[], lim
   return data || [];
 }
 
-// SEO pages
-export async function fetchSEOPage(slug: string) {
-  const { data, error } = await supabase
-    .from("seo_pages")
-    .select("*")
-    .eq("slug", slug)
-    .eq("status", "published")
-    .single();
-
-  if (error) throw error;
-  return data;
-}
-
-export async function fetchAllSEOPageSlugs() {
-  const { data, error } = await supabase
-    .from("seo_pages")
-    .select("slug, updated_at")
-    .eq("status", "published");
-
-  if (error) throw error;
-  return data || [];
-}
-
 export async function fetchAllBlogSlugs() {
   const { data, error } = await supabase
     .from("blog_posts")
