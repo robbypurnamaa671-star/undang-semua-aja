@@ -250,7 +250,8 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
   const animPreset: AnimationPreset = culturalStyle.animationPreset || 'default';
 
   // ── Section animation variants by preset ──
-  const sectionVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sectionVariants: Record<AnimationPreset, { hidden: any; visible: any }> = {
     default: {
       hidden: { opacity: 0, y: 50 },
       visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
@@ -273,7 +274,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     },
   };
 
-  const sectionScaleVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+  const sectionScaleVariants: Record<AnimationPreset, { hidden: any; visible: any }> = {
     default: {
       hidden: { opacity: 0, scale: 0.92 },
       visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
@@ -310,7 +311,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     },
   };
 
-  const staggerItemVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+  const staggerItemVariants: Record<AnimationPreset, { hidden: any; visible: any }> = {
     default: {
       hidden: { opacity: 0, y: 30 },
       visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
@@ -335,7 +336,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
 
   const staggerItem = staggerItemVariants[animPreset];
 
-  const galleryVariants: Record<AnimationPreset, { hidden: object; visible: object }> = {
+  const galleryVariants: Record<AnimationPreset, { hidden: any; visible: any }> = {
     default: {
       hidden: { opacity: 0, scale: 0.85 },
       visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
