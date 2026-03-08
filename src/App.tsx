@@ -14,7 +14,6 @@ import PublicInvitation from "./pages/PublicInvitation";
 import BlogList from "./pages/BlogList";
 import BlogDetail from "./pages/BlogDetail";
 import TemplateShowcase from "./pages/TemplateShowcase";
-import DynamicSEOPage from "./pages/DynamicSEOPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
