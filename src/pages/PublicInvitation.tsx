@@ -835,7 +835,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
 
         {/* Digital Envelope */}
         {features?.hasDigitalEnvelope && invitation.bankAccounts.length > 0 && invitation.bankAccounts.some(a => a.bankName) && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.envelope : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <motion.h2 
@@ -856,11 +856,11 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 secondaryColor={template.colorScheme.secondary}
               />
             </motion.div>
-          </section>
+          </CustomSection>
         )}
         
         {/* Closing Section */}
-        <section className="py-12 px-6 text-center">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.closing : undefined} className="py-12 px-6 text-center">
           <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
             <Divider {...decorProps} />
 
