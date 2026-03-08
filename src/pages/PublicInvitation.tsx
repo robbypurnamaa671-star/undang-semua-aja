@@ -557,7 +557,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
 
         {/* Message / Sambutan */}
         {invitation.message && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.names : undefined} className="py-12 px-6">
             <motion.div 
               variants={sectionFadeScale}
               initial="hidden"
@@ -585,7 +585,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 >"</motion.div>
               </SectionWrapper>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
         
         {/* Countdown Section */}
