@@ -722,7 +722,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
 
         {/* Save to Calendar */}
         {features?.hasCalendar && (
-        <section className="py-8 px-6">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.datetime : undefined} className="py-8 px-6">
           <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto text-center">
             <Divider {...decorProps} />
             <h3 className="font-serif text-lg font-semibold mb-4 flex items-center justify-center gap-2" style={{ color: template.colorScheme.primary }}>
@@ -741,12 +741,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               secondaryColor={template.colorScheme.secondary}
             />
           </motion.div>
-        </section>
+        </CustomSection>
         )}
         
         {/* Gallery Section with staggered items */}
         {features?.hasGallery && invitation.galleryImages.length > 0 && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.gallery : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <h2 className="font-serif text-xl font-semibold mb-6 text-center" style={{ color: template.colorScheme.primary }}>
