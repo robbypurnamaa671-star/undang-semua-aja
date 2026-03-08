@@ -569,4 +569,132 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
     { path: 'M10 50 L25 20 L40 50 L55 20 L70 50 L85 20 L90 30 L90 70 L85 80 L70 50 L55 80 L40 50 L25 80 L10 70 Z', label: 'Fan Pattern' },
     { path: 'M30 15 L70 15 L70 85 L30 85 Z M35 20 L65 20 L65 80 L35 80 Z M40 25 L60 25 L60 75 L40 75 Z', path2: 'M50 15 L50 85 M30 50 L70 50', label: 'Frame' },
   ],
+
+  // ══════════════════ NEW BATCH 2: ZODIAK & CELESTIAL ══════════════════
+
+  'wedding-celestial-stars': [
+    { path: 'M50 10 L55 30 L75 30 L60 42 L65 62 L50 50 L35 62 L40 42 L25 30 L45 30 Z', label: 'Bintang Emas' },
+    { path: 'M50 15 Q60 15 65 25 Q70 35 60 42 Q55 50 50 45 Q45 50 40 42 Q30 35 35 25 Q40 15 50 15 Z', path2: 'M30 60 L35 70 L25 70 Z M70 55 L75 65 L65 65 Z M50 75 L55 85 L45 85 Z', label: 'Rasi Bintang' },
+    { path: 'M50 20 Q65 20 70 35 Q75 50 60 60 Q50 65 40 60 Q25 50 30 35 Q35 20 50 20 Z', path2: 'M50 28 Q58 28 62 38 Q65 48 55 55 Q50 58 45 55 Q35 48 38 38 Q42 28 50 28 Z', label: 'Celestial Orb' },
+  ],
+
+  'wedding-moon-phase': [
+    { path: 'M50 10 Q75 10 75 50 Q75 90 50 90 Q25 90 25 50 Q25 10 50 10 Z', path2: 'M50 10 Q40 30 40 50 Q40 70 50 90', label: 'Bulan Purnama' },
+    { path: 'M50 15 Q65 15 65 50 Q65 85 50 85 Q50 65 50 50 Q50 35 50 15 Z', label: 'Bulan Sabit' },
+    { path: 'M20 50 Q20 30 35 25 Q40 50 35 75 Q20 70 20 50 Z M50 50 Q50 30 65 25 Q70 50 65 75 Q50 70 50 50 Z M80 50 Q80 30 95 25 Q100 50 95 75 Q80 70 80 50 Z', label: 'Fase Bulan' },
+  ],
+
+  'wedding-galaxy-nebula': [
+    { path: 'M50 10 Q70 20 75 45 Q80 70 55 80 Q30 90 20 65 Q10 40 30 25 Q45 15 50 10 Z', path2: 'M50 25 Q60 30 62 45 Q65 58 52 65 Q40 70 35 55 Q30 42 40 32 Q48 25 50 25 Z', label: 'Nebula' },
+    { path: 'M15 50 Q30 20 50 15 Q70 20 85 50 Q70 80 50 85 Q30 80 15 50 Z', path2: 'M25 50 Q35 30 50 25 Q65 30 75 50 Q65 70 50 75 Q35 70 25 50 Z', label: 'Galaxy Spiral' },
+    { path: 'M50 5 L53 18 L65 10 L58 22 L72 22 L60 30 L68 42 L55 35 L55 50 L48 38 L38 48 L42 35 L28 38 L38 28 L25 22 L40 22 L35 10 L48 18 Z', label: 'Supernova' },
+  ],
+
+  'wedding-constellation': [
+    { path: 'M20 20 L35 40 L55 30 L70 50 L85 35 L80 65 L60 75 L35 60 L20 70', path2: 'M20 20 Q22 18 24 20 M35 40 Q37 38 39 40 M55 30 Q57 28 59 30 M70 50 Q72 48 74 50 M85 35 Q87 33 89 35', label: 'Rasi Bintang' },
+    { path: 'M50 10 L55 25 L70 25 L58 35 L62 50 L50 40 L38 50 L42 35 L30 25 L45 25 Z', label: 'North Star' },
+    { path: 'M15 30 L30 30 L30 60 M50 20 L50 50 L70 50 M60 70 L80 70 L80 85', path2: 'M15 30 Q13 28 15 26 M30 60 Q32 62 30 64 M50 20 Q48 18 50 16 M70 50 Q72 52 70 54 M60 70 Q58 68 60 66 M80 85 Q82 87 80 89', label: 'Star Map' },
+  ],
+
+  'wedding-solar-eclipse': [
+    { path: 'M50 10 Q80 10 80 50 Q80 90 50 90 Q20 90 20 50 Q20 10 50 10 Z', path2: 'M50 18 Q72 18 72 50 Q72 82 50 82 Q28 82 28 50 Q28 18 50 18 Z', label: 'Corona' },
+    { path: 'M50 15 Q70 15 70 50 Q70 85 50 85 Q30 85 30 50 Q30 15 50 15 Z M50 25 Q45 35 45 50 Q45 65 50 75 Q55 65 55 50 Q55 35 50 25 Z', label: 'Eclipse' },
+    { path: 'M50 50 L50 5 M50 50 L90 25 M50 50 L95 50 M50 50 L90 75 M50 50 L50 95 M50 50 L10 75 M50 50 L5 50 M50 50 L10 25', label: 'Sun Rays' },
+  ],
+
+  // ══════════════════ NEW BATCH 2: ARSITEKTUR DUNIA ══════════════════
+
+  'wedding-gothic-cathedral': [
+    { path: 'M50 5 Q55 5 58 15 L60 45 L65 45 L65 90 L35 90 L35 45 L40 45 L42 15 Q45 5 50 5 Z', path2: 'M42 50 Q50 40 58 50 M45 65 Q50 58 55 65 M48 78 Q50 75 52 78', label: 'Gothic Arch' },
+    { path: 'M50 10 Q70 20 70 50 Q70 80 50 90 Q30 80 30 50 Q30 20 50 10 Z', path2: 'M50 20 L55 35 L65 25 L58 38 L68 40 L55 45 L60 58 L50 48 L40 58 L45 45 L32 40 L42 38 L35 25 L45 35 Z', label: 'Rose Window' },
+    { path: 'M30 90 L30 50 Q30 25 50 10 Q70 25 70 50 L70 90 Z', path2: 'M40 90 L40 55 Q40 38 50 28 Q60 38 60 55 L60 90', label: 'Pointed Arch' },
+  ],
+
+  'wedding-zen-garden': [
+    { path: 'M15 60 Q30 55 45 60 Q60 55 75 60 Q85 57 90 60 M15 70 Q30 65 45 70 Q60 65 75 70 Q85 67 90 70 M15 80 Q30 75 45 80 Q60 75 75 80 Q85 77 90 80', label: 'Raked Sand' },
+    { path: 'M40 30 Q40 15 50 12 Q60 15 60 30 Q60 45 50 48 Q40 45 40 30 Z', path2: 'M35 55 Q35 45 42 43 L58 43 Q65 45 65 55 Q65 65 58 68 L42 68 Q35 65 35 55 Z', label: 'Zen Stones' },
+    { path: 'M50 5 L50 95 M48 15 L35 25 M52 20 L65 30 M47 35 L30 45 M53 40 L70 50 M48 55 L32 65 M52 60 L68 70 M47 75 L38 82 M53 80 L62 87', label: 'Bambu' },
+  ],
+
+  'wedding-mediterranean-villa': [
+    { path: 'M20 45 Q20 20 50 15 Q80 20 80 45 L80 85 L20 85 Z', path2: 'M30 55 L30 85 M45 55 L45 85 M55 55 L55 85 M70 55 L70 85 M25 55 L75 55', label: 'Arcade' },
+    { path: 'M35 20 Q35 10 50 8 Q65 10 65 20 L68 70 Q68 82 50 85 Q32 82 32 70 Z', path2: 'M38 25 L62 25 M38 45 L62 45 M38 65 L62 65', label: 'Olive Jar' },
+    { path: 'M50 10 Q55 15 58 22 Q65 18 62 28 Q68 32 60 36 Q62 42 55 40 Q55 48 50 44 Q45 48 45 40 Q38 42 40 36 Q32 32 38 28 Q35 18 42 22 Q45 15 50 10 Z', label: 'Sunflower' },
+  ],
+
+  'wedding-victorian-manor': [
+    { path: 'M15 85 L15 40 L35 40 L35 20 L50 10 L65 20 L65 40 L85 40 L85 85 Z', path2: 'M42 85 L42 62 L58 62 L58 85 M25 50 L25 60 L32 60 L32 50 M68 50 L68 60 L75 60 L75 50', label: 'Victorian House' },
+    { path: 'M50 10 Q58 10 60 20 Q68 18 64 26 Q70 30 62 34 Q64 42 56 40 Q55 48 48 42 Q42 48 42 40 Q34 42 36 34 Q28 30 36 26 Q32 18 40 20 Q42 10 50 10 Z', path2: 'M50 22 Q54 22 55 27 Q58 26 56 30 Q59 32 55 34 Q56 38 52 37 L50 38 L48 37 Q44 38 45 34 Q41 32 44 30 Q42 26 45 27 Q46 22 50 22 Z', label: 'Victorian Rose' },
+    { path: 'M30 15 L70 15 L70 85 L30 85 Z M35 20 L65 20 L65 80 L35 80 Z', path2: 'M50 20 L50 80 M35 50 L65 50 M35 35 L65 35 M35 65 L65 65', label: 'Iron Gate' },
+  ],
+
+  'wedding-moroccan-riad': [
+    { path: 'M50 10 L70 30 L70 60 L50 80 L30 60 L30 30 Z', path2: 'M50 20 L62 32 L62 56 L50 68 L38 56 L38 32 Z', label: 'Zellige Star' },
+    { path: 'M20 50 Q20 20 50 10 Q80 20 80 50 Q80 80 50 90 Q20 80 20 50 Z', path2: 'M30 50 Q30 28 50 20 Q70 28 70 50 Q70 72 50 80 Q30 72 30 50 Z', label: 'Horseshoe Arch' },
+    { path: 'M50 5 L55 18 L70 18 L58 28 L62 42 L50 33 L38 42 L42 28 L30 18 L45 18 Z M50 55 L55 68 L70 68 L58 78 L62 92 L50 83 L38 92 L42 78 L30 68 L45 68 Z', label: 'Geometric Pattern' },
+  ],
+
+  // ══════════════════ NEW BATCH 2: WARNA & MOOD ══════════════════
+
+  'wedding-midnight-noir': [
+    { path: 'M50 10 L55 30 L75 30 L60 42 L65 62 L50 50 L35 62 L40 42 L25 30 L45 30 Z', path2: 'M50 18 L53 28 L62 28 L55 35 L57 44 L50 38 L43 44 L45 35 L38 28 L47 28 Z', label: 'Gold Star' },
+    { path: 'M50 15 Q65 15 70 35 Q75 55 60 65 Q50 70 40 65 Q25 55 30 35 Q35 15 50 15 Z', path2: 'M50 25 Q58 25 62 38 Q65 50 55 56 Q50 60 45 56 Q35 50 38 38 Q42 25 50 25 Z', label: 'Noir Diamond' },
+    { path: 'M30 15 L70 15 L70 85 L30 85 Z M35 20 L65 20 L65 80 L35 80 Z M40 25 L60 25 L60 75 L40 75 Z', path2: 'M50 25 L50 75 M40 50 L60 50', label: 'Art Frame' },
+  ],
+
+  'wedding-rose-quartz': [
+    { path: 'M50 15 Q60 15 65 30 Q70 45 55 55 Q50 58 45 55 Q30 45 35 30 Q40 15 50 15 Z', path2: 'M50 60 L50 90 M42 70 L35 65 M58 75 L65 70', label: 'Crystal' },
+    { path: 'M50 10 Q55 15 58 22 Q65 18 62 28 Q68 32 60 36 Q62 42 55 40 Q55 48 50 44 Q45 48 45 40 Q38 42 40 36 Q32 32 38 28 Q35 18 42 22 Q45 15 50 10 Z', label: 'Rose Bloom' },
+    { path: 'M30 30 Q35 20 45 25 Q50 15 55 25 Q65 20 70 30 Q75 40 65 50 L50 70 L35 50 Q25 40 30 30 Z', label: 'Heart Crystal' },
+  ],
+
+  'wedding-emerald-dream': [
+    { path: 'M50 10 L65 25 L65 55 L50 70 L35 55 L35 25 Z', path2: 'M50 18 L58 28 L58 52 L50 62 L42 52 L42 28 Z', label: 'Emerald Gem' },
+    { path: 'M50 5 Q55 10 60 18 Q65 15 62 24 Q70 26 64 32 Q68 38 60 38 Q60 45 54 40 Q50 46 46 40 Q40 45 40 38 Q32 38 36 32 Q30 26 38 24 Q35 15 40 18 Q45 10 50 5 Z', label: 'Emerald Crown' },
+    { path: 'M20 50 L35 20 L50 50 L65 20 L80 50 L65 80 L50 50 L35 80 Z', label: 'Faceted Gem' },
+  ],
+
+  'wedding-copper-luxe': [
+    { path: 'M50 15 Q65 15 70 30 Q75 45 65 52 Q70 60 60 62 Q62 70 52 68 Q50 72 48 68 Q38 70 40 62 Q30 60 35 52 Q25 45 30 30 Q35 15 50 15 Z', path2: 'M50 25 L50 45 M42 35 L58 35', label: 'Copper Gear' },
+    { path: 'M30 20 L70 20 L75 25 L75 75 L70 80 L30 80 L25 75 L25 25 Z', path2: 'M35 30 L65 30 M35 45 L65 45 M35 60 L65 60 M50 20 L50 80', label: 'Metal Frame' },
+    { path: 'M50 10 L60 20 L55 20 L55 40 L70 40 L70 35 L80 45 L70 55 L70 50 L55 50 L55 70 L60 70 L50 80 L40 70 L45 70 L45 50 L30 50 L30 55 L20 45 L30 35 L30 40 L45 40 L45 20 L40 20 Z', label: 'Pinwheel' },
+  ],
+
+  'wedding-lavender-mist': [
+    { path: 'M50 10 Q55 15 52 22 Q58 20 55 28 Q60 28 55 34 Q58 38 52 36 Q52 42 48 38 Q42 42 44 36 Q38 38 40 34 Q36 28 42 28 Q38 20 45 22 Q42 15 50 10 Z', path2: 'M50 38 L50 85 M46 50 L38 45 M54 55 L62 50 M46 65 L40 60 M54 70 L60 65', label: 'Lavender Sprig' },
+    { path: 'M25 40 Q30 30 40 35 Q45 20 55 30 Q65 22 70 35 Q80 30 78 45 Q85 52 75 58 Q78 68 65 65 Q60 75 50 68 Q40 75 35 65 Q22 68 25 58 Q15 52 22 45 Q20 35 25 40 Z', label: 'Cloud' },
+    { path: 'M30 30 Q35 20 45 25 Q50 15 55 25 Q65 20 70 30 Q75 40 65 50 L50 70 L35 50 Q25 40 30 30 Z', path2: 'M38 35 Q42 28 50 32 Q58 28 62 35 Q66 42 58 48 L50 58 L42 48 Q34 42 38 35 Z', label: 'Heart Mist' },
+  ],
+
+  // ══════════════════ NEW BATCH 2: MUSIM & FENOMENA ALAM ══════════════════
+
+  'wedding-spring-blossom': [
+    { path: 'M50 15 Q55 20 52 28 Q58 25 55 32 Q60 32 55 38 Q58 42 52 40 Q55 45 50 42 Q45 45 48 40 Q42 42 45 38 Q40 32 45 32 Q42 25 48 28 Q45 20 50 15 Z', label: 'Cherry Blossom' },
+    { path: 'M50 10 Q55 15 58 22 Q65 18 62 28 Q68 32 60 36 Q62 42 55 40 Q55 48 50 44 Q45 48 45 40 Q38 42 40 36 Q32 32 38 28 Q35 18 42 22 Q45 15 50 10 Z', path2: 'M50 44 L50 90', label: 'Tulip' },
+    { path: 'M30 30 Q35 20 45 25 Q50 15 55 25 Q65 20 70 30 Q75 40 65 50 L50 70 L35 50 Q25 40 30 30 Z', label: 'Spring Heart' },
+  ],
+
+  'wedding-monsoon-rain': [
+    { path: 'M50 10 L55 30 L50 30 L55 50 L50 50 L55 70 L45 55 L50 55 L45 35 L50 35 L45 15 Z', label: 'Lightning' },
+    { path: 'M25 30 Q32 18 45 25 Q50 15 55 25 Q68 18 75 30 Q82 42 70 48 L50 48 L30 48 Q18 42 25 30 Z', path2: 'M35 48 L33 62 M45 48 L43 58 M55 48 L53 62 M65 48 L63 58', label: 'Rain Cloud' },
+    { path: 'M15 70 Q30 50 50 60 Q70 50 85 70 Q70 75 50 68 Q30 75 15 70 Z M20 72 Q35 55 50 63 Q65 55 80 72', path2: 'M35 40 Q50 20 65 40', label: 'Rainbow' },
+  ],
+
+  'wedding-desert-mirage': [
+    { path: 'M10 75 L25 45 L40 60 L55 35 L70 55 L85 40 L95 75 Z', label: 'Sand Dunes' },
+    { path: 'M50 15 L52 25 L55 30 L52 40 Q55 50 52 60 L55 70 L52 75 L50 85 L48 75 L45 70 L48 60 Q45 50 48 40 L45 30 L48 25 Z', path2: 'M42 35 L35 30 M58 45 L65 40 M40 55 L33 52 M60 65 L67 62', label: 'Cactus' },
+    { path: 'M50 20 Q65 20 68 35 Q70 50 58 55 L55 80 L45 80 L42 55 Q30 50 32 35 Q35 20 50 20 Z', path2: 'M48 8 L50 3 L52 8', label: 'Minaret' },
+  ],
+
+  'wedding-northern-lights': [
+    { path: 'M5 70 Q20 40 35 55 Q50 30 65 50 Q80 35 95 65 L95 90 L5 90 Z', path2: 'M10 75 Q25 50 40 60 Q55 40 70 55 Q85 42 92 70', label: 'Aurora Wave' },
+    { path: 'M50 5 L50 95 M48 15 L35 25 M52 20 L65 30 M47 35 L30 45 M53 40 L70 50 M48 55 L32 65 M52 60 L68 70', label: 'Pine Tree' },
+    { path: 'M50 10 L50 90 M50 50 L80 25 M50 50 L20 25 M50 50 L80 75 M50 50 L20 75 M25 50 L75 50', path2: 'M50 20 L55 25 L50 30 L45 25 Z M50 70 L55 75 L50 80 L45 75 Z', label: 'Snowflake' },
+  ],
+
+  'wedding-tropical-storm': [
+    { path: 'M50 10 L55 30 L50 30 L58 55 L42 45 L50 70 L38 50 L45 80 L30 60 L35 90 L25 70', path2: 'M55 15 L60 35 L55 35 L62 58', label: 'Lightning Bolt' },
+    { path: 'M0 55 Q15 45 30 52 Q45 42 60 55 Q75 45 90 55 Q100 48 100 55 L100 90 L0 90 Z', label: 'Storm Wave' },
+    { path: 'M50 15 Q60 20 65 35 Q68 50 55 58 Q50 55 45 58 Q32 50 35 35 Q40 20 50 15 Z M50 58 L50 90 M42 65 L35 60 M58 70 L65 65 M42 80 L38 75', label: 'Palm in Wind' },
+  ],
 };
