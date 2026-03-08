@@ -19,6 +19,7 @@ import { RSVPForm } from "@/components/invitation/RSVPForm";
 import { GuestBook } from "@/components/invitation/GuestBook";
 import { DigitalEnvelope } from "@/components/invitation/DigitalEnvelope";
 import { CalendarButtons } from "@/components/invitation/CalendarButtons";
+import { CustomSection } from "@/components/invitation/CustomSection";
 import { format, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { MapPin, Calendar, Clock, Volume2, VolumeX, Loader2, Gift, Heart, MessageCircle, CalendarPlus } from "lucide-react";
