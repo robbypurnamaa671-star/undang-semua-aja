@@ -124,32 +124,22 @@ export function TemplatesSection() {
                 );
               })()}
 
-              {/* Premium Lock Overlay */}
-              {template.isPremium && (
-                <div className="absolute inset-0 bg-foreground/40 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3 z-10">
-                  <div className="w-14 h-14 rounded-full bg-background/90 flex items-center justify-center shadow-lg">
-                    <Lock className="w-7 h-7 text-primary" />
-                  </div>
+              {/* Badge */}
+              <div className="absolute top-3 right-3 z-10">
+                {template.isPremium ? (
                   <Badge className="bg-primary text-primary-foreground shadow-lg">
                     <Crown className="w-3 h-3 mr-1" />
                     Premium
                   </Badge>
-                </div>
-              )}
-              
-              {/* Free Badge */}
-              {!template.isPremium && (
-                <div className="absolute top-3 right-3 z-10">
+                ) : (
                   <Badge variant="outline" className="bg-background/90 text-primary border-primary">
                     Gratis
                   </Badge>
-                </div>
-              )}
+                )}
+              </div>
               
               {/* Hover Overlay */}
-              {!template.isPremium && (
-                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300 z-10" />
-              )}
+              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300 z-10" />
               
               {/* Template Info */}
               <div className="p-4 bg-card">
@@ -160,16 +150,10 @@ export function TemplatesSection() {
                       {template.eventTypes[0]}
                     </p>
                   </div>
-                  {template.isPremium ? (
-                    <Badge variant="secondary" className="capitalize">
-                      <Lock className="w-3 h-3 mr-1" />
-                      Terkunci
-                    </Badge>
-                  ) : (
-                    <Badge variant="secondary" className="capitalize">
-                      {template.style}
-                    </Badge>
-                  )}
+                  <Badge variant="secondary" className="capitalize">
+                    {template.isPremium && <Crown className="w-3 h-3 mr-1" />}
+                    {template.style}
+                  </Badge>
                 </div>
               </div>
             </motion.div>
