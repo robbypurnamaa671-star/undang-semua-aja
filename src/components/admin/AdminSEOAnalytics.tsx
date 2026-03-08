@@ -88,6 +88,12 @@ export function AdminSEOAnalytics() {
       ? 100
       : 0;
 
+  // Avoid Recharts prop collision: `style` key in data can be treated as SVG style prop
+  const topStylesChartData = (data.top_styles ?? []).map((item) => ({
+    style_name: item.style,
+    views: item.views,
+  }));
+
   return (
     <div className="space-y-6">
       {/* Period selector */}
