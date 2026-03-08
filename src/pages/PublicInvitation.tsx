@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Template, getTemplateById } from "@/lib/templates";
 import { getEventTypeConfig } from "@/lib/event-types";
-import { getTemplateCulturalStyle } from "@/lib/template-styles";
+import { getTemplateCulturalStyle, AnimationPreset } from "@/lib/template-styles";
 import { usePublicInvitation } from "@/hooks/use-invitations";
 import { 
   CornerOrnaments, 
