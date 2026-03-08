@@ -32,7 +32,7 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Bantuan</h4>
             <ul className="space-y-2 text-primary-foreground/70">
               <li><a href="#" className="hover:text-primary-foreground transition-colors">Cara Pakai</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">FAQ</a></li>
+              <li><a href="#faq" className="hover:text-primary-foreground transition-colors">FAQ</a></li>
               <li><a href="#" className="hover:text-primary-foreground transition-colors">Hubungi Kami</a></li>
             </ul>
           </div>
