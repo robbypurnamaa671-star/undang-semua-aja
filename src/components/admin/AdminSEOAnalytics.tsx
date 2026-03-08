@@ -7,8 +7,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Eye, TrendingUp, Monitor, Globe, MapPin, Palette, Calendar as CalendarIcon } from "lucide-react";
 
 const COLORS = [
-  "hsl(var(--primary))",
-  "hsl(var(--accent))",
+  "#c8956c",
+  "#d4a574",
   "#f59e0b",
   "#10b981",
   "#8b5cf6",
