@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { InvitationData, EventSession, BankAccount, generateSlug } from "@/lib/invitation";
+import { InvitationData, EventSession, BankAccount, CustomBackgrounds, generateSlug } from "@/lib/invitation";
 
 export interface DbInvitation {
   id: string;
@@ -31,6 +31,7 @@ export interface DbInvitation {
   music_url: string | null;
   whatsapp_number: string | null;
   guest_list: string[];
+  custom_backgrounds: any;
   created_at: string;
   updated_at: string;
 }
@@ -74,6 +75,7 @@ export function dbToInvitation(db: DbInvitation): InvitationData {
     musicUrl: db.music_url || undefined,
     whatsappNumber: db.whatsapp_number || undefined,
     guestList: db.guest_list || [],
+    customBackgrounds: (db.custom_backgrounds || {}) as CustomBackgrounds,
     createdAt: db.created_at,
     updatedAt: db.updated_at,
   };
@@ -107,6 +109,7 @@ export function invitationToDb(invitation: InvitationData, userId: string) {
     music_url: invitation.musicUrl || null,
     whatsapp_number: invitation.whatsappNumber || null,
     guest_list: invitation.guestList || [],
+    custom_backgrounds: invitation.customBackgrounds || {},
   };
 }
 
@@ -215,6 +218,7 @@ export function useInvitations() {
       if (invitation.musicUrl !== undefined) updateData.music_url = invitation.musicUrl || null;
       if (invitation.whatsappNumber !== undefined) updateData.whatsapp_number = invitation.whatsappNumber || null;
       if (invitation.guestList !== undefined) updateData.guest_list = invitation.guestList;
+      if (invitation.customBackgrounds !== undefined) updateData.custom_backgrounds = invitation.customBackgrounds;
 
       const { error } = await supabase
         .from("invitations")

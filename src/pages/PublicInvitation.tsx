@@ -19,6 +19,7 @@ import { RSVPForm } from "@/components/invitation/RSVPForm";
 import { GuestBook } from "@/components/invitation/GuestBook";
 import { DigitalEnvelope } from "@/components/invitation/DigitalEnvelope";
 import { CalendarButtons } from "@/components/invitation/CalendarButtons";
+import { CustomSection } from "@/components/invitation/CustomSection";
 import { format, differenceInDays, differenceInHours, differenceInMinutes, differenceInSeconds } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
 import { MapPin, Calendar, Clock, Volume2, VolumeX, Loader2, Gift, Heart, MessageCircle, CalendarPlus } from "lucide-react";
@@ -47,6 +48,8 @@ export default function PublicInvitation() {
   const isLamaran = invitation?.eventType === "lamaran";
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig?.features;
+  const isFullCustom = template?.isFullCustom === true;
+  const customBg = invitation?.customBackgrounds || {};
 
   // Parallax scroll for hero section
   const { scrollY } = useScroll();
@@ -321,14 +324,19 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 overflow-hidden"
-            style={{ background: invitation.coverImage ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}60 0%, ${template.colorScheme.background} 50%, ${template.colorScheme.secondary}60 100%)` }}
+            style={{ background: (invitation.coverImage || (isFullCustom && customBg.cover)) ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}60 0%, ${template.colorScheme.background} 50%, ${template.colorScheme.secondary}60 100%)` }}
           >
-            {invitation.coverImage && (
+            {(isFullCustom && customBg.cover) ? (
+              <>
+                <img src={customBg.cover} alt="Cover" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/50" />
+              </>
+            ) : invitation.coverImage ? (
               <>
                 <img src={invitation.coverImage} alt="Cover" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}90 0%, ${template.colorScheme.background}70 50%, ${template.colorScheme.background}90 100%)` }} />
               </>
-            )}
+            ) : null}
             
             <CornerOrnaments {...decorProps} />
             
@@ -426,30 +434,45 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         <section 
           ref={heroRef}
           className="min-h-screen flex flex-col items-center justify-center text-center p-6 relative overflow-hidden"
-          style={{ background: invitation.coverImage ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` }}
+          style={{ background: (invitation.coverImage || (isFullCustom && customBg.names)) ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` }}
         >
-          {/* Parallax Cover Image */}
-          {invitation.coverImage && (
+          {/* Full Custom Hero Background */}
+          {isFullCustom && customBg.names ? (
             <>
               <motion.img 
-                src={invitation.coverImage} 
-                alt="Cover" 
+                src={customBg.names} 
+                alt="Hero Background" 
                 className="absolute inset-0 w-full h-full object-cover will-change-transform"
                 style={{ y: heroImageY, scale: heroScale }}
               />
-              <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` }} />
+              <div className="absolute inset-0 bg-black/50" />
             </>
-          )}
+          ) : (
+            <>
+              {/* Parallax Cover Image */}
+              {invitation.coverImage && (
+                <>
+                  <motion.img 
+                    src={invitation.coverImage} 
+                    alt="Cover" 
+                    className="absolute inset-0 w-full h-full object-cover will-change-transform"
+                    style={{ y: heroImageY, scale: heroScale }}
+                  />
+                  <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` }} />
+                </>
+              )}
 
-          {/* Non-cover parallax gradient */}
-          {!invitation.coverImage && (
-            <motion.div 
-              className="absolute inset-0"
-              style={{ 
-                y: heroImageY,
-                background: `radial-gradient(ellipse at center, ${template.colorScheme.secondary}50 0%, transparent 70%)` 
-              }}
-            />
+              {/* Non-cover parallax gradient */}
+              {!invitation.coverImage && (
+                <motion.div 
+                  className="absolute inset-0"
+                  style={{ 
+                    y: heroImageY,
+                    background: `radial-gradient(ellipse at center, ${template.colorScheme.secondary}50 0%, transparent 70%)` 
+                  }}
+                />
+              )}
+            </>
           )}
 
           <CornerOrnaments {...decorProps} />
@@ -534,7 +557,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
 
         {/* Message / Sambutan */}
         {invitation.message && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.names : undefined} className="py-12 px-6">
             <motion.div 
               variants={sectionFadeScale}
               initial="hidden"
@@ -562,12 +585,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 >"</motion.div>
               </SectionWrapper>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
         
         {/* Countdown Section */}
         {features?.hasCountdown && (
-        <section className="py-12 px-6">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.countdown : undefined} className="py-12 px-6">
           <motion.div 
             variants={sectionFadeUp}
             initial="hidden"
@@ -603,12 +626,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               ))}
             </motion.div>
           </motion.div>
-        </section>
+        </CustomSection>
         )}
 
         {/* Event Sessions */}
         {invitation.events.length > 0 && invitation.events.some(e => e.name) && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.datetime : undefined} className="py-12 px-6">
             <motion.div
               variants={staggerContainer}
               initial="hidden"
@@ -648,11 +671,11 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 </motion.div>
               ))}
             </motion.div>
-          </section>
+          </CustomSection>
         )}
         
         {/* Event Details */}
-        <section className="py-12 px-6">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.location : undefined} className="py-12 px-6">
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto space-y-6">
             <motion.div variants={staggerItem}>
               <SectionWrapper {...decorProps} className="p-6 text-center">
@@ -695,11 +718,11 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               )}
             </SectionWrapper></motion.div>
           </motion.div>
-        </section>
+        </CustomSection>
 
         {/* Save to Calendar */}
         {features?.hasCalendar && (
-        <section className="py-8 px-6">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.datetime : undefined} className="py-8 px-6">
           <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto text-center">
             <Divider {...decorProps} />
             <h3 className="font-serif text-lg font-semibold mb-4 flex items-center justify-center gap-2" style={{ color: template.colorScheme.primary }}>
@@ -718,12 +741,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               secondaryColor={template.colorScheme.secondary}
             />
           </motion.div>
-        </section>
+        </CustomSection>
         )}
         
         {/* Gallery Section with staggered items */}
         {features?.hasGallery && invitation.galleryImages.length > 0 && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.gallery : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <h2 className="font-serif text-xl font-semibold mb-6 text-center" style={{ color: template.colorScheme.primary }}>
@@ -749,12 +772,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 ))}
               </motion.div>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
 
         {/* RSVP Section */}
         {features?.hasRSVP && invitation.id && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.rsvp : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <motion.h2 
@@ -778,12 +801,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 />
               </SectionWrapper>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
 
         {/* Guest Book */}
         {features?.hasGuestBook && invitation.id && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.guestbook : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <motion.h2 
@@ -807,12 +830,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 />
               </SectionWrapper>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
 
         {/* Digital Envelope */}
         {features?.hasDigitalEnvelope && invitation.bankAccounts.length > 0 && invitation.bankAccounts.some(a => a.bankName) && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.envelope : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeScale} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <motion.h2 
@@ -833,11 +856,11 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 secondaryColor={template.colorScheme.secondary}
               />
             </motion.div>
-          </section>
+          </CustomSection>
         )}
         
         {/* Closing Section */}
-        <section className="py-12 px-6 text-center">
+        <CustomSection backgroundUrl={isFullCustom ? customBg.closing : undefined} className="py-12 px-6 text-center">
           <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
             <Divider {...decorProps} />
 
@@ -905,7 +928,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               </p>
             </div>
           </motion.div>
-        </section>
+        </CustomSection>
       </motion.div>
     </div>
     </>

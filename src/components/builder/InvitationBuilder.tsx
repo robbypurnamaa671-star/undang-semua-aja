@@ -12,6 +12,7 @@ import { GalleryUpload } from "./GalleryUpload";
 import { EventSessionsEditor } from "./EventSessionsEditor";
 import { BankAccountsEditor } from "./BankAccountsEditor";
 import { GuestListEditor } from "./GuestListEditor";
+import { SectionBackgroundsEditor } from "./SectionBackgroundsEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Edit, Share2, Smartphone, Clock, Globe } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -39,6 +40,7 @@ export function InvitationBuilder({
   const isLamaran = invitation.eventType === "lamaran";
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig.features;
+  const isFullCustom = template.isFullCustom === true;
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
@@ -195,7 +197,7 @@ export function InvitationBuilder({
             </div>
             
             {/* Cover Image */}
-            {features.hasGallery && (
+            {features.hasGallery && !isFullCustom && (
               <ImageUpload
                 label="Foto Cover (1080 × 1440 px)"
                 value={invitation.coverImage}
@@ -206,12 +208,20 @@ export function InvitationBuilder({
             )}
             
             {/* Gallery Images */}
-            {features.hasGallery && (
+            {features.hasGallery && !isFullCustom && (
               <GalleryUpload
                 label="Galeri Foto (1080 × 1080 px)"
                 value={invitation.galleryImages}
                 onChange={(urls) => updateField("galleryImages", urls)}
                 maxImages={6}
+              />
+            )}
+
+            {/* Full Custom Section Backgrounds */}
+            {isFullCustom && (
+              <SectionBackgroundsEditor
+                value={invitation.customBackgrounds || {}}
+                onChange={(backgrounds) => updateField("customBackgrounds", backgrounds)}
               />
             )}
             

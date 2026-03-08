@@ -107,6 +107,7 @@ export type Database = {
           closing_prayer: string | null
           cover_image: string | null
           created_at: string
+          custom_backgrounds: Json
           event_date: string | null
           event_time: string | null
           event_type: string
@@ -137,6 +138,7 @@ export type Database = {
           closing_prayer?: string | null
           cover_image?: string | null
           created_at?: string
+          custom_backgrounds?: Json
           event_date?: string | null
           event_time?: string | null
           event_type: string
@@ -167,6 +169,7 @@ export type Database = {
           closing_prayer?: string | null
           cover_image?: string | null
           created_at?: string
+          custom_backgrounds?: Json
           event_date?: string | null
           event_time?: string | null
           event_type?: string
