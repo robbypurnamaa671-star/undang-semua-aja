@@ -147,18 +147,22 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <TabsList className="grid w-full grid-cols-5 max-w-2xl">
+              <TabsList className="grid w-full grid-cols-6 max-w-3xl">
                 <TabsTrigger value="my-invitations" className="gap-1.5 text-xs sm:text-sm">
                   <Mail className="w-4 h-4 hidden sm:block" />
-                  Undangan Saya
+                  Undangan
                 </TabsTrigger>
                 <TabsTrigger value="admin-overview" className="gap-1.5 text-xs sm:text-sm">
                   <BarChart3 className="w-4 h-4 hidden sm:block" />
                   Statistik
                 </TabsTrigger>
+                <TabsTrigger value="admin-seo" className="gap-1.5 text-xs sm:text-sm">
+                  <TrendingUp className="w-4 h-4 hidden sm:block" />
+                  SEO
+                </TabsTrigger>
                 <TabsTrigger value="admin-invitations" className="gap-1.5 text-xs sm:text-sm">
                   <Mail className="w-4 h-4 hidden sm:block" />
-                  Semua Undangan
+                  Semua
                 </TabsTrigger>
                 <TabsTrigger value="admin-blog" className="gap-1.5 text-xs sm:text-sm">
                   <FileText className="w-4 h-4 hidden sm:block" />
