@@ -718,7 +718,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               )}
             </SectionWrapper></motion.div>
           </motion.div>
-        </section>
+        </CustomSection>
 
         {/* Save to Calendar */}
         {features?.hasCalendar && (
