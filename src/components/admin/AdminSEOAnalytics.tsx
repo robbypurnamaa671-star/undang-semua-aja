@@ -88,6 +88,12 @@ export function AdminSEOAnalytics() {
       ? 100
       : 0;
 
+  // Avoid Recharts prop collision: `style` key in data can be treated as SVG style prop
+  const topStylesChartData = (data.top_styles ?? []).map((item) => ({
+    style_name: item.style,
+    views: item.views,
+  }));
+
   return (
     <div className="space-y-6">
       {/* Period selector */}
@@ -213,7 +219,7 @@ export function AdminSEOAnalytics() {
         )}
 
         {/* Top styles */}
-        {data.top_styles && data.top_styles.length > 0 && (
+        {topStylesChartData.length > 0 && (
           <Card>
             <CardHeader className="flex flex-row items-center gap-2">
               <Palette className="h-4 w-4 text-primary" />
@@ -221,9 +227,9 @@ export function AdminSEOAnalytics() {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={data.top_styles}>
+                <BarChart data={topStylesChartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis dataKey="style" stroke="#9ca3af" fontSize={12} />
+                  <XAxis dataKey="style_name" stroke="#9ca3af" fontSize={12} />
                   <YAxis stroke="#9ca3af" fontSize={12} />
                   <Tooltip />
                   <Bar dataKey="views" fill="#d4a574" isAnimationActive={false} />
