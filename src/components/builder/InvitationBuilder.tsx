@@ -197,7 +197,7 @@ export function InvitationBuilder({
             </div>
             
             {/* Cover Image */}
-            {features.hasGallery && (
+            {features.hasGallery && !isFullCustom && (
               <ImageUpload
                 label="Foto Cover (1080 × 1440 px)"
                 value={invitation.coverImage}
@@ -208,12 +208,20 @@ export function InvitationBuilder({
             )}
             
             {/* Gallery Images */}
-            {features.hasGallery && (
+            {features.hasGallery && !isFullCustom && (
               <GalleryUpload
                 label="Galeri Foto (1080 × 1080 px)"
                 value={invitation.galleryImages}
                 onChange={(urls) => updateField("galleryImages", urls)}
                 maxImages={6}
+              />
+            )}
+
+            {/* Full Custom Section Backgrounds */}
+            {isFullCustom && (
+              <SectionBackgroundsEditor
+                value={invitation.customBackgrounds || {}}
+                onChange={(backgrounds) => updateField("customBackgrounds", backgrounds)}
               />
             )}
             
