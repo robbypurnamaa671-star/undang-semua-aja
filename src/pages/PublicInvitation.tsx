@@ -928,7 +928,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               </p>
             </div>
           </motion.div>
-        </section>
+        </CustomSection>
       </motion.div>
     </div>
     </>
