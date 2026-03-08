@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.generate-ai-seo-pages]
 verify_jwt = false
+
+[functions.admin-toggle-premium]
+verify_jwt = false
