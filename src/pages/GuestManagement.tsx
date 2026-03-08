@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -196,6 +197,13 @@ export default function GuestManagement() {
   }
 
   return (
+    <>
+      <SEO
+        title="Kelola Daftar Tamu | Undangan Digital"
+        description="Kelola daftar tamu undangan digital Anda. Lihat RSVP, kirim undangan via WhatsApp, dan pantau kehadiran tamu."
+        canonical="/guests"
+        noIndex
+      />
     <div className="min-h-screen bg-muted/30">
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-50">
@@ -401,5 +409,6 @@ export default function GuestManagement() {
         )}
       </main>
     </div>
+    </>
   );
 }

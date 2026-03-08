@@ -1,4 +1,5 @@
 import { useParams, useSearchParams } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Template, getTemplateById } from "@/lib/templates";
@@ -284,6 +285,13 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
   };
   
   return (
+    <>
+      <SEO
+        title={`${invitation.title || 'Undangan Digital'} | Undanganlink`}
+        description={`Anda diundang ke ${invitation.title || 'acara spesial'}. Buka undangan digital ini untuk melihat detail acara dan konfirmasi kehadiran.`}
+        canonical={`/invite/${slug}`}
+        ogType="article"
+      />
     <div 
       className="min-h-screen"
       style={{ 
@@ -900,5 +908,6 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         </section>
       </motion.div>
     </div>
+    </>
   );
 }
