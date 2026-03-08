@@ -26,6 +26,7 @@ import { AdminStats } from "@/components/admin/AdminStats";
 import { AdminInvitations } from "@/components/admin/AdminInvitations";
 import { AdminBlog } from "@/components/admin/AdminBlog";
 import { AdminUsers } from "@/components/admin/AdminUsers";
+import { AdminSEOAnalytics } from "@/components/admin/AdminSEOAnalytics";
 
 const container = {
   hidden: { opacity: 0 },
