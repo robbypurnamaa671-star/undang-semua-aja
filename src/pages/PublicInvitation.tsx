@@ -434,30 +434,45 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         <section 
           ref={heroRef}
           className="min-h-screen flex flex-col items-center justify-center text-center p-6 relative overflow-hidden"
-          style={{ background: invitation.coverImage ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` }}
+          style={{ background: (invitation.coverImage || (isFullCustom && customBg.names)) ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` }}
         >
-          {/* Parallax Cover Image */}
-          {invitation.coverImage && (
+          {/* Full Custom Hero Background */}
+          {isFullCustom && customBg.names ? (
             <>
               <motion.img 
-                src={invitation.coverImage} 
-                alt="Cover" 
+                src={customBg.names} 
+                alt="Hero Background" 
                 className="absolute inset-0 w-full h-full object-cover will-change-transform"
                 style={{ y: heroImageY, scale: heroScale }}
               />
-              <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` }} />
+              <div className="absolute inset-0 bg-black/50" />
             </>
-          )}
+          ) : (
+            <>
+              {/* Parallax Cover Image */}
+              {invitation.coverImage && (
+                <>
+                  <motion.img 
+                    src={invitation.coverImage} 
+                    alt="Cover" 
+                    className="absolute inset-0 w-full h-full object-cover will-change-transform"
+                    style={{ y: heroImageY, scale: heroScale }}
+                  />
+                  <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` }} />
+                </>
+              )}
 
-          {/* Non-cover parallax gradient */}
-          {!invitation.coverImage && (
-            <motion.div 
-              className="absolute inset-0"
-              style={{ 
-                y: heroImageY,
-                background: `radial-gradient(ellipse at center, ${template.colorScheme.secondary}50 0%, transparent 70%)` 
-              }}
-            />
+              {/* Non-cover parallax gradient */}
+              {!invitation.coverImage && (
+                <motion.div 
+                  className="absolute inset-0"
+                  style={{ 
+                    y: heroImageY,
+                    background: `radial-gradient(ellipse at center, ${template.colorScheme.secondary}50 0%, transparent 70%)` 
+                  }}
+                />
+              )}
+            </>
           )}
 
           <CornerOrnaments {...decorProps} />
