@@ -197,6 +197,13 @@ export default function GuestManagement() {
   }
 
   return (
+    <>
+      <SEO
+        title="Kelola Daftar Tamu | Undangan Digital"
+        description="Kelola daftar tamu undangan digital Anda. Lihat RSVP, kirim undangan via WhatsApp, dan pantau kehadiran tamu."
+        canonical="/guests"
+        noIndex
+      />
     <div className="min-h-screen bg-muted/30">
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-50">
