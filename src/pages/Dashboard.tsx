@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
-import { Plus, Edit2, Trash2, Eye, Share2, LogOut, Users, Shield, BarChart3, FileText, Mail } from "lucide-react";
+import { Plus, Edit2, Trash2, Eye, Share2, LogOut, Users, Shield, BarChart3, FileText, Mail, TrendingUp } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useInvitations } from "@/hooks/use-invitations";
 import { useAdmin } from "@/hooks/use-admin";
