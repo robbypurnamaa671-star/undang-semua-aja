@@ -4,6 +4,8 @@
  * that reflect the cultural identity of each template design.
  */
 
+export type AnimationPreset = 'default' | 'celestial' | 'architectural' | 'chromatic' | 'elemental';
+
 export interface TemplateCulturalStyle {
   greeting: string;
   closingText: string;
@@ -18,6 +20,8 @@ export interface TemplateCulturalStyle {
   backgroundPattern: string | null;
   /** Cultural icons displayed as subtle background decorations */
   culturalIcons?: { emoji: string; label: string }[];
+  /** Animation preset for unique enter/exit animations */
+  animationPreset?: AnimationPreset;
 }
 
 const defaultStyle: TemplateCulturalStyle = {
