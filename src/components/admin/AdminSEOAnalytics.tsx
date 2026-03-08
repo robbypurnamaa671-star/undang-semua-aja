@@ -184,7 +184,7 @@ export function AdminSEOAnalytics() {
                   <XAxis type="number" stroke="#9ca3af" fontSize={12} />
                   <YAxis dataKey="city" type="category" width={90} stroke="#9ca3af" fontSize={12} />
                   <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
-                  <Bar dataKey="views" fill="#c8956c" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="views" fill="#c8956c" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -227,7 +227,7 @@ export function AdminSEOAnalytics() {
                   <XAxis dataKey="style" stroke="#9ca3af" fontSize={12} />
                   <YAxis stroke="#9ca3af" fontSize={12} />
                   <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8 }} />
-                  <Bar dataKey="views" fill="#d4a574" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="views" fill="#d4a574" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
