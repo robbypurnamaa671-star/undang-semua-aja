@@ -1,6 +1,26 @@
 {
   "rewrites": [
     {
+      "source": "/sitemap.xml",
+      "destination": "https://pypldtluvvngweimcmos.supabase.co/functions/v1/sitemap"
+    },
+    {
+      "source": "/sitemap-static.xml",
+      "destination": "https://pypldtluvvngweimcmos.supabase.co/functions/v1/sitemap?type=static"
+    },
+    {
+      "source": "/sitemap-blog.xml",
+      "destination": "https://pypldtluvvngweimcmos.supabase.co/functions/v1/sitemap?type=blog"
+    },
+    {
+      "source": "/sitemap-seo-pages.xml",
+      "destination": "https://pypldtluvvngweimcmos.supabase.co/functions/v1/sitemap?type=seo-pages"
+    },
+    {
+      "source": "/sitemap-invitations.xml",
+      "destination": "https://pypldtluvvngweimcmos.supabase.co/functions/v1/sitemap?type=invitations"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
