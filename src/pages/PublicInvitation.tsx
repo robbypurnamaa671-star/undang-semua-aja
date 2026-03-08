@@ -772,7 +772,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 ))}
               </motion.div>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
 
         {/* RSVP Section */}
