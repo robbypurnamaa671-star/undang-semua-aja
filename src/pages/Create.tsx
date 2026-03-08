@@ -291,12 +291,10 @@ export default function Create() {
                 {templates.map((template) => (
                   <motion.button
                     key={template.id}
-                    whileHover={{ scale: template.isPremium ? 1 : 1.02 }}
-                    whileTap={{ scale: template.isPremium ? 1 : 0.98 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={() => handleTemplateSelect(template)}
-                    className={`card-interactive text-left overflow-hidden relative ${
-                      template.isPremium ? 'opacity-80 cursor-not-allowed' : ''
-                    }`}
+                    className="card-interactive text-left overflow-hidden relative"
                   >
                     {/* Template Preview */}
                     {(() => {
@@ -368,17 +366,12 @@ export default function Create() {
                             />
                           </div>
                           
-                          {/* Premium Lock Overlay */}
+                          {/* Premium Badge */}
                           {template.isPremium && (
-                            <div className="absolute inset-0 bg-foreground/40 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3">
-                              <div className="w-14 h-14 rounded-full bg-background/90 flex items-center justify-center shadow-lg">
-                                <Lock className="w-7 h-7 text-primary" />
-                              </div>
-                              <Badge className="bg-primary text-primary-foreground shadow-lg">
-                                <Crown className="w-3 h-3 mr-1" />
-                                Premium
-                              </Badge>
-                            </div>
+                            <Badge className="absolute top-3 right-3 bg-primary text-primary-foreground shadow-lg">
+                              <Crown className="w-3 h-3 mr-1" />
+                              Premium
+                            </Badge>
                           )}
                         </div>
                       );
@@ -392,8 +385,8 @@ export default function Create() {
                         </div>
                         {template.isPremium ? (
                           <Badge variant="secondary" className="text-xs">
-                            <Lock className="w-3 h-3 mr-1" />
-                            Terkunci
+                            <Crown className="w-3 h-3 mr-1" />
+                            Premium
                           </Badge>
                         ) : (
                           <Badge variant="outline" className="text-xs text-primary border-primary">
