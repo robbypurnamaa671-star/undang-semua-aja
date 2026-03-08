@@ -188,6 +188,10 @@ export default function Dashboard() {
                 <AdminStats />
               </TabsContent>
 
+              <TabsContent value="admin-seo">
+                <AdminSEOAnalytics />
+              </TabsContent>
+
               <TabsContent value="admin-invitations">
                 <AdminInvitations />
               </TabsContent>
