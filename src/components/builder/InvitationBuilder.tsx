@@ -12,6 +12,7 @@ import { GalleryUpload } from "./GalleryUpload";
 import { EventSessionsEditor } from "./EventSessionsEditor";
 import { BankAccountsEditor } from "./BankAccountsEditor";
 import { GuestListEditor } from "./GuestListEditor";
+import { SectionBackgroundsEditor } from "./SectionBackgroundsEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Edit, Share2, Smartphone, Clock, Globe } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -39,6 +40,7 @@ export function InvitationBuilder({
   const isLamaran = invitation.eventType === "lamaran";
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig.features;
+  const isFullCustom = template.isFullCustom === true;
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
