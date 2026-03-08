@@ -62,10 +62,18 @@ export default function DynamicSEOPage() {
   }
   schemas.push({
     "@context": "https://schema.org",
-    "@type": "WebPage",
+    "@type": "Article",
+    headline: page.h1 || page.title,
     name: page.meta_title || page.title,
     description: page.meta_description || "",
-    url: `https://undanganku.app/p/${page.slug}`,
+    url: `https://undanganlink.com/p/${page.slug}`,
+    publisher: {
+      "@type": "Organization",
+      name: "Undanganlink",
+      url: "https://undanganlink.com",
+    },
+    dateModified: page.updated_at,
+    inLanguage: "id-ID",
   });
 
   return (
