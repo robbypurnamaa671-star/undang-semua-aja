@@ -48,6 +48,8 @@ export default function PublicInvitation() {
   const isLamaran = invitation?.eventType === "lamaran";
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig?.features;
+  const isFullCustom = template?.isFullCustom === true;
+  const customBg = invitation?.customBackgrounds || {};
 
   // Parallax scroll for hero section
   const { scrollY } = useScroll();
