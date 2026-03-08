@@ -777,7 +777,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
 
         {/* RSVP Section */}
         {features?.hasRSVP && invitation.id && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.rsvp : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <motion.h2 
@@ -801,12 +801,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 />
               </SectionWrapper>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
 
         {/* Guest Book */}
         {features?.hasGuestBook && invitation.id && (
-          <section className="py-12 px-6">
+          <CustomSection backgroundUrl={isFullCustom ? customBg.guestbook : undefined} className="py-12 px-6">
             <motion.div variants={sectionFadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} className="max-w-md mx-auto">
               <Divider {...decorProps} />
               <motion.h2 
@@ -830,7 +830,7 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
                 />
               </SectionWrapper>
             </motion.div>
-          </section>
+          </CustomSection>
         )}
 
         {/* Digital Envelope */}
