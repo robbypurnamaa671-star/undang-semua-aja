@@ -11,6 +11,10 @@ import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
 import GuestManagement from "./pages/GuestManagement";
 import PublicInvitation from "./pages/PublicInvitation";
+import BlogList from "./pages/BlogList";
+import BlogDetail from "./pages/BlogDetail";
+import TemplateShowcase from "./pages/TemplateShowcase";
+import DynamicSEOPage from "./pages/DynamicSEOPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +34,10 @@ const App = () => (
             <Route path="/create" element={<Create />} />
             <Route path="/guests" element={<GuestManagement />} />
             <Route path="/invite/:slug" element={<PublicInvitation />} />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
+            <Route path="/templates" element={<TemplateShowcase />} />
+            <Route path="/p/:seoSlug" element={<DynamicSEOPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
