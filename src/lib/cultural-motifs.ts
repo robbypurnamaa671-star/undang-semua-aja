@@ -439,4 +439,134 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
       label: 'Nuwo Sesat',
     },
   ],
+
+  // ── NEW TEMPLATES: Religion ──
+
+  'wedding-islami-mewah': [
+    { path: 'M50 10 Q75 25 75 50 L75 85 L25 85 L25 50 Q25 25 50 10 Z', path2: 'M48 5 L50 0 L52 5 M35 85 L35 65 L65 65 L65 85', label: 'Masjid' },
+    { path: 'M50 10 Q60 10 65 25 Q70 40 50 50 Q30 40 35 25 Q40 10 50 10 Z', path2: 'M50 50 L50 90', label: 'Bulan Sabit' },
+    { path: 'M30 15 L70 15 L72 20 L72 85 L28 85 L28 20 Z', path2: 'M35 25 L65 25 M35 35 L65 35 M35 45 L65 45 M35 55 L65 55', label: 'Al-Quran' },
+  ],
+
+  'wedding-kristen-sakral': [
+    { path: 'M45 10 L55 10 L55 40 L80 40 L80 50 L55 50 L55 90 L45 90 L45 50 L20 50 L20 40 L45 40 Z', label: 'Salib' },
+    { path: 'M25 85 L25 40 Q25 20 50 10 Q75 20 75 40 L75 85 Z', path2: 'M48 5 L50 0 L52 5 M40 85 L40 60 L60 60 L60 85 Q50 75 40 85', label: 'Gereja' },
+    { path: 'M50 15 Q55 15 55 20 Q55 25 50 25 Q45 25 45 20 Q45 15 50 15 Z M45 25 L42 40 L50 35 L58 40 L55 25 M42 40 L38 80 L45 75 M58 40 L62 80 L55 75 L50 85 L45 75', label: 'Lonceng' },
+  ],
+
+  'wedding-katolik-agung': [
+    { path: 'M20 85 L20 40 L30 40 L30 30 Q30 15 50 8 Q70 15 70 30 L70 40 L80 40 L80 85 Z', path2: 'M48 3 L50 0 L52 3 M40 85 L40 60 L60 60 L60 85', label: 'Katedral' },
+    { path: 'M50 10 Q55 10 55 14 Q60 12 60 17 Q65 15 63 20 Q68 22 63 26 Q65 30 60 30 Q62 35 57 33 Q55 38 50 35 Q45 38 43 33 Q38 35 40 30 Q35 30 37 26 Q32 22 37 20 Q35 15 40 17 Q40 12 45 14 Q45 10 50 10 Z M50 35 L50 85 M50 55 L40 45 M50 65 L60 55', label: 'Rosario' },
+    { path: 'M45 15 L55 15 L55 80 L45 80 Z M35 25 L50 15 L65 25 Z', path2: 'M48 10 L50 5 L52 10 M42 80 L50 90 L58 80', label: 'Lilin' },
+  ],
+
+  'wedding-hindu-suci': [
+    { path: 'M50 10 Q65 25 65 45 Q65 60 50 70 Q35 60 35 45 Q35 25 50 10 Z', path2: 'M50 25 Q57 35 57 45 Q57 55 50 60 Q43 55 43 45 Q43 35 50 25 Z', label: 'Mandala' },
+    { path: 'M50 5 Q55 15 60 20 Q55 25 50 20 Q45 25 40 20 Q45 15 50 5 Z M50 20 L50 30 M40 30 Q30 40 35 55 Q40 65 50 70 Q60 65 65 55 Q70 40 60 30 L40 30 Z', label: 'Teratai Om' },
+    { path: 'M15 80 L15 40 Q15 20 30 15 L35 10 L38 15 L38 80 Z M85 80 L85 40 Q85 20 70 15 L65 10 L62 15 L62 80 Z', path2: 'M20 50 L35 50 M65 50 L80 50', label: 'Gapura' },
+  ],
+
+  'wedding-buddha-harmoni': [
+    { path: 'M50 15 L58 35 L80 35 L62 50 L70 70 L50 58 L30 70 L38 50 L20 35 L42 35 Z', label: 'Roda Dharma' },
+    { path: 'M50 20 Q55 25 60 30 Q55 35 50 30 Q45 35 40 30 Q45 25 50 20 Z M50 30 L50 40 M35 40 Q25 50 30 65 Q38 78 50 82 Q62 78 70 65 Q75 50 65 40 L35 40 Z', label: 'Teratai' },
+    { path: 'M50 10 Q70 15 70 35 Q70 55 50 65 Q30 55 30 35 Q30 15 50 10 Z', path2: 'M50 20 Q60 25 60 35 Q60 48 50 55 Q40 48 40 35 Q40 25 50 20 Z', label: 'Stupa' },
+  ],
+
+  // ── NEW TEMPLATES: Famous Cities ──
+
+  'wedding-paris-romantis': [
+    { path: 'M48 5 L52 5 L52 25 L60 25 L60 30 L55 30 L55 50 L65 50 L65 55 L58 55 L58 70 L72 70 L72 78 L60 78 L60 85 L40 85 L40 78 L28 78 L28 70 L42 70 L42 55 L35 55 L35 50 L45 50 L45 30 L40 30 L40 25 L48 25 Z', label: 'Eiffel Tower' },
+    { path: 'M30 45 Q30 20 50 15 Q70 20 70 45 Q70 65 50 75 Q30 65 30 45 Z', path2: 'M40 45 Q40 30 50 25 Q60 30 60 45 Q60 55 50 62 Q40 55 40 45 Z', label: 'Rose Window' },
+    { path: 'M50 10 Q58 10 60 18 Q68 16 65 24 Q72 28 66 34 Q70 40 62 42 Q63 50 55 48 Q55 55 48 50 Q42 55 42 48 Q35 50 36 42 Q28 40 34 34 Q28 28 36 24 Q32 16 40 18 Q42 10 50 10 Z', label: 'Mawar' },
+  ],
+
+  'wedding-tokyo-sakura': [
+    { path: 'M50 15 Q55 20 52 28 Q58 25 55 32 Q60 32 55 38 Q58 42 52 40 Q55 45 50 42 Q45 45 48 40 Q42 42 45 38 Q40 32 45 32 Q42 25 48 28 Q45 20 50 15 Z', label: 'Sakura' },
+    { path: 'M15 80 L15 40 Q15 20 30 15 L35 10 L38 15 L38 80 Z M85 80 L85 40 Q85 20 70 15 L65 10 L62 15 L62 80 Z', path2: 'M38 35 L62 35', label: 'Torii Gate' },
+    { path: 'M40 15 L60 15 L58 25 L55 25 L55 30 Q60 35 60 45 Q60 60 50 65 Q40 60 40 45 Q40 35 45 30 L45 25 L42 25 Z', label: 'Kokeshi' },
+  ],
+
+  'wedding-istanbul-megah': [
+    { path: 'M20 85 L20 45 Q20 20 50 10 Q80 20 80 45 L80 85 Z', path2: 'M48 5 L50 0 L52 5 M30 85 L30 50 Q30 30 50 20 Q70 30 70 50 L70 85', label: 'Hagia Sophia' },
+    { path: 'M50 15 Q70 25 70 50 Q70 75 50 85 Q30 75 30 50 Q30 25 50 15 Z', path2: 'M50 25 Q60 30 60 50 Q60 70 50 78 Q40 70 40 50 Q40 30 50 25 Z', label: 'Evil Eye' },
+    { path: 'M50 10 Q55 15 52 22 Q58 18 55 26 Q60 24 55 30 Q58 35 52 32 Q55 38 50 34 Q45 38 48 32 Q42 35 45 30 Q40 24 45 26 Q42 18 48 22 Q45 15 50 10 Z', label: 'Tulip' },
+  ],
+
+  'wedding-jogja-heritage': [
+    { path: 'M50 10 L60 25 L65 25 L65 35 L70 35 L70 50 L75 50 L75 65 L80 65 L80 90 L20 90 L20 65 L25 65 L25 50 L30 50 L30 35 L35 35 L35 25 L40 25 Z', label: 'Keraton' },
+    { path: 'M50 20 Q65 35 50 50 Q35 35 50 20 Z M20 50 Q35 35 50 50 Q35 65 20 50 Z M50 80 Q35 65 50 50 Q65 65 50 80 Z M80 50 Q65 65 50 50 Q65 35 80 50 Z', label: 'Batik Parang' },
+    { path: 'M45 10 Q55 10 55 20 L55 25 Q60 27 58 32 L55 50 L65 65 L60 67 L50 55 L50 70 L60 90 L55 90 L48 75 L41 90 L36 90 L46 70 L46 55 L36 67 L31 65 L41 50 L41 32 Q36 27 41 25 L41 20 Q41 10 45 10 Z', label: 'Wayang' },
+  ],
+
+  'wedding-venice-elegan': [
+    { path: 'M15 65 Q25 50 40 55 L60 55 Q75 50 85 65 Z M50 55 L50 25 L55 27 L55 50', path2: 'M50 25 L70 40 L55 45', label: 'Gondola' },
+    { path: 'M30 20 Q30 10 50 10 Q70 10 70 20 Q72 35 65 40 Q70 45 68 55 L60 55 Q58 48 62 42 Q55 38 55 25 Q55 15 50 15 Q45 15 45 25 Q45 38 38 42 Q42 48 40 55 L32 55 Q30 45 35 40 Q28 35 30 20 Z', label: 'Topeng Venesia' },
+    { path: 'M20 70 Q20 30 50 20 Q80 30 80 70 Z', path2: 'M30 70 Q30 40 50 30 Q70 40 70 70', label: 'Jembatan Rialto' },
+  ],
+
+  // ── NEW TEMPLATES: Climate/Nature ──
+
+  'wedding-garden-boho': [
+    { path: 'M50 15 Q58 15 60 25 Q68 22 64 30 Q70 36 62 38 Q64 46 56 44 Q55 50 48 46 Q42 50 42 44 Q34 46 36 38 Q28 36 34 30 Q30 22 38 25 Q40 15 50 15 Z', label: 'Bunga Matahari' },
+    { path: 'M50 10 Q52 20 55 30 Q60 35 55 45 Q58 55 50 60 Q42 55 45 45 Q40 35 45 30 Q48 20 50 10 Z', path2: 'M50 60 L50 90 M45 70 L35 65 M55 75 L65 70', label: 'Eucalyptus' },
+    { path: 'M50 5 L52 15 Q58 12 55 20 Q62 20 57 26 Q60 32 53 30 Q52 35 50 30 Q48 35 47 30 Q40 32 43 26 Q38 20 45 20 Q42 12 48 15 Z M50 30 L50 90 M46 45 L38 40 M54 55 L62 50 M46 65 L38 60', label: 'Wildflower' },
+  ],
+
+  'wedding-pantai-sunset': [
+    { path: 'M0 60 Q15 50 30 58 Q45 50 60 60 Q75 50 90 58 Q100 52 100 60 L100 90 L0 90 Z', label: 'Ombak' },
+    { path: 'M50 25 Q55 25 58 30 Q65 28 62 35 Q68 38 62 42 Q65 48 58 46 Q55 50 50 46 Q45 50 42 46 Q35 48 38 42 Q32 38 38 35 Q35 28 42 30 Q45 25 50 25 Z', path2: 'M43 38 L40 42 M57 35 L60 32', label: 'Kerang' },
+    { path: 'M50 5 L50 70 M48 70 Q40 75 35 85 Q50 80 65 85 Q60 75 52 70', path2: 'M45 20 L25 30 M55 15 L75 25 M42 35 L20 45 M58 30 L78 38', label: 'Kelapa' },
+  ],
+
+  'wedding-winter-frost': [
+    { path: 'M50 10 L50 90 M50 50 L80 25 M50 50 L20 25 M50 50 L80 75 M50 50 L20 75 M25 50 L75 50', path2: 'M50 20 L55 25 L50 30 L45 25 Z M50 70 L55 75 L50 80 L45 75 Z M30 40 L35 35 L40 40 L35 45 Z M60 60 L65 55 L70 60 L65 65 Z', label: 'Kristal Es' },
+    { path: 'M50 15 Q60 15 65 25 Q70 35 60 40 Q65 50 55 52 Q58 60 50 58 Q42 60 45 52 Q35 50 40 40 Q30 35 35 25 Q40 15 50 15 Z', path2: 'M44 30 Q46 28 48 30 M52 32 Q54 30 56 32 M46 40 Q50 44 54 40', label: 'Snowman' },
+    { path: 'M50 10 L55 30 L75 30 L60 42 L65 62 L50 50 L35 62 L40 42 L25 30 L45 30 Z', label: 'Bintang Salju' },
+  ],
+
+  'wedding-autumn-warm': [
+    { path: 'M50 15 Q60 20 65 35 Q68 50 55 60 Q50 55 45 60 Q32 50 35 35 Q40 20 50 15 Z', path2: 'M50 15 L50 85 M42 30 L35 25 M58 40 L65 35', label: 'Maple Leaf' },
+    { path: 'M50 10 Q52 20 55 25 Q60 22 57 30 Q62 32 56 36 Q58 42 50 40 Q42 42 44 36 Q38 32 43 30 Q40 22 45 25 Q48 20 50 10 Z M50 40 L50 90 M45 55 Q35 58 30 65 M55 65 Q65 68 70 75', label: 'Gandum' },
+    { path: 'M30 40 Q30 20 50 15 Q70 20 70 40 Q70 55 55 60 L55 85 L45 85 L45 60 Q30 55 30 40 Z', path2: 'M40 45 Q42 40 48 42 M52 38 Q55 35 58 38', label: 'Labu' },
+  ],
+
+  // ── NEW TEMPLATES: Identity/Culture ──
+
+  'wedding-nusantara-fusion': [
+    { path: 'M50 15 L60 25 L58 28 L65 35 L60 38 L68 48 L50 60 L32 48 L40 38 L35 35 L42 28 L40 25 Z', path2: 'M50 60 L50 85', label: 'Garuda' },
+    { path: 'M20 20 L35 20 Q30 35 35 50 Q30 65 35 80 L20 80 Z M65 20 L80 20 Q75 35 80 50 Q75 65 80 80 L65 80 Z', path2: 'M35 30 L65 30 M35 50 L65 50 M35 70 L65 70', label: 'Songket' },
+    { path: 'M15 50 Q15 25 50 15 Q85 25 85 50 Q85 75 50 85 Q15 75 15 50 Z', path2: 'M25 50 Q25 32 50 25 Q75 32 75 50 Q75 68 50 75 Q25 68 25 50 Z', label: 'Peta Nusantara' },
+  ],
+
+  'wedding-arab-luxury': [
+    { path: 'M50 10 L65 25 L65 50 L50 65 L35 50 L35 25 Z', path2: 'M50 20 L58 28 L58 48 L50 55 L42 48 L42 28 Z', label: 'Arabesque Star' },
+    { path: 'M50 5 L55 18 L70 18 L58 28 L62 42 L50 33 L38 42 L42 28 L30 18 L45 18 Z', label: 'Islamic Star' },
+    { path: 'M40 15 L60 15 Q70 15 70 25 L70 75 Q70 85 60 85 L40 85 Q30 85 30 75 L30 25 Q30 15 40 15 Z', path2: 'M35 25 L65 25 M35 45 L65 45 M35 65 L65 65', label: 'Ornamen Geometris' },
+  ],
+
+  'wedding-india-bollywood': [
+    { path: 'M50 10 Q55 15 58 22 Q65 18 62 28 Q70 28 64 35 Q68 42 60 40 Q60 48 52 44 Q50 50 48 44 Q40 48 40 40 Q32 42 36 35 Q30 28 38 28 Q35 18 42 22 Q45 15 50 10 Z', label: 'Mandala' },
+    { path: 'M50 15 Q60 20 65 35 Q68 50 55 60 Q50 55 45 60 Q32 50 35 35 Q40 20 50 15 Z M50 60 L50 90', path2: 'M35 45 Q42 50 50 45 Q58 50 65 45', label: 'Paisley' },
+    { path: 'M25 65 Q25 30 50 15 Q75 30 75 65 L70 70 Q70 40 50 28 Q30 40 30 70 Z', path2: 'M40 65 L40 85 L60 85 L60 65', label: 'Gajah' },
+  ],
+
+  'wedding-korea-hanbok': [
+    { path: 'M35 20 Q35 12 50 10 Q65 12 65 20 L70 35 L30 35 Z M28 35 L72 35 L68 85 L32 85 Z', path2: 'M40 35 L40 50 M60 35 L60 50 M45 55 L55 55', label: 'Hanbok' },
+    { path: 'M35 20 Q35 10 50 8 Q65 10 65 20 L68 70 Q68 82 50 85 Q32 82 32 70 Z', path2: 'M35 20 Q35 28 50 30 Q65 28 65 20', label: 'Lentera Korea' },
+    { path: 'M20 60 L50 30 L80 60 Z M30 60 L30 85 L70 85 L70 60', path2: 'M42 85 L42 68 L58 68 L58 85', label: 'Hanok' },
+  ],
+
+  // ── NEW TEMPLATES: Modern Lifestyle ──
+
+  'wedding-industrial-chic': [
+    { path: 'M50 15 Q65 15 70 30 Q75 45 65 52 Q70 60 60 62 Q62 70 52 68 Q50 72 48 68 Q38 70 40 62 Q30 60 35 52 Q25 45 30 30 Q35 15 50 15 Z', path2: 'M50 25 L50 45 M42 35 L58 35 M35 42 L50 35 L65 42', label: 'Gear' },
+    { path: 'M45 10 L55 10 L55 25 Q60 25 60 30 L60 80 Q60 85 55 85 L45 85 Q40 85 40 80 L40 30 Q40 25 45 25 Z', path2: 'M46 35 Q50 30 54 35 Q54 40 50 42 Q46 40 46 35 Z', label: 'Edison Bulb' },
+    { path: 'M15 20 L85 20 L85 80 L15 80 Z M15 35 L85 35 M15 50 L85 50 M15 65 L85 65 M35 20 L35 80 M55 20 L55 80 M75 20 L75 80', label: 'Brick Wall' },
+  ],
+
+  'wedding-art-deco-gatsby': [
+    { path: 'M50 10 L70 20 L80 40 L80 60 L70 80 L50 90 L30 80 L20 60 L20 40 L30 20 Z', path2: 'M50 20 L62 26 L68 40 L68 60 L62 74 L50 80 L38 74 L32 60 L32 40 L38 26 Z', label: 'Art Deco Gem' },
+    { path: 'M10 50 L25 20 L40 50 L55 20 L70 50 L85 20 L90 30 L90 70 L85 80 L70 50 L55 80 L40 50 L25 80 L10 70 Z', label: 'Fan Pattern' },
+    { path: 'M30 15 L70 15 L70 85 L30 85 Z M35 20 L65 20 L65 80 L35 80 Z M40 25 L60 25 L60 75 L40 75 Z', path2: 'M50 15 L50 85 M30 50 L70 50', label: 'Frame' },
+  ],
 };
