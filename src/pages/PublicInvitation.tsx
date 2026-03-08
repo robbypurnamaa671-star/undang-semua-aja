@@ -324,14 +324,19 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 overflow-hidden"
-            style={{ background: invitation.coverImage ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}60 0%, ${template.colorScheme.background} 50%, ${template.colorScheme.secondary}60 100%)` }}
+            style={{ background: (invitation.coverImage || (isFullCustom && customBg.cover)) ? undefined : `linear-gradient(180deg, ${template.colorScheme.secondary}60 0%, ${template.colorScheme.background} 50%, ${template.colorScheme.secondary}60 100%)` }}
           >
-            {invitation.coverImage && (
+            {(isFullCustom && customBg.cover) ? (
+              <>
+                <img src={customBg.cover} alt="Cover" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-black/50" />
+              </>
+            ) : invitation.coverImage ? (
               <>
                 <img src={invitation.coverImage} alt="Cover" className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}90 0%, ${template.colorScheme.background}70 50%, ${template.colorScheme.background}90 100%)` }} />
               </>
-            )}
+            ) : null}
             
             <CornerOrnaments {...decorProps} />
             
