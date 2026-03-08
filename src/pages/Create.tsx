@@ -8,6 +8,7 @@ import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
 import logo from "@/assets/logo.png";
 import { getTemplateCulturalStyle } from "@/lib/template-styles";
+import { SEO } from "@/components/SEO";
 import { CulturalMotifLine } from "@/components/invitation/TemplateDecorations";
 import { toast } from "sonner";
 import { InvitationData, createDefaultInvitation } from "@/lib/invitation";
@@ -182,6 +183,13 @@ export default function Create() {
   }
   
   return (
+    <>
+      <SEO
+        title="Buat Undangan Digital | Pilih Template & Desain"
+        description="Buat undangan digital pernikahan, khitanan, atau ulang tahun dengan template premium. Pilih desain, isi detail, dan bagikan lewat WhatsApp."
+        canonical="/create"
+        noIndex
+      />
     <div className="min-h-screen bg-muted/30">
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-50">

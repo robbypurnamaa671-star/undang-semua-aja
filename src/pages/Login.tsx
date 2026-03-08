@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -86,6 +87,13 @@ export default function Login() {
   }
 
   return (
+    <>
+      <SEO
+        title="Masuk ke Akun | Undangan Digital"
+        description="Masuk ke akun Undanganlink Anda untuk mengelola undangan digital pernikahan, khitanan, dan acara spesial lainnya."
+        canonical="/login"
+        noIndex
+      />
     <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
       {/* Background Pattern */}
       <div className="absolute inset-0 pattern-batik opacity-50" />

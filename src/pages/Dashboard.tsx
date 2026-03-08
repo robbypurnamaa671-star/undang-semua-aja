@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SEO } from "@/components/SEO";
 import { motion } from "framer-motion";
 import { Plus, Edit2, Trash2, Eye, Share2, LogOut, Users } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
@@ -88,6 +89,13 @@ export default function Dashboard() {
   }
 
   return (
+    <>
+      <SEO
+        title="Dashboard | Kelola Undangan Digital Anda"
+        description="Kelola semua undangan digital Anda di satu tempat. Lihat status, edit, dan bagikan undangan pernikahan, khitanan, dan acara lainnya."
+        canonical="/dashboard"
+        noIndex
+      />
     <div className="min-h-screen bg-muted/30">
       {/* Header */}
       <header className="bg-card border-b border-border sticky top-0 z-50">
