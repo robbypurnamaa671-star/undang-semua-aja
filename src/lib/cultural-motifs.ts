@@ -697,7 +697,6 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
     { path: 'M0 55 Q15 45 30 52 Q45 42 60 55 Q75 45 90 55 Q100 48 100 55 L100 90 L0 90 Z', label: 'Storm Wave' },
     { path: 'M50 15 Q60 20 65 35 Q68 50 55 58 Q50 55 45 58 Q32 50 35 35 Q40 20 50 15 Z M50 58 L50 90 M42 65 L35 60 M58 70 L65 65 M42 80 L38 75', label: 'Palm in Wind' },
   ],
-  ],
 
   // ═══ TROPICAL PARADISE NICHE ═══
   'birthday-tropical-fiesta': [
