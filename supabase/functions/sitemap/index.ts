@@ -113,24 +113,23 @@ serve(async (req) => {
 
     // Default: Sitemap Index
     const now = toDate(new Date().toISOString());
-    const sitemapFnUrl = `${Deno.env.get("SUPABASE_URL")}/functions/v1/sitemap`;
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>${sitemapFnUrl}?type=static</loc>
+    <loc>${BASE_URL}/sitemap-static.xml</loc>
     <lastmod>${now}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${sitemapFnUrl}?type=blog</loc>
+    <loc>${BASE_URL}/sitemap-blog.xml</loc>
     <lastmod>${now}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${sitemapFnUrl}?type=seo-pages</loc>
+    <loc>${BASE_URL}/sitemap-seo-pages.xml</loc>
     <lastmod>${now}</lastmod>
   </sitemap>
   <sitemap>
-    <loc>${sitemapFnUrl}?type=invitations</loc>
+    <loc>${BASE_URL}/sitemap-invitations.xml</loc>
     <lastmod>${now}</lastmod>
   </sitemap>
 </sitemapindex>`;
