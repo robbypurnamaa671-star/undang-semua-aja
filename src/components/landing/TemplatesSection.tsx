@@ -5,7 +5,7 @@ import { CulturalMotifLine } from "@/components/invitation/TemplateDecorations";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Crown, Lock } from "lucide-react";
+import { ArrowRight, Crown } from "lucide-react";
 
 const container = {
   hidden: { opacity: 0 },
