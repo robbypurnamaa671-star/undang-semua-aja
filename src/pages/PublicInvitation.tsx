@@ -272,6 +272,22 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
       hidden: { opacity: 0, scale: 0.9, y: 40, rotate: -2 },
       visible: { opacity: 1, scale: 1, y: 0, rotate: 0, transition: { duration: 0.8, ease: "easeOut", type: "spring", stiffness: 80 } },
     },
+    tropical: {
+      hidden: { opacity: 0, y: 60, rotate: 5, scale: 0.95 },
+      visible: { opacity: 1, y: 0, rotate: 0, scale: 1, transition: { duration: 0.8, ease: [0.34, 1.56, 0.64, 1], type: "spring", damping: 12 } },
+    },
+    retro: {
+      hidden: { opacity: 0, scale: 1.15, filter: 'sepia(1) blur(3px)' },
+      visible: { opacity: 1, scale: 1, filter: 'sepia(0) blur(0px)', transition: { duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] } },
+    },
+    cosmic: {
+      hidden: { opacity: 0, scale: 0.5, filter: 'blur(12px) brightness(2)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px) brightness(1)', transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] } },
+    },
+    botanical: {
+      hidden: { opacity: 0, y: 40, x: -20, rotate: -3 },
+      visible: { opacity: 1, y: 0, x: 0, rotate: 0, transition: { duration: 0.85, ease: [0.43, 0.13, 0.23, 0.96] } },
+    },
   };
 
   const sectionScaleVariants: Record<AnimationPreset, { hidden: any; visible: any }> = {
@@ -294,6 +310,22 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     elemental: {
       hidden: { opacity: 0, y: 60, filter: 'blur(4px)' },
       visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: "easeOut" } },
+    },
+    tropical: {
+      hidden: { opacity: 0, scale: 0.8, rotate: -5 },
+      visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 0.7, type: "spring", damping: 10, stiffness: 100 } },
+    },
+    retro: {
+      hidden: { opacity: 0, scale: 0.85, filter: 'sepia(1)' },
+      visible: { opacity: 1, scale: 1, filter: 'sepia(0)', transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] } },
+    },
+    cosmic: {
+      hidden: { opacity: 0, scale: 0.4, filter: 'blur(10px)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px)', transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
+    },
+    botanical: {
+      hidden: { opacity: 0, scale: 0.9, y: 30, rotate: 2 },
+      visible: { opacity: 1, scale: 1, y: 0, rotate: 0, transition: { duration: 0.75, ease: [0.43, 0.13, 0.23, 0.96] } },
     },
   };
 
@@ -332,6 +364,22 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
       hidden: { opacity: 0, y: 30, rotate: -3 },
       visible: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.5, type: "spring", stiffness: 100 } },
     },
+    tropical: {
+      hidden: { opacity: 0, y: 40, rotate: 3 },
+      visible: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.5, type: "spring", damping: 12 } },
+    },
+    retro: {
+      hidden: { opacity: 0, scale: 1.1, filter: 'sepia(0.8)' },
+      visible: { opacity: 1, scale: 1, filter: 'sepia(0)', transition: { duration: 0.6, ease: "easeOut" } },
+    },
+    cosmic: {
+      hidden: { opacity: 0, scale: 0.6, filter: 'blur(8px) brightness(1.5)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px) brightness(1)', transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+    },
+    botanical: {
+      hidden: { opacity: 0, x: -25, rotate: -2 },
+      visible: { opacity: 1, x: 0, rotate: 0, transition: { duration: 0.55, ease: [0.43, 0.13, 0.23, 0.96] } },
+    },
   };
 
   const staggerItem = staggerItemVariants[animPreset];
@@ -356,6 +404,22 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
     elemental: {
       hidden: { opacity: 0, y: 40, scale: 0.9 },
       visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, type: "spring", stiffness: 100 } },
+    },
+    tropical: {
+      hidden: { opacity: 0, scale: 0.7, rotate: 8 },
+      visible: { opacity: 1, scale: 1, rotate: 0, transition: { duration: 0.6, type: "spring", damping: 10 } },
+    },
+    retro: {
+      hidden: { opacity: 0, scale: 0.9, filter: 'sepia(1) contrast(0.8)' },
+      visible: { opacity: 1, scale: 1, filter: 'sepia(0) contrast(1)', transition: { duration: 0.7, ease: "easeOut" } },
+    },
+    cosmic: {
+      hidden: { opacity: 0, scale: 0.3, filter: 'blur(10px) brightness(2)' },
+      visible: { opacity: 1, scale: 1, filter: 'blur(0px) brightness(1)', transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+    },
+    botanical: {
+      hidden: { opacity: 0, scale: 0.85, y: 20, rotate: -2 },
+      visible: { opacity: 1, scale: 1, y: 0, rotate: 0, transition: { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] } },
     },
   };
 

@@ -697,4 +697,113 @@ export const culturalMotifSets: Record<string, CulturalMotifSet> = {
     { path: 'M0 55 Q15 45 30 52 Q45 42 60 55 Q75 45 90 55 Q100 48 100 55 L100 90 L0 90 Z', label: 'Storm Wave' },
     { path: 'M50 15 Q60 20 65 35 Q68 50 55 58 Q50 55 45 58 Q32 50 35 35 Q40 20 50 15 Z M50 58 L50 90 M42 65 L35 60 M58 70 L65 65 M42 80 L38 75', label: 'Palm in Wind' },
   ],
+  ],
+
+  // ═══ TROPICAL PARADISE NICHE ═══
+  'birthday-tropical-fiesta': [
+    { path: 'M50 10 Q70 25 65 50 Q60 75 50 90 Q40 75 35 50 Q30 25 50 10 Z', path2: 'M50 30 Q58 40 55 50 Q52 60 50 70', label: 'Tropical Leaf' },
+    { path: 'M50 15 L55 35 L75 35 L60 48 L65 68 L50 55 L35 68 L40 48 L25 35 L45 35 Z', label: 'Hibiscus Star' },
+    { path: 'M50 5 Q55 15 50 25 Q45 15 50 5 M50 25 L50 95 M30 45 Q40 50 50 45 Q60 50 70 45 M25 65 Q37 72 50 65 Q63 72 75 65', label: 'Palm Tree' },
+  ],
+  'family-pantai-senja': [
+    { path: 'M0 60 Q25 40 50 55 Q75 40 100 60 L100 100 L0 100 Z', path2: 'M0 70 Q25 55 50 65 Q75 55 100 70', label: 'Ocean Wave' },
+    { path: 'M50 10 Q65 15 70 30 Q75 45 65 55 Q55 65 50 55 Q45 65 35 55 Q25 45 30 30 Q35 15 50 10 Z', label: 'Seashell' },
+    { path: 'M50 5 L52 20 L60 10 L55 25 L70 20 L58 30 L75 30 L60 38 L50 50 L40 38 L25 30 L42 30 L30 20 L45 25 L40 10 L48 20 Z', label: 'Sunset Burst' },
+  ],
+  'bukber-kelapa-muda': [
+    { path: 'M50 20 Q62 22 65 35 Q68 48 58 55 Q48 62 42 55 Q32 48 35 35 Q38 22 50 20 Z', path2: 'M50 55 L48 80 M52 55 L54 78', label: 'Coconut' },
+    { path: 'M50 5 Q80 15 85 45 Q90 75 60 90 Q30 95 15 70 Q5 45 20 20 Q35 0 50 5 Z', label: 'Crescent Moon' },
+    { path: 'M50 5 L50 95 M50 20 L80 10 M50 35 L75 25 M50 50 L85 40 M50 65 L70 55 M50 80 L75 72', label: 'Palm Frond' },
+  ],
+  'arisan-paradise-island': [
+    { path: 'M30 80 Q35 50 50 40 Q65 50 70 80 Z', path2: 'M50 40 L50 15 M50 15 L35 25 M50 15 L65 25', label: 'Island' },
+    { path: 'M10 50 Q25 30 40 45 Q50 25 60 45 Q75 30 90 50', label: 'Wave Pattern' },
+    { path: 'M50 15 Q65 20 70 35 Q72 50 60 60 Q50 65 40 60 Q28 50 30 35 Q35 20 50 15 Z M45 35 L50 45 L55 35', label: 'Tropical Fish' },
+  ],
+  'acara-umum-hawaiian': [
+    { path: 'M50 10 Q70 20 65 40 Q80 35 75 55 Q90 50 80 70 Q70 65 60 80 Q50 70 40 80 Q30 65 20 70 Q10 50 25 55 Q20 35 35 40 Q30 20 50 10 Z', label: 'Plumeria' },
+    { path: 'M50 5 L50 95 M50 30 L25 15 M50 30 L75 15 M50 55 L20 42 M50 55 L80 42 M50 78 L30 68 M50 78 L70 68', label: 'Tiki Torch' },
+    { path: 'M15 50 Q30 20 50 50 Q70 20 85 50 Q70 80 50 50 Q30 80 15 50 Z', label: 'Lei Flower' },
+  ],
+
+  // ═══ RETRO & VINTAGE NICHE ═══
+  'khitanan-retro-pop': [
+    { path: 'M50 5 L58 35 L90 35 L63 55 L73 85 L50 65 L27 85 L37 55 L10 35 L42 35 Z', label: 'Retro Star' },
+    { path: 'M20 20 L80 20 L80 80 L20 80 Z M30 30 L70 30 L70 70 L30 70 Z M40 40 L60 40 L60 60 L40 60 Z', label: 'Nested Squares' },
+    { path: 'M50 10 A40 40 0 1 1 50 90 A40 40 0 1 1 50 10 Z M50 25 A25 25 0 1 1 50 75 A25 25 0 1 1 50 25 Z', label: 'Target Circle' },
+  ],
+  'aqiqah-vintage-rose': [
+    { path: 'M50 20 Q60 15 65 25 Q70 35 60 42 Q65 50 55 55 Q50 60 45 55 Q35 50 40 42 Q30 35 35 25 Q40 15 50 20 Z', path2: 'M50 55 L48 80 Q50 85 52 80 L50 55', label: 'Vintage Rose' },
+    { path: 'M50 10 Q55 20 50 30 Q45 20 50 10 M35 20 Q45 25 40 35 Q30 28 35 20 M65 20 Q60 28 60 35 Q55 25 65 20', label: 'Rose Buds' },
+    { path: 'M20 50 Q35 30 50 50 Q65 30 80 50 L75 55 Q62 38 50 55 Q38 38 25 55 Z', label: 'Ribbon Bow' },
+  ],
+  'wisuda-classic-scholar': [
+    { path: 'M30 30 L70 30 L70 80 L50 70 L30 80 Z', path2: 'M35 35 L65 35 L65 72 L50 64 L35 72 Z', label: 'Book' },
+    { path: 'M25 45 L75 45 L75 50 L25 50 Z M30 40 L70 40 L72 45 L28 45 Z M40 35 L60 35 L62 40 L38 40 Z M48 25 L52 25 L55 35 L45 35 Z', label: 'Pillar' },
+    { path: 'M50 15 L55 30 L70 30 L58 40 L62 55 L50 45 L38 55 L42 40 L30 30 L45 30 Z M45 55 L55 55 L53 85 L47 85 Z', label: 'Trophy' },
+  ],
+  'hajatan-nostalgia': [
+    { path: 'M50 10 A40 40 0 0 1 90 50 A40 40 0 0 1 50 90 A40 40 0 0 1 10 50 A40 40 0 0 1 50 10 Z M50 20 L50 50 L70 50', label: 'Vintage Clock' },
+    { path: 'M25 30 L75 30 L75 75 L25 75 Z M30 35 L70 35 L70 70 L30 70 Z M35 50 Q50 40 65 50 Q50 60 35 50 Z', label: 'Radio' },
+    { path: 'M30 20 L70 20 Q75 20 75 25 L75 75 Q75 80 70 80 L30 80 Q25 80 25 75 L25 25 Q25 20 30 20 Z M35 30 L65 30 L65 60 L35 60 Z', label: 'TV Frame' },
+  ],
+  'syukuran-rumah-art-deco': [
+    { path: 'M50 5 L90 30 L90 70 L50 95 L10 70 L10 30 Z M50 20 L75 35 L75 65 L50 80 L25 65 L25 35 Z', label: 'Art Deco Hex' },
+    { path: 'M50 5 L50 95 M5 50 L95 50 M20 20 L80 80 M80 20 L20 80', path2: 'M50 30 L50 70 M30 50 L70 50', label: 'Sunburst' },
+    { path: 'M10 90 L10 50 L30 50 L30 70 L50 70 L50 30 L70 30 L70 60 L90 60 L90 10', label: 'Art Deco Steps' },
+  ],
+
+  // ═══ COSMIC & GALAXY NICHE ═══
+  'birthday-stardust': [
+    { path: 'M50 5 L55 38 L88 38 L60 58 L70 90 L50 68 L30 90 L40 58 L12 38 L45 38 Z', label: 'Big Star' },
+    { path: 'M50 20 A30 30 0 1 1 50 80 A30 30 0 1 1 50 20 Z M50 30 A20 20 0 1 1 50 70 A20 20 0 1 1 50 30 Z M50 40 A10 10 0 1 1 50 60 A10 10 0 1 1 50 40 Z', label: 'Planet Rings' },
+    { path: 'M10 80 L15 60 L20 75 L25 55 L30 70 L40 40 L50 65 L55 45 L65 60 L70 30 L80 55 L85 35 L90 50', label: 'Stardust Trail' },
+  ],
+  'lamaran-moonlight': [
+    { path: 'M60 10 Q90 15 90 50 Q90 85 60 90 Q35 80 30 50 Q35 20 60 10 Z', path2: 'M55 25 Q75 28 75 50 Q75 72 55 75', label: 'Crescent Moon' },
+    { path: 'M50 10 L53 42 L85 42 L58 60 L68 92 L50 72 L32 92 L42 60 L15 42 L47 42 Z', label: 'Evening Star' },
+    { path: 'M20 30 L25 28 L23 33 M40 15 L45 13 L43 18 M70 25 L75 23 L73 28 M80 50 L85 48 L83 53 M60 75 L65 73 L63 78 M30 70 L35 68 L33 73', label: 'Scattered Stars' },
+  ],
+  'wisuda-constellation': [
+    { path: 'M20 20 L40 30 L50 15 L60 35 L80 25 M40 30 L45 55 L60 35 M45 55 L35 80 L55 70 L70 85', label: 'Constellation Map' },
+    { path: 'M50 5 L50 95 M48 15 L52 15 M46 25 L54 25 M44 35 L56 35 M42 45 L58 45 M40 55 L60 55 M38 65 L62 65 M36 75 L64 75 M34 85 L66 85', label: 'Star Ladder' },
+    { path: 'M50 10 L55 25 L70 25 L58 35 L62 50 L50 40 L38 50 L42 35 L30 25 L45 25 Z M50 55 L52 62 L58 62 L53 67 L55 73 L50 69 L45 73 L47 67 L42 62 L48 62 Z', label: 'Double Star' },
+  ],
+  'pengajian-nebula': [
+    { path: 'M50 10 Q80 20 85 50 Q80 80 50 90 Q20 80 15 50 Q20 20 50 10 Z', path2: 'M50 25 Q68 32 70 50 Q68 68 50 75 Q32 68 30 50 Q32 32 50 25 Z', label: 'Nebula Cloud' },
+    { path: 'M50 5 Q55 15 50 25 Q45 15 50 5 Z M30 15 Q35 25 30 35 Q25 25 30 15 Z M70 15 Q75 25 70 35 Q65 25 70 15 Z M15 40 Q20 50 15 60 Q10 50 15 40 Z M85 40 Q90 50 85 60 Q80 50 85 40 Z', label: 'Star Cluster' },
+    { path: 'M50 10 L50 90 M25 30 L75 70 M75 30 L25 70 M10 50 L90 50', path2: 'M50 35 A15 15 0 1 1 50 65 A15 15 0 1 1 50 35 Z', label: 'Cosmic Cross' },
+  ],
+  'family-aurora-borealis': [
+    { path: 'M0 60 Q15 30 30 50 Q45 20 55 45 Q70 15 80 40 Q90 25 100 55', path2: 'M0 70 Q20 40 40 55 Q55 30 65 50 Q80 25 100 60', label: 'Aurora Wave' },
+    { path: 'M50 5 L55 20 L70 10 L60 25 L75 25 L62 35 L80 40 L60 45 L50 60 L40 45 L20 40 L38 35 L25 25 L40 25 L30 10 L45 20 Z', label: 'Northern Star' },
+    { path: 'M20 85 L25 55 L30 70 L40 35 L50 60 L55 40 L65 55 L70 25 L80 50 L85 30', label: 'Mountain Aurora' },
+  ],
+
+  // ═══ BOTANICAL & GARDEN NICHE ═══
+  'tahlilan-zaitun': [
+    { path: 'M50 10 Q60 15 60 30 Q60 45 50 50 Q40 45 40 30 Q40 15 50 10 Z M50 50 L50 90 M45 60 L35 55 M55 65 L65 60 M45 75 L38 70', label: 'Olive Branch' },
+    { path: 'M50 20 Q58 15 62 22 Q66 29 58 35 Q62 42 55 45 Q48 48 45 42 Q38 45 35 38 Q32 31 40 25 Q36 18 42 18 Q46 15 50 20 Z', label: 'Olive Wreath' },
+    { path: 'M30 50 Q40 30 50 50 Q60 30 70 50 L65 55 Q58 38 50 55 Q42 38 35 55 Z', path2: 'M50 55 L50 85 M45 65 Q50 60 55 65', label: 'Dove' },
+  ],
+  'duka-cita-lily-putih': [
+    { path: 'M50 15 Q65 20 65 40 Q65 55 50 60 Q35 55 35 40 Q35 20 50 15 Z M50 60 L50 90', path2: 'M42 35 Q50 28 58 35 Q50 42 42 35 Z', label: 'White Lily' },
+    { path: 'M50 10 L50 90 M40 20 Q50 15 60 20 M35 35 Q50 28 65 35 M30 50 Q50 42 70 50 M35 65 Q50 58 65 65 M40 80 Q50 75 60 80', label: 'Memorial Cross' },
+    { path: 'M50 20 Q55 10 60 20 Q55 15 55 25 Q55 35 50 40 Q45 35 45 25 Q45 15 50 20 Z M40 25 Q35 15 30 25 Q35 20 35 30 Q35 38 40 42 M60 25 Q65 15 70 25 Q65 20 65 30 Q65 38 60 42', label: 'Candle Flame' },
+  ],
+  'aqiqah-garden-party': [
+    { path: 'M50 15 Q70 20 70 40 Q70 60 50 65 Q30 60 30 40 Q30 20 50 15 Z', path2: 'M40 30 Q50 22 60 30 Q60 40 50 45 Q40 40 40 30 Z', label: 'Sunflower' },
+    { path: 'M50 10 Q55 20 50 30 Q45 20 50 10 Z M30 25 Q40 30 35 40 Q25 35 30 25 Z M70 25 Q65 35 75 40 Q80 30 70 25 Z M20 50 Q30 55 25 65 Q15 60 20 50 Z M80 50 Q75 60 85 65 Q90 55 80 50 Z', label: 'Butterfly' },
+    { path: 'M50 90 L50 40 M50 40 Q35 25 25 35 M50 40 Q65 25 75 35 M50 55 Q38 45 30 50 M50 55 Q62 45 70 50 M50 70 Q40 62 35 65', label: 'Garden Vine' },
+  ],
+  'khitanan-bambu-hijau': [
+    { path: 'M45 5 L45 95 M55 5 L55 95 M45 20 L55 20 M45 40 L55 40 M45 60 L55 60 M45 80 L55 80', path2: 'M55 15 L75 8 M55 35 L70 28 M55 55 L72 48 M45 45 L25 38 M45 65 L28 58', label: 'Bamboo Stalk' },
+    { path: 'M50 10 Q60 15 62 28 Q64 42 55 48 Q65 55 60 68 Q55 82 50 90 Q45 82 40 68 Q35 55 45 48 Q36 42 38 28 Q40 15 50 10 Z', label: 'Bamboo Leaf' },
+    { path: 'M20 20 Q35 15 50 20 Q65 15 80 20 M20 45 Q35 40 50 45 Q65 40 80 45 M20 70 Q35 65 50 70 Q65 65 80 70', label: 'Bamboo Fence' },
+  ],
+  'hajatan-lavender-field': [
+    { path: 'M50 90 L50 40 M48 40 Q45 30 42 20 Q48 15 50 10 Q52 15 58 20 Q55 30 52 40 Z', path2: 'M46 35 Q43 28 42 22 M54 35 Q57 28 58 22', label: 'Lavender Stem' },
+    { path: 'M20 80 L25 50 Q28 35 25 25 M35 80 L38 55 Q40 40 38 28 M50 80 L50 45 Q50 35 50 22 M65 80 L62 55 Q60 40 62 28 M80 80 L75 50 Q72 35 75 25', label: 'Lavender Field' },
+    { path: 'M50 15 Q58 12 62 18 Q65 25 58 30 Q55 35 50 32 Q45 35 42 30 Q35 25 38 18 Q42 12 50 15 Z M42 30 Q38 38 35 50 Q32 62 38 70 M58 30 Q62 38 65 50 Q68 62 62 70', label: 'Butterfly on Lavender' },
+  ],
 };
