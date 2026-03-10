@@ -53,7 +53,7 @@ export const homepageFaqItems = [
   {
     question: "Berapa harga paket Premium?",
     answer:
-      "Paket Premium hanya Rp 12.000 per undangan. Sudah termasuk semua template, tanpa watermark, RSVP lengkap, buku tamu digital, galeri foto, amplop digital, dan semua fitur premium lainnya.",
+      "Paket Premium hanya Rp 12.000 per bulan (langganan bulanan). Sudah termasuk semua template, undangan unlimited, tanpa watermark, RSVP lengkap, buku tamu digital, galeri foto, amplop digital, dan semua fitur premium lainnya.",
   },
   {
     question: "Bagaimana cara membagikan undangan?",
