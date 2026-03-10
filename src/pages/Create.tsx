@@ -135,7 +135,12 @@ export default function Create() {
 
   const handlePublish = async () => {
     if (!invitation) return;
-    setShowPaymentDialog(true);
+    if (isPremium) {
+      // Premium users publish directly without watermark
+      handlePublishWithPayment(true);
+    } else {
+      setShowPaymentDialog(true);
+    }
   };
 
   const handlePublishWithPayment = async (isPaid: boolean) => {
