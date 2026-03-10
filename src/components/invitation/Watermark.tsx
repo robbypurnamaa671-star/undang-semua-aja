@@ -1,4 +1,8 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { useSubscription } from "@/hooks/use-subscription";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 interface WatermarkProps {
   templateColors?: {
@@ -8,6 +12,32 @@ interface WatermarkProps {
 }
 
 export function Watermark({ templateColors }: WatermarkProps) {
+  const { user } = useAuth();
+  const { createPayment } = useSubscription();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleSubscribe = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!user) {
+      window.location.href = "/login";
+      return;
+    }
+    setIsProcessing(true);
+    try {
+      const paymentUrl = await createPayment();
+      if (paymentUrl) {
+        window.open(paymentUrl, "_blank");
+      } else {
+        toast.error("Gagal membuat pembayaran");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Gagal memproses pembayaran");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-30 pointer-events-none overflow-hidden">
       {/* Diagonal repeating watermark */}
@@ -50,7 +80,15 @@ export function Watermark({ templateColors }: WatermarkProps) {
         }}
       >
         <p className="text-sm font-medium">
-          🔒 Ini adalah preview. Bayar untuk menghapus watermark.
+          🔒 Ini adalah preview. Mulai berlangganan untuk menghapus watermark.{" "}
+          <a
+            href="#"
+            onClick={handleSubscribe}
+            className="underline font-bold hover:opacity-80 transition-opacity"
+            style={{ color: templateColors?.background || "hsl(var(--background))" }}
+          >
+            {isProcessing ? "Memproses..." : "Berlangganan sekarang →"}
+          </a>
         </p>
       </motion.div>
     </div>
