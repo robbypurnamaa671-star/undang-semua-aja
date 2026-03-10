@@ -43,6 +43,21 @@ export function PricingSection() {
     }
   };
 
+  const comparisonFeatures = [
+    { feature: "Akses semua template", free: true, premium: true },
+    { feature: "Customisasi warna & foto", free: true, premium: true },
+    { feature: "RSVP & Buku Tamu", free: true, premium: true },
+    { feature: "Galeri Foto", free: true, premium: true },
+    { feature: "Bagikan via WhatsApp", free: true, premium: true },
+    { feature: "Optimized untuk mobile", free: true, premium: true },
+    { feature: "Jumlah undangan", free: "Unlimited", premium: "Unlimited" },
+    { feature: "Jumlah tamu per undangan", free: "Maks 20", premium: "Unlimited" },
+    { feature: "Watermark", free: "Ada", premium: "Tanpa watermark" },
+    { feature: "Amplop digital", free: false, premium: true },
+    { feature: "Link undangan permanen", free: false, premium: true },
+    { feature: "Dukungan prioritas", free: false, premium: true },
+  ];
+
   return (
     <section id="harga" className="py-20 bg-background">
       <div className="container px-4">
@@ -60,16 +75,68 @@ export function PricingSection() {
             Langganan bulanan dengan harga terjangkau untuk semua fitur premium
           </p>
         </motion.div>
+
+        {/* Comparison Table */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="max-w-2xl mx-auto mb-12"
+        >
+          <div className="card-elevated overflow-hidden rounded-2xl">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left p-4 font-semibold text-foreground">Fitur</th>
+                    <th className="text-center p-4 min-w-[100px]">
+                      <span className="font-semibold text-muted-foreground">Gratis</span>
+                      <div className="text-xs text-muted-foreground mt-1">Rp 0</div>
+                    </th>
+                    <th className="text-center p-4 min-w-[100px] bg-primary/5">
+                      <span className="font-semibold text-primary">Premium</span>
+                      <div className="text-xs text-primary mt-1">Rp 12.000/bln</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisonFeatures.map((item, index) => (
+                    <tr key={index} className="border-b border-border/50 last:border-0">
+                      <td className="p-4 text-foreground">{item.feature}</td>
+                      <td className="p-4 text-center">
+                        {item.free === true ? (
+                          <Check className="w-5 h-5 text-hajatan mx-auto" />
+                        ) : item.free === false ? (
+                          <X className="w-5 h-5 text-muted-foreground/40 mx-auto" />
+                        ) : (
+                          <span className="text-xs text-muted-foreground">{item.free}</span>
+                        )}
+                      </td>
+                      <td className="p-4 text-center bg-primary/5">
+                        {item.premium === true ? (
+                          <Check className="w-5 h-5 text-hajatan mx-auto" />
+                        ) : (
+                          <span className="text-xs font-medium text-primary">{item.premium}</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </motion.div>
         
+        {/* Premium CTA Card */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="max-w-lg mx-auto"
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="max-w-md mx-auto"
         >
-          <div className="card-elevated overflow-hidden">
-            {/* Header */}
+          <div className="card-elevated overflow-hidden rounded-2xl">
             <div className="bg-gradient-to-r from-primary to-wedding p-8 text-center text-primary-foreground">
               <h3 className="font-serif text-2xl font-bold mb-2">Premium</h3>
               <div className="flex items-baseline justify-center gap-1">
@@ -79,30 +146,8 @@ export function PricingSection() {
               <p className="mt-2 opacity-80">per bulan</p>
             </div>
             
-            {/* Features */}
             <div className="p-8">
-              <ul className="space-y-4">
-                {[
-                  "Akses semua template premium",
-                  "Undangan unlimited",
-                  "Tamu unlimited",
-                  "Customisasi warna & foto",
-                  "Link undangan permanen",
-                  "Tanpa watermark",
-                  "Optimized untuk mobile",
-                  "Dibagikan via WhatsApp",
-                  "Dukungan pelanggan prioritas",
-                ].map((feature, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-hajatan/20 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-hajatan" />
-                    </div>
-                    <span className="text-foreground">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              <div className="mt-8 space-y-3">
+              <div className="space-y-3">
                 <Button 
                   onClick={handleSubscribe} 
                   disabled={isProcessing || isPremium}
