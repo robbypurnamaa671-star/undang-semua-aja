@@ -37,7 +37,7 @@ export default function Create() {
   const navigate = useNavigate();
   const { user, isLoading: authLoading } = useAuth();
   const { createInvitation, updateInvitation, publishInvitation } = useInvitations();
-  const { createPayment } = useSubscription();
+  const { createPayment, isPremium } = useSubscription();
 
   // Redirect if not logged in
   useEffect(() => {
@@ -135,7 +135,12 @@ export default function Create() {
 
   const handlePublish = async () => {
     if (!invitation) return;
-    setShowPaymentDialog(true);
+    if (isPremium) {
+      // Premium users publish directly without watermark
+      handlePublishWithPayment(true);
+    } else {
+      setShowPaymentDialog(true);
+    }
   };
 
   const handlePublishWithPayment = async (isPaid: boolean) => {
