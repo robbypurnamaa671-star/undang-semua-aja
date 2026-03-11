@@ -119,14 +119,15 @@ export default function Create() {
     
     setIsSaving(true);
     
-    if (invitation.id) {
-      // Update existing
-      await updateInvitation(invitation.id, invitation);
+    // Auto-set isPaid for premium users
+    const saveData = isPremium ? { ...invitation, isPaid: true } : invitation;
+    
+    if (saveData.id) {
+      await updateInvitation(saveData.id, saveData);
     } else {
-      // Create new
-      const id = await createInvitation(invitation);
+      const id = await createInvitation(saveData);
       if (id) {
-        setInvitation({ ...invitation, id });
+        setInvitation({ ...saveData, id });
       }
     }
     
