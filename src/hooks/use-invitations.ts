@@ -293,6 +293,7 @@ export function usePublicInvitation(slug: string) {
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [ownerIsPremium, setOwnerIsPremium] = useState(false);
 
   useEffect(() => {
     const fetchInvitation = async () => {
@@ -313,7 +314,23 @@ export function usePublicInvitation(slug: string) {
           setError("Undangan tidak ditemukan");
           setInvitation(null);
         } else {
-          setInvitation(dbToInvitation(data as unknown as DbInvitation));
+          const inv = dbToInvitation(data as unknown as DbInvitation);
+          setInvitation(inv);
+
+          // Check if invitation owner has active premium subscription
+          if (!inv.isPaid) {
+            const { data: premiumData } = await supabase
+              .rpc("is_user_premium", { _user_id: data.user_id });
+            if (premiumData === true) {
+              setOwnerIsPremium(true);
+              // Also update the invitation to mark as paid
+              await supabase
+                .from("invitations")
+                .update({ is_paid: true })
+                .eq("id", data.id);
+              setInvitation({ ...inv, isPaid: true });
+            }
+          }
         }
       } catch (err: any) {
         console.error("Error fetching public invitation:", err);
@@ -328,5 +345,5 @@ export function usePublicInvitation(slug: string) {
     }
   }, [slug]);
 
-  return { invitation, isLoading, error };
+  return { invitation, isLoading, error, ownerIsPremium };
 }
