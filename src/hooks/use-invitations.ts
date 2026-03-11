@@ -323,11 +323,6 @@ export function usePublicInvitation(slug: string) {
               .rpc("is_user_premium", { _user_id: data.user_id });
             if (premiumData === true) {
               setOwnerIsPremium(true);
-              // Also update the invitation to mark as paid
-              await supabase
-                .from("invitations")
-                .update({ is_paid: true })
-                .eq("id", data.id);
               setInvitation({ ...inv, isPaid: true });
             }
           }
