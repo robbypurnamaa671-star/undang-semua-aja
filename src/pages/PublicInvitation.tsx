@@ -34,7 +34,6 @@ export default function PublicInvitation() {
   
   const { invitation, isLoading, error } = usePublicInvitation(slug || "");
   const [isOpen, setIsOpen] = useState(false);
-  const [ownerIsPremium, setOwnerIsPremium] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const audioRef = useRef<HTMLAudioElement | null>(null);
