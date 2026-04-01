@@ -15,6 +15,7 @@ import BlogList from "./pages/BlogList";
 import BlogDetail from "./pages/BlogDetail";
 import TemplateShowcase from "./pages/TemplateShowcase";
 import NotFound from "./pages/NotFound";
+import SeoPage from "./pages/SeoPage";
 
 const queryClient = new QueryClient();
 
