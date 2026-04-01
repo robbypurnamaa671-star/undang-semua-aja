@@ -15,6 +15,7 @@ import BlogList from "./pages/BlogList";
 import BlogDetail from "./pages/BlogDetail";
 import TemplateShowcase from "./pages/TemplateShowcase";
 import NotFound from "./pages/NotFound";
+import SeoPage from "./pages/SeoPage";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/templates" element={<TemplateShowcase />} />
             
+            <Route path="/p/:slug" element={<SeoPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
