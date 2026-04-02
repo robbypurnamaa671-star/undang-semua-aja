@@ -89,6 +89,28 @@ serve(async (req) => {
       return new Response(xml, { headers });
     }
 
+    // Sub-sitemap: SEO pages
+    if (type === "seo-pages") {
+      const allPages = await fetchAll(supabase, "seo_pages", "slug, updated_at", "status", "published");
+
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+
+      for (const page of allPages) {
+        xml += `
+  <url>
+    <loc>${BASE_URL}/p/${page.slug}</loc>
+    <lastmod>${toDate(page.updated_at)}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>`;
+      }
+
+      xml += `
+</urlset>`;
+      return new Response(xml, { headers });
+    }
+
     // Default: Sitemap Index
     const now = toDate(new Date().toISOString());
 
@@ -104,6 +126,10 @@ serve(async (req) => {
   </sitemap>
   <sitemap>
     <loc>${BASE_URL}/sitemap-invitations.xml</loc>
+    <lastmod>${now}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-seo-pages.xml</loc>
     <lastmod>${now}</lastmod>
   </sitemap>
 </sitemapindex>`;
