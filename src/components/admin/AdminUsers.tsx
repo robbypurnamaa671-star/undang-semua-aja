@@ -105,13 +105,30 @@ export function AdminUsers() {
     }
   };
 
-  const filtered = search
-    ? users.filter(
-        (u) =>
-          u.email?.toLowerCase().includes(search.toLowerCase()) ||
-          u.user_id.toLowerCase().includes(search.toLowerCase())
-      )
-    : users;
+  const exportCSV = () => {
+    const header = ["Email", "User ID", "Tanggal Terdaftar", "Status", "Berakhir", "Invoice", "Amount"];
+    const rows = filtered.map((u) => {
+      const premium = isPremiumActive(u);
+      return [
+        u.email || "",
+        u.user_id,
+        new Date(u.created_at).toLocaleDateString("id-ID"),
+        premium ? "Premium" : "Free",
+        u.active_subscription?.expires_at ? new Date(u.active_subscription.expires_at).toLocaleDateString("id-ID") : "-",
+        u.active_subscription?.invoice_number || "-",
+        u.active_subscription?.amount?.toString() || "-",
+      ];
+    });
+    const csv = [header, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `users-undanganlink-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "Export berhasil", description: `${filtered.length} data user telah diexport ke CSV.` });
+  };
 
   return (
     <div className="space-y-4">
@@ -123,9 +140,11 @@ export function AdminUsers() {
           onChange={(e) => setSearch(e.target.value)}
           className="max-w-sm"
         />
+        <Button variant="outline" size="sm" onClick={exportCSV} className="ml-auto gap-1.5">
+          <Download className="w-4 h-4" />
+          Export CSV
+        </Button>
       </div>
-
-      {loading ? (
         <div className="space-y-2">
           {[1, 2, 3].map((i) => (
             <Skeleton key={i} className="h-12 w-full" />
