@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
@@ -12,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Search, Loader2 } from "lucide-react";
+import { Search, Loader2, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface AdminUser {
@@ -112,6 +113,31 @@ export function AdminUsers() {
       )
     : users;
 
+  const exportCSV = () => {
+    const header = ["Email", "User ID", "Tanggal Terdaftar", "Status", "Berakhir", "Invoice", "Amount"];
+    const rows = filtered.map((u) => {
+      const premium = isPremiumActive(u);
+      return [
+        u.email || "",
+        u.user_id,
+        new Date(u.created_at).toLocaleDateString("id-ID"),
+        premium ? "Premium" : "Free",
+        u.active_subscription?.expires_at ? new Date(u.active_subscription.expires_at).toLocaleDateString("id-ID") : "-",
+        u.active_subscription?.invoice_number || "-",
+        u.active_subscription?.amount?.toString() || "-",
+      ];
+    });
+    const csv = [header, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `users-undanganlink-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "Export berhasil", description: `${filtered.length} data user telah diexport ke CSV.` });
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
@@ -122,6 +148,10 @@ export function AdminUsers() {
           onChange={(e) => setSearch(e.target.value)}
           className="max-w-sm"
         />
+        <Button variant="outline" size="sm" onClick={exportCSV} className="ml-auto gap-1.5">
+          <Download className="w-4 h-4" />
+          Export CSV
+        </Button>
       </div>
 
       {loading ? (
