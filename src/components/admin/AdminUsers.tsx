@@ -105,6 +105,14 @@ export function AdminUsers() {
     }
   };
 
+  const filtered = search
+    ? users.filter(
+        (u) =>
+          u.email?.toLowerCase().includes(search.toLowerCase()) ||
+          u.user_id.toLowerCase().includes(search.toLowerCase())
+      )
+    : users;
+
   const exportCSV = () => {
     const header = ["Email", "User ID", "Tanggal Terdaftar", "Status", "Berakhir", "Invoice", "Amount"];
     const rows = filtered.map((u) => {
