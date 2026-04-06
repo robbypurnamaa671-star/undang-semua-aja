@@ -145,6 +145,8 @@ export function AdminUsers() {
           Export CSV
         </Button>
       </div>
+
+      {loading ? (
         <div className="space-y-2">
           {[1, 2, 3].map((i) => (
             <Skeleton key={i} className="h-12 w-full" />
