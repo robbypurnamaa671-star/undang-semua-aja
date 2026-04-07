@@ -207,7 +207,7 @@ export default function Create() {
               </Button>
             )}
             <Link to="/" className="flex items-center gap-2">
-              <img src={logo} alt="Undanganlink" className="h-8 w-8" />
+              <img src={logo} alt="Undanganlink" className="h-8 w-auto object-contain" />
               <span className="font-serif text-xl font-semibold text-gradient hidden sm:block">Undanganlink</span>
             </Link>
           </div>
