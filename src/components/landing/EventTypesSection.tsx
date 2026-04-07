@@ -41,17 +41,17 @@ export function EventTypesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6"
+          className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-5 gap-2 md:gap-4"
         >
           {eventTypes.map((eventType) => (
             <motion.div key={eventType.id} variants={item}>
               <Link 
                 to={`/register?event=${eventType.id}`}
-                className={`card-interactive block p-6 text-center border-2 event-${eventType.id}`}
+                className={`card-interactive block p-3 md:p-4 text-center border-2 event-${eventType.id}`}
               >
-                <span className="text-4xl mb-3 block">{eventType.icon}</span>
-                <h3 className="font-semibold text-foreground mb-1">{eventType.nameIndonesian}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-2">{eventType.description}</p>
+                <span className="text-2xl md:text-3xl mb-1 md:mb-2 block">{eventType.icon}</span>
+                <h3 className="font-semibold text-foreground text-xs md:text-sm mb-0.5">{eventType.nameIndonesian}</h3>
+                <p className="text-[10px] md:text-xs text-muted-foreground line-clamp-1 hidden sm:block">{eventType.description}</p>
               </Link>
             </motion.div>
           ))}
