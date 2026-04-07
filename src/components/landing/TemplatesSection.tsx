@@ -23,8 +23,8 @@ const item = {
 };
 
 export function TemplatesSection() {
-  // Show 8 featured templates (mix of free and premium)
-  const featuredTemplates = templates.slice(0, 8);
+  // Show 6 featured templates (mix of free and premium)
+  const featuredTemplates = templates.slice(0, 6);
   
   return (
     <section id="template" className="py-20 bg-background">
@@ -49,7 +49,7 @@ export function TemplatesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
         >
           {featuredTemplates.map((template) => (
             <motion.div 
