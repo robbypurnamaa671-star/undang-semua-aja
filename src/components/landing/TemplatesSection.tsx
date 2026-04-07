@@ -27,16 +27,16 @@ export function TemplatesSection() {
   const featuredTemplates = templates.slice(0, 6);
   
   return (
-    <section id="template" className="py-20 bg-background">
+    <section id="template" className="py-12 bg-background">
       <div className="container px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Template <span className="text-gradient">Premium</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">

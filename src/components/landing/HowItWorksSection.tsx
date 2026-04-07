@@ -25,16 +25,16 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-12 bg-muted/30">
       <div className="container px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Cara <span className="text-gradient">Membuat</span> Undangan
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -54,20 +54,20 @@ export function HowItWorksSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className={`relative flex items-center gap-6 md:gap-12 mb-8 last:mb-0 ${
+                className={`relative flex items-center gap-4 md:gap-10 mb-6 last:mb-0 ${
                   index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
                 {/* Number Circle */}
-                <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-16 h-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-serif text-2xl font-bold shadow-gold z-10">
+                <div className="absolute left-8 md:left-1/2 md:-translate-x-1/2 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-serif text-xl font-bold shadow-gold z-10">
                   {step.number}
                 </div>
                 
                 {/* Content Card */}
-                <div className={`ml-28 md:ml-0 md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
-                  <div className="card-elevated p-6 bg-card">
-                    <h3 className="font-serif text-xl font-semibold mb-2">{step.title}</h3>
-                    <p className="text-muted-foreground">{step.description}</p>
+                <div className={`ml-24 md:ml-0 md:w-5/12 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
+                  <div className="card-elevated p-4 bg-card">
+                    <h3 className="font-serif text-base font-semibold mb-1">{step.title}</h3>
+                    <p className="text-muted-foreground text-sm">{step.description}</p>
                   </div>
                 </div>
                 

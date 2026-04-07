@@ -6,7 +6,7 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-16">
       {/* Background Image - No Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -20,33 +20,33 @@ export function HeroSection() {
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
       <div className="absolute bottom-1/4 right-10 w-80 h-80 bg-wedding/10 rounded-full blur-3xl animate-float-delayed" />
       
-      <div className="container relative z-10 px-4 py-20">
+      <div className="container relative z-10 px-4 py-12 md:py-16">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center bg-background/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-elevated"
+          className="max-w-4xl mx-auto text-center bg-background/80 backdrop-blur-sm rounded-2xl p-6 md:p-10 shadow-elevated"
         >
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-primary/10 rounded-full border border-primary/20"
+            className="inline-flex items-center gap-2 px-3 py-1.5 mb-4 bg-primary/10 rounded-full border border-primary/20"
           >
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-primary">Buat undangan dalam 10 menit</span>
           </motion.div>
           
           {/* Main Heading */}
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
             <span className="text-foreground">Undangan Digital</span>
             <br />
             <span className="text-gradient">Pernikahan & Acara Spesial</span>
           </h1>
           
           {/* Subheading */}
-          <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-muted-foreground mb-6 max-w-2xl mx-auto leading-relaxed">
             Buat website undangan nikah online, undangan khitanan, ulang tahun, dan acara spesial lainnya. 
             Bagikan undangan digital lewat WhatsApp dengan mudah dan cepat.
           </p>
@@ -58,13 +58,13 @@ export function HeroSection() {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button asChild size="lg" className="btn-hero text-lg px-8 py-6">
+            <Button asChild size="lg" className="btn-hero px-6 py-5">
               <Link to="/register">
                 Buat Undangan Gratis
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 btn-outline-hero">
+            <Button asChild variant="outline" size="lg" className="px-6 py-5 btn-outline-hero">
               <a href="#template">
                 Lihat Template
               </a>
@@ -76,7 +76,7 @@ export function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground"
+            className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-muted-foreground"
           >
             <div className="flex items-center gap-2">
               <span className="text-lg">✅</span>
