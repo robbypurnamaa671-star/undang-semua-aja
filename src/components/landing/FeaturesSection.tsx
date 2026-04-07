@@ -51,16 +51,16 @@ const item = {
 
 export function FeaturesSection() {
   return (
-    <section className="py-20 bg-muted/30 pattern-batik">
+    <section className="py-12 bg-muted/30 pattern-batik">
       <div className="container px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Kenapa <span className="text-gradient">Undanganlink</span>?
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -73,19 +73,19 @@ export function FeaturesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
         >
           {features.map((feature, index) => (
             <motion.div 
               key={index} 
               variants={item}
-              className="card-elevated p-6 md:p-8 bg-card"
+              className="card-elevated p-4 md:p-6 bg-card"
             >
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
-                <feature.icon className="w-7 h-7 text-primary" />
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
+                <feature.icon className="w-5 h-5 text-primary" />
               </div>
-              <h3 className="font-serif text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
+              <h3 className="font-serif text-base font-semibold mb-1">{feature.title}</h3>
+              <p className="text-muted-foreground text-sm">{feature.description}</p>
             </motion.div>
           ))}
         </motion.div>

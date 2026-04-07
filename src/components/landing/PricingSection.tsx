@@ -59,16 +59,16 @@ export function PricingSection() {
   ];
 
   return (
-    <section id="harga" className="py-20 bg-background">
+    <section id="harga" className="py-12 bg-background">
       <div className="container px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Harga <span className="text-gradient">Terjangkau</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -82,7 +82,7 @@ export function PricingSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1, duration: 0.6 }}
-          className="max-w-2xl mx-auto mb-12"
+          className="max-w-2xl mx-auto mb-8"
         >
           <div className="card-elevated overflow-hidden rounded-2xl">
             <div className="overflow-x-auto">
@@ -137,16 +137,16 @@ export function PricingSection() {
           className="max-w-md mx-auto"
         >
           <div className="card-elevated overflow-hidden rounded-2xl">
-            <div className="bg-gradient-to-r from-primary to-wedding p-8 text-center text-primary-foreground">
-              <h3 className="font-serif text-2xl font-bold mb-2">Premium</h3>
+             <div className="bg-gradient-to-r from-primary to-wedding p-6 text-center text-primary-foreground">
+              <h3 className="font-serif text-xl font-bold mb-1">Premium</h3>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="text-sm opacity-80">Rp</span>
-                <span className="font-serif text-5xl font-bold">12.000</span>
+                <span className="font-serif text-4xl font-bold">12.000</span>
               </div>
-              <p className="mt-2 opacity-80">per bulan</p>
+              <p className="mt-1 text-sm opacity-80">per bulan</p>
             </div>
             
-            <div className="p-8">
+            <div className="p-5">
               <div className="space-y-3">
                 <Button 
                   onClick={handleSubscribe} 

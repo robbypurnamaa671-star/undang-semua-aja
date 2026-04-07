@@ -9,16 +9,16 @@ import { homepageFaqItems } from "@/lib/seo-schemas";
 
 export function FAQSection() {
   return (
-    <section id="faq" className="py-20 bg-muted/30">
+    <section id="faq" className="py-12 bg-muted/30">
       <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
             Pertanyaan <span className="text-gradient">Umum</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
