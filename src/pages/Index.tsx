@@ -6,6 +6,7 @@ import { TemplatesSection } from "@/components/landing/TemplatesSection";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { FAQSection } from "@/components/landing/FAQSection";
+import { DoneForYouSection } from "@/components/landing/DoneForYouSection";
 import { CTASection } from "@/components/landing/CTASection";
 import { Footer } from "@/components/landing/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
