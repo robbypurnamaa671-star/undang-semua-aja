@@ -46,22 +46,24 @@ export function Watermark({ templateColors }: WatermarkProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
-          className="relative w-[200%] h-[200%] -rotate-45"
+          className="relative w-[200%] h-[200%] -rotate-30"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gridTemplateRows: "repeat(8, 1fr)",
-            gap: "2rem",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateRows: "repeat(6, 1fr)",
+            gap: "1.5rem",
           }}
         >
-          {Array.from({ length: 32 }).map((_, i) => (
+          {Array.from({ length: 18 }).map((_, i) => (
             <div
               key={i}
-              className="flex items-center justify-center opacity-[0.08]"
+              className="flex items-center justify-center opacity-[0.18]"
               style={{ color: templateColors?.primary || "hsl(var(--primary))" }}
             >
-              <span className="text-xl sm:text-2xl font-bold whitespace-nowrap tracking-wider">
-                PREVIEW
+              <span className="text-3xl sm:text-4xl font-extrabold whitespace-nowrap tracking-widest uppercase"
+                style={{ textShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+              >
+                UNDANGANLINK
               </span>
             </div>
           ))}
