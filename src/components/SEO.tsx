@@ -10,8 +10,8 @@ interface SEOProps {
   jsonLd?: object | object[];
 }
 
-const BASE_URL = "https://undanganku.app";
-const DEFAULT_OG_IMAGE = "https://lovable.dev/opengraph-image-p98pqg.png";
+const BASE_URL = "https://www.undanganlink.com";
+const DEFAULT_OG_IMAGE = "https://www.undanganlink.com/favicon.png";
 
 export function SEO({
   title,
