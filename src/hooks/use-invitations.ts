@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -294,51 +294,75 @@ export function usePublicInvitation(slug: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [ownerIsPremium, setOwnerIsPremium] = useState(false);
+  const retryCountRef = useRef(0);
+  const maxRetries = 3;
 
-  useEffect(() => {
-    const fetchInvitation = async () => {
+  const fetchInvitation = useCallback(async (isRetry = false) => {
+    if (!isRetry) {
       setIsLoading(true);
-      setError(null);
+      retryCountRef.current = 0;
+    }
+    setError(null);
 
-      try {
-        const { data, error } = await supabase
-          .from("invitations")
-          .select("*")
-          .eq("slug", slug)
-          .eq("status", "published")
-          .maybeSingle();
+    try {
+      const { data, error: fetchError } = await supabase
+        .from("invitations")
+        .select("*")
+        .eq("slug", slug)
+        .eq("status", "published")
+        .maybeSingle();
 
-        if (error) throw error;
+      if (fetchError) throw fetchError;
 
-        if (!data) {
-          setError("Undangan tidak ditemukan");
-          setInvitation(null);
-        } else {
-          const inv = dbToInvitation(data as unknown as DbInvitation);
-          setInvitation(inv);
+      if (!data) {
+        // On first attempt, retry once after a short delay (data might not be propagated yet)
+        if (retryCountRef.current < 1) {
+          retryCountRef.current++;
+          await new Promise(r => setTimeout(r, 1500));
+          return fetchInvitation(true);
+        }
+        setError("Undangan tidak ditemukan");
+        setInvitation(null);
+      } else {
+        const inv = dbToInvitation(data as unknown as DbInvitation);
+        setInvitation(inv);
 
-          // Check if invitation owner has active premium subscription
-          if (!inv.isPaid) {
+        // Check if invitation owner has active premium subscription
+        if (!inv.isPaid) {
+          try {
             const { data: premiumData } = await supabase
               .rpc("is_user_premium", { _user_id: data.user_id });
             if (premiumData === true) {
               setOwnerIsPremium(true);
               setInvitation({ ...inv, isPaid: true });
             }
+          } catch (premiumErr) {
+            // Non-critical: don't fail the whole load if premium check fails
+            console.warn("Premium check failed, defaulting to free:", premiumErr);
           }
         }
-      } catch (err: any) {
-        console.error("Error fetching public invitation:", err);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
       }
-    };
-
-    if (slug) {
-      fetchInvitation();
+    } catch (err: any) {
+      console.error("Error fetching public invitation:", err);
+      // Retry on network/transient errors
+      if (retryCountRef.current < maxRetries) {
+        retryCountRef.current++;
+        const delay = Math.min(1000 * Math.pow(2, retryCountRef.current - 1), 5000);
+        console.log(`Retrying invitation fetch (attempt ${retryCountRef.current}/${maxRetries}) in ${delay}ms...`);
+        await new Promise(r => setTimeout(r, delay));
+        return fetchInvitation(true);
+      }
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   }, [slug]);
 
-  return { invitation, isLoading, error, ownerIsPremium };
+  useEffect(() => {
+    if (slug) {
+      fetchInvitation();
+    }
+  }, [slug, fetchInvitation]);
+
+  return { invitation, isLoading, error, ownerIsPremium, refetch: fetchInvitation };
 }
