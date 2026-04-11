@@ -232,9 +232,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
       <div className="min-h-screen flex flex-col items-center justify-center bg-background p-6 text-center">
         <span className="text-6xl mb-4">📭</span>
         <h1 className="font-serif text-2xl font-bold mb-2">Undangan Tidak Ditemukan</h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground mb-4">
           Undangan yang Anda cari tidak ada atau belum dipublikasikan.
         </p>
+        <Button variant="outline" onClick={() => refetch()} className="gap-2">
+          <Loader2 className="w-4 h-4" /> Coba Muat Ulang
+        </Button>
       </div>
     );
   }
