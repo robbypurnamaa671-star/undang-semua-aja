@@ -40,6 +40,9 @@ export default function PublicInvitation() {
   const ytPlayerRef = useRef<any>(null);
   const ytContainerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const ytReadyRef = useRef<boolean>(false);
+  const pendingPlayRef = useRef<boolean>(false);
+  const audioReadyRef = useRef<boolean>(false);
   
   const template = invitation ? getTemplateById(invitation.templateId) as Template : null;
   const eventConfig = invitation ? getEventTypeConfig(invitation.eventType) : null;
@@ -63,37 +66,83 @@ export default function PublicInvitation() {
     if (!invitation?.musicUrl) return;
     const ytId = extractYouTubeId(invitation.musicUrl);
     if (!ytId) {
-      // Fallback: direct audio URL
-      audioRef.current = new Audio(invitation.musicUrl);
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.3;
+      // Fallback: direct audio URL — preload for instant playback
+      const a = new Audio();
+      a.src = invitation.musicUrl;
+      a.loop = true;
+      a.volume = 0.3;
+      a.preload = "auto";
+      a.crossOrigin = "anonymous";
+      // Mark as ready (we still try to play even before canplay fires)
+      const onReady = () => { audioReadyRef.current = true; };
+      a.addEventListener("canplaythrough", onReady);
+      a.addEventListener("loadeddata", onReady);
+      a.load();
+      audioRef.current = a;
       return () => {
-        audioRef.current?.pause();
+        a.removeEventListener("canplaythrough", onReady);
+        a.removeEventListener("loadeddata", onReady);
+        a.pause();
         audioRef.current = null;
+        audioReadyRef.current = false;
       };
     }
 
-    // Load YT IFrame API if not loaded
-    if (!(window as any).YT) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.head.appendChild(tag);
+    // Load YT IFrame API once (don't clobber existing callback)
+    if (!(window as any).YT || !(window as any).YT.Player) {
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+        const tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+      }
     }
 
     const initPlayer = () => {
-      if (!ytContainerRef.current) return;
+      if (!ytContainerRef.current || ytPlayerRef.current) return;
       ytPlayerRef.current = new (window as any).YT.Player(ytContainerRef.current, {
         videoId: ytId,
         height: "0",
         width: "0",
-        playerVars: { autoplay: 0, loop: 1, playlist: ytId, controls: 0 },
+        playerVars: {
+          autoplay: 0,
+          loop: 1,
+          playlist: ytId,
+          controls: 0,
+          playsinline: 1,
+          modestbranding: 1,
+          rel: 0,
+        },
         events: {
-          onReady: () => {},
+          onReady: () => {
+            ytReadyRef.current = true;
+            try { ytPlayerRef.current?.setVolume(30); } catch {}
+            // If user already pressed "Buka Undangan" before player was ready, play now
+            if (pendingPlayRef.current) {
+              pendingPlayRef.current = false;
+              try {
+                // iOS/Safari workaround: start muted, then unmute
+                ytPlayerRef.current?.mute();
+                ytPlayerRef.current?.playVideo();
+                setTimeout(() => {
+                  try {
+                    ytPlayerRef.current?.unMute();
+                    ytPlayerRef.current?.setVolume(30);
+                  } catch {}
+                }, 300);
+              } catch {}
+            }
+          },
           onStateChange: (event: any) => {
             // Loop when ended
             if (event.data === (window as any).YT.PlayerState.ENDED) {
-              ytPlayerRef.current?.playVideo();
+              try { ytPlayerRef.current?.playVideo(); } catch {}
             }
+          },
+          onError: () => {
+            // Try to restart on error
+            setTimeout(() => {
+              try { ytPlayerRef.current?.playVideo(); } catch {}
+            }, 1000);
           },
         },
       });
@@ -102,36 +151,86 @@ export default function PublicInvitation() {
     if ((window as any).YT && (window as any).YT.Player) {
       initPlayer();
     } else {
-      (window as any).onYouTubeIframeAPIReady = initPlayer;
+      // Chain rather than overwrite existing callback
+      const prev = (window as any).onYouTubeIframeAPIReady;
+      (window as any).onYouTubeIframeAPIReady = () => {
+        if (typeof prev === "function") { try { prev(); } catch {} }
+        initPlayer();
+      };
     }
 
     return () => {
-      ytPlayerRef.current?.destroy();
+      ytReadyRef.current = false;
+      try { ytPlayerRef.current?.destroy(); } catch {}
       ytPlayerRef.current = null;
     };
   }, [invitation?.musicUrl]);
 
-  // Play/pause control
+  // Toggle mute (does NOT trigger initial play — that happens in the click handler
+  // so it counts as a user gesture even on iOS Safari).
   useEffect(() => {
-    const ytId = invitation?.musicUrl ? extractYouTubeId(invitation.musicUrl) : null;
+    if (!invitation?.musicUrl) return;
+    const ytId = extractYouTubeId(invitation.musicUrl);
     if (ytId) {
-      // YouTube player
-      if (isMuted) {
-        ytPlayerRef.current?.pauseVideo();
-      } else {
-        ytPlayerRef.current?.setVolume(30);
-        ytPlayerRef.current?.playVideo();
-      }
+      if (!ytReadyRef.current || !ytPlayerRef.current) return;
+      try {
+        if (isMuted) {
+          ytPlayerRef.current.pauseVideo();
+        } else {
+          ytPlayerRef.current.unMute();
+          ytPlayerRef.current.setVolume(30);
+          ytPlayerRef.current.playVideo();
+        }
+      } catch {}
     } else {
-      // HTML Audio
       if (!audioRef.current) return;
       if (isMuted) {
         audioRef.current.pause();
       } else {
+        audioRef.current.muted = false;
         audioRef.current.play().catch(() => {});
       }
     }
   }, [isMuted, invitation?.musicUrl]);
+
+  // Called from the "Buka Undangan" click — must run synchronously inside the
+  // user gesture so browsers (especially iOS Safari) allow audio playback.
+  const startMusicFromGesture = useCallback(() => {
+    if (!invitation?.musicUrl) return;
+    const ytId = extractYouTubeId(invitation.musicUrl);
+    if (ytId) {
+      if (ytReadyRef.current && ytPlayerRef.current) {
+        try {
+          // Start muted then unmute — guaranteed to satisfy autoplay policies
+          ytPlayerRef.current.mute();
+          ytPlayerRef.current.playVideo();
+          setTimeout(() => {
+            try {
+              ytPlayerRef.current?.unMute();
+              ytPlayerRef.current?.setVolume(30);
+            } catch {}
+          }, 300);
+        } catch {}
+      } else {
+        // Player not ready yet — flag so onReady will play immediately
+        pendingPlayRef.current = true;
+      }
+    } else if (audioRef.current) {
+      const a = audioRef.current;
+      // Trick: start muted (always allowed), then unmute right after
+      a.muted = true;
+      const p = a.play();
+      if (p && typeof p.then === "function") {
+        p.then(() => {
+          a.muted = false;
+        }).catch(() => {
+          // Retry once unmuted directly (some browsers prefer this path)
+          a.muted = false;
+          a.play().catch(() => {});
+        });
+      }
+    }
+  }, [invitation?.musicUrl]);
   
   // Countdown timer
   useEffect(() => {
@@ -511,7 +610,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               </p>
               
               <Button
-                onClick={() => { setIsOpen(true); setIsMuted(false); }}
+                onClick={() => {
+                  // Start music synchronously inside the user gesture
+                  startMusicFromGesture();
+                  setIsOpen(true);
+                  setIsMuted(false);
+                }}
                 className="px-8 py-6 text-lg rounded-full shadow-lg"
                 style={{ backgroundColor: template.colorScheme.primary, color: template.colorScheme.background }}
               >
