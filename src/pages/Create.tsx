@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Crown } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/logo.svg";
 import { getTemplateCulturalStyle } from "@/lib/template-styles";
 import { SEO } from "@/components/SEO";
 import { CulturalMotifLine } from "@/components/invitation/TemplateDecorations";
