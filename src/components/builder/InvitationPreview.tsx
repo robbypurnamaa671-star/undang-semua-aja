@@ -94,7 +94,12 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
         <div className="relative z-10 max-w-full">
           <GreetingText {...decorProps} />
           <Divider {...decorProps} />
-          <span className="text-5xl mb-3 block">{eventConfig.icon}</span>
+          <img
+            src={eventConfig.icon}
+            alt={eventConfig.nameIndonesian}
+            loading="lazy"
+            className="w-16 h-16 mx-auto mb-3 object-contain"
+          />
           <h2 className="text-xs uppercase tracking-[0.25em] mb-2 opacity-70" style={{ color: template.colorScheme.primary }}>
             {eventConfig.defaultLabels.title}
           </h2>

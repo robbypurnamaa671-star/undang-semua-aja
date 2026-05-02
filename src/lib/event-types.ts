@@ -1,4 +1,20 @@
 // Event types and their configurations
+import weddingIcon from "@/assets/event-icons/wedding.png";
+import lamaranIcon from "@/assets/event-icons/lamaran.png";
+import khitananIcon from "@/assets/event-icons/khitanan.png";
+import aqiqahIcon from "@/assets/event-icons/aqiqah.png";
+import hajatanIcon from "@/assets/event-icons/hajatan.png";
+import tahlilanIcon from "@/assets/event-icons/tahlilan.png";
+import pengajianIcon from "@/assets/event-icons/pengajian.png";
+import wisudaIcon from "@/assets/event-icons/wisuda.png";
+import birthdayIcon from "@/assets/event-icons/birthday.png";
+import familyIcon from "@/assets/event-icons/family.png";
+import syukuranRumahIcon from "@/assets/event-icons/syukuran_rumah.png";
+import dukaCitaIcon from "@/assets/event-icons/duka_cita.png";
+import bukberIcon from "@/assets/event-icons/bukber.png";
+import arisanIcon from "@/assets/event-icons/arisan.png";
+import acaraUmumIcon from "@/assets/event-icons/acara_umum.png";
+
 export type EventType = 
   | 'wedding' 
   | 'khitanan' 
@@ -83,7 +99,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Wedding',
     nameIndonesian: 'Pernikahan',
     description: 'Undangan pernikahan yang elegan dan romantis',
-    icon: '💒',
+    icon: weddingIcon,
     color: 'wedding',
     lightColor: 'wedding-light',
     defaultLabels: {
@@ -99,7 +115,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Engagement',
     nameIndonesian: 'Lamaran / Tunangan',
     description: 'Undangan lamaran dan pertunangan yang berkesan',
-    icon: '💍',
+    icon: lamaranIcon,
     color: 'wedding',
     lightColor: 'wedding-light',
     defaultLabels: {
@@ -115,7 +131,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Khitanan',
     nameIndonesian: 'Khitanan / Sunatan',
     description: 'Undangan khitanan yang berkesan',
-    icon: '🎉',
+    icon: khitananIcon,
     color: 'khitanan',
     lightColor: 'khitanan-light',
     defaultLabels: {
@@ -131,7 +147,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Aqiqah',
     nameIndonesian: 'Aqiqah',
     description: 'Undangan aqiqah untuk menyambut buah hati',
-    icon: '👶',
+    icon: aqiqahIcon,
     color: 'khitanan',
     lightColor: 'khitanan-light',
     defaultLabels: {
@@ -147,7 +163,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Hajatan',
     nameIndonesian: 'Hajatan / Syukuran',
     description: 'Undangan syukuran dan hajatan keluarga',
-    icon: '🙏',
+    icon: hajatanIcon,
     color: 'hajatan',
     lightColor: 'hajatan-light',
     defaultLabels: {
@@ -163,7 +179,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Tahlilan',
     nameIndonesian: 'Tahlilan / Yasinan',
     description: 'Undangan tahlilan, yasinan, dan doa bersama',
-    icon: '📿',
+    icon: tahlilanIcon,
     color: 'hajatan',
     lightColor: 'hajatan-light',
     defaultLabels: {
@@ -188,7 +204,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Pengajian',
     nameIndonesian: 'Pengajian / Maulid',
     description: 'Undangan pengajian, maulid, dan isra mi\'raj',
-    icon: '🕌',
+    icon: pengajianIcon,
     color: 'hajatan',
     lightColor: 'hajatan-light',
     defaultLabels: {
@@ -213,7 +229,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Graduation',
     nameIndonesian: 'Wisuda',
     description: 'Undangan wisuda sekolah, kampus, atau tahfidz',
-    icon: '🎓',
+    icon: wisudaIcon,
     color: 'birthday',
     lightColor: 'birthday-light',
     defaultLabels: {
@@ -229,7 +245,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Birthday',
     nameIndonesian: 'Ulang Tahun',
     description: 'Undangan ulang tahun yang meriah',
-    icon: '🎂',
+    icon: birthdayIcon,
     color: 'birthday',
     lightColor: 'birthday-light',
     defaultLabels: {
@@ -245,7 +261,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Family Gathering',
     nameIndonesian: 'Kumpul Keluarga',
     description: 'Undangan pertemuan keluarga besar',
-    icon: '👨‍👩‍👧‍👦',
+    icon: familyIcon,
     color: 'family',
     lightColor: 'family-light',
     defaultLabels: {
@@ -261,7 +277,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Housewarming',
     nameIndonesian: 'Syukuran Rumah / Usaha',
     description: 'Undangan syukuran rumah baru atau usaha baru',
-    icon: '🏠',
+    icon: syukuranRumahIcon,
     color: 'family',
     lightColor: 'family-light',
     defaultLabels: {
@@ -277,7 +293,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Condolence',
     nameIndonesian: 'Duka Cita',
     description: 'Pemberitahuan duka cita dan pemakaman',
-    icon: '🕊️',
+    icon: dukaCitaIcon,
     color: 'hajatan',
     lightColor: 'hajatan-light',
     defaultLabels: {
@@ -302,7 +318,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Iftar',
     nameIndonesian: 'Buka Puasa Bersama',
     description: 'Undangan buka puasa bersama di bulan Ramadan',
-    icon: '🌙',
+    icon: bukberIcon,
     color: 'hajatan',
     lightColor: 'hajatan-light',
     defaultLabels: {
@@ -318,7 +334,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'Arisan',
     nameIndonesian: 'Arisan',
     description: 'Undangan arisan rutin atau pertemuan komunitas',
-    icon: '💰',
+    icon: arisanIcon,
     color: 'family',
     lightColor: 'family-light',
     defaultLabels: {
@@ -343,7 +359,7 @@ export const eventTypes: EventTypeConfig[] = [
     name: 'General Event',
     nameIndonesian: 'Acara Umum',
     description: 'Undangan acara sekolah, seminar, dan kegiatan umum',
-    icon: '📋',
+    icon: acaraUmumIcon,
     color: 'family',
     lightColor: 'family-light',
     defaultLabels: {
