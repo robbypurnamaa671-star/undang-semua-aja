@@ -587,7 +587,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
               className="text-center relative z-10"
             >
               <GreetingText {...decorProps} />
-              <span className="text-6xl mb-6 block">{eventConfig.icon}</span>
+              <img
+                src={eventConfig.icon}
+                alt={eventConfig.nameIndonesian}
+                loading="lazy"
+                className="w-20 h-20 mx-auto mb-6 object-contain"
+              />
               <p className="text-sm uppercase tracking-widest mb-4" style={{ color: template.colorScheme.primary }}>
                 {eventConfig.defaultLabels.title}
               </p>
