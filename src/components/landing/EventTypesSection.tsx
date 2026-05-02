@@ -49,7 +49,12 @@ export function EventTypesSection() {
                 to={`/register?event=${eventType.id}`}
                 className={`card-interactive block p-3 md:p-4 text-center border-2 event-${eventType.id}`}
               >
-                <span className="text-2xl md:text-3xl mb-1 md:mb-2 block">{eventType.icon}</span>
+                <img
+                  src={eventType.icon}
+                  alt={eventType.nameIndonesian}
+                  loading="lazy"
+                  className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-1 md:mb-2 object-contain"
+                />
                 <h3 className="font-semibold text-foreground text-xs md:text-sm mb-0.5">{eventType.nameIndonesian}</h3>
                 <p className="text-[10px] md:text-xs text-muted-foreground line-clamp-1 hidden sm:block">{eventType.description}</p>
               </Link>

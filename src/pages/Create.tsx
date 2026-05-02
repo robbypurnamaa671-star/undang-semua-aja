@@ -270,7 +270,12 @@ export default function Create() {
                     onClick={() => handleEventSelect(eventType.id)}
                     className={`card-interactive p-6 text-left border-2 event-${eventType.id}`}
                   >
-                    <span className="text-4xl mb-3 block">{eventType.icon}</span>
+                    <img
+                      src={eventType.icon}
+                      alt={eventType.nameIndonesian}
+                      loading="lazy"
+                      className="w-14 h-14 mb-3 object-contain"
+                    />
                     <h3 className="font-serif text-xl font-semibold mb-1">{eventType.nameIndonesian}</h3>
                     <p className="text-sm text-muted-foreground">{eventType.description}</p>
                     <div className="mt-4 flex items-center text-primary font-medium">
@@ -348,9 +353,12 @@ export default function Create() {
                             className="w-14 h-14 rounded-full mb-3 flex items-center justify-center"
                             style={{ backgroundColor: template.colorScheme.primary + '15' }}
                           >
-                            <span className="text-2xl">
-                              {eventTypes.find(e => e.id === selectedEventType)?.icon}
-                            </span>
+                            {(() => {
+                              const ic = eventTypes.find(e => e.id === selectedEventType)?.icon;
+                              return ic ? (
+                                <img src={ic} alt="" loading="lazy" className="w-9 h-9 object-contain" />
+                              ) : null;
+                            })()}
                           </div>
                           <h4 
                             className="font-serif text-lg font-semibold text-center mb-1"
