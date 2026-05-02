@@ -1,4 +1,20 @@
 // Event types and their configurations
+import weddingIcon from "@/assets/event-icons/wedding.png";
+import lamaranIcon from "@/assets/event-icons/lamaran.png";
+import khitananIcon from "@/assets/event-icons/khitanan.png";
+import aqiqahIcon from "@/assets/event-icons/aqiqah.png";
+import hajatanIcon from "@/assets/event-icons/hajatan.png";
+import tahlilanIcon from "@/assets/event-icons/tahlilan.png";
+import pengajianIcon from "@/assets/event-icons/pengajian.png";
+import wisudaIcon from "@/assets/event-icons/wisuda.png";
+import birthdayIcon from "@/assets/event-icons/birthday.png";
+import familyIcon from "@/assets/event-icons/family.png";
+import syukuranRumahIcon from "@/assets/event-icons/syukuran_rumah.png";
+import dukaCitaIcon from "@/assets/event-icons/duka_cita.png";
+import bukberIcon from "@/assets/event-icons/bukber.png";
+import arisanIcon from "@/assets/event-icons/arisan.png";
+import acaraUmumIcon from "@/assets/event-icons/acara_umum.png";
+
 export type EventType = 
   | 'wedding' 
   | 'khitanan' 
