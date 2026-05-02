@@ -731,14 +731,15 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
             style={{ y: heroContentY, opacity: heroOpacity }}
           >
             <GreetingText {...decorProps} />
-            <motion.span 
-              className="text-5xl mb-4 block"
+            <motion.img
+              src={eventConfig.icon}
+              alt={eventConfig.nameIndonesian}
+              loading="lazy"
+              className="w-20 h-20 mx-auto mb-4 object-contain"
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.5, type: "spring", stiffness: 200 }}
-            >
-              {eventConfig.icon}
-            </motion.span>
+            />
             <motion.p 
               className="text-xs uppercase tracking-widest mb-4"
               style={{ color: template.colorScheme.primary }}
