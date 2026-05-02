@@ -92,6 +92,6 @@ export const organizationSchema = {
   "@type": "Organization",
   name: "Undanganlink",
   url: BASE_URL,
-  logo: `${BASE_URL}/favicon.png`,
+  logo: `${BASE_URL}/favicon.png?v=4`,
   sameAs: [],
 };
