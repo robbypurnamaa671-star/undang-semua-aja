@@ -404,6 +404,7 @@ export type Database = {
     }
     Functions: {
       get_all_users_admin: { Args: never; Returns: Json }
+      get_published_invitation: { Args: { _slug: string }; Returns: Json }
       get_seo_analytics: { Args: { days_back?: number }; Returns: Json }
       get_subscriptions_with_emails: { Args: never; Returns: Json }
       has_role: {
