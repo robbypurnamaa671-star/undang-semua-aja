@@ -305,12 +305,10 @@ export function usePublicInvitation(slug: string) {
     setError(null);
 
     try {
-      const { data, error: fetchError } = await supabase
-        .from("invitations")
-        .select("*")
-        .eq("slug", slug)
-        .eq("status", "published")
-        .maybeSingle();
+      const { data: rpcData, error: fetchError } = await supabase
+        .rpc("get_published_invitation", { _slug: slug });
+
+      const data = rpcData as any;
 
       if (fetchError) throw fetchError;
 
@@ -324,22 +322,12 @@ export function usePublicInvitation(slug: string) {
         setError("Undangan tidak ditemukan");
         setInvitation(null);
       } else {
-        const inv = dbToInvitation(data as unknown as DbInvitation);
+        // RPC returns sanitized record without user_id; inject placeholder for type compat
+        const inv = dbToInvitation({ ...data, user_id: "" } as unknown as DbInvitation);
         setInvitation(inv);
 
-        // Check if invitation owner has active premium subscription
-        if (!inv.isPaid) {
-          try {
-            const { data: premiumData } = await supabase
-              .rpc("is_user_premium", { _user_id: data.user_id });
-            if (premiumData === true) {
-              setOwnerIsPremium(true);
-              setInvitation({ ...inv, isPaid: true });
-            }
-          } catch (premiumErr) {
-            // Non-critical: don't fail the whole load if premium check fails
-            console.warn("Premium check failed, defaulting to free:", premiumErr);
-          }
+        if (data.owner_is_premium === true) {
+          setOwnerIsPremium(true);
         }
       }
     } catch (err: any) {
