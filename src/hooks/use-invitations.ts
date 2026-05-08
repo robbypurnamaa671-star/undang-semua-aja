@@ -163,15 +163,29 @@ export function useInvitations() {
     }
 
     try {
-      const dbData = invitationToDb(invitation, user.id);
-      
-      const { data, error } = await supabase
-        .from("invitations")
-        .insert(dbData as any)
-        .select()
-        .single();
-
-      if (error) throw error;
+      // Retry on rare slug UNIQUE collision so users can always create more invitations
+      let data: any = null;
+      let lastError: any = null;
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const dbData = invitationToDb(
+          { ...invitation, slug: attempt === 0 ? invitation.slug : generateSlug() },
+          user.id
+        );
+        const res = await supabase
+          .from("invitations")
+          .insert(dbData as any)
+          .select()
+          .single();
+        if (!res.error) {
+          data = res.data;
+          lastError = null;
+          break;
+        }
+        lastError = res.error;
+        // 23505 = unique_violation. Retry with a fresh slug. Otherwise stop.
+        if ((res.error as any).code !== "23505") break;
+      }
+      if (!data) throw lastError || new Error("Insert failed");
 
       setInvitations((prev) => [dbToInvitation(data as unknown as DbInvitation), ...prev]);
       
