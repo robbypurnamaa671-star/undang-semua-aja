@@ -2,7 +2,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { Template, getTemplateById } from "@/lib/templates";
+import { Template, resolveTemplate } from "@/lib/templates";
 import { getEventTypeConfig } from "@/lib/event-types";
 import { getTemplateCulturalStyle, AnimationPreset } from "@/lib/template-styles";
 import { usePublicInvitation } from "@/hooks/use-invitations";
@@ -44,7 +44,7 @@ export default function PublicInvitation() {
   const pendingPlayRef = useRef<boolean>(false);
   const audioReadyRef = useRef<boolean>(false);
   
-  const template = invitation ? getTemplateById(invitation.templateId) as Template : null;
+  const template = invitation ? resolveTemplate(invitation.templateId, invitation.eventType) : null;
   const eventConfig = invitation ? getEventTypeConfig(invitation.eventType) : null;
   const culturalStyle = template ? getTemplateCulturalStyle(template.id) : null;
   const isWedding = invitation?.eventType === "wedding";
