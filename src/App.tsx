@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
 import GuestManagement from "./pages/GuestManagement";
 import PublicInvitation from "./pages/PublicInvitation";
+import { InvitationErrorBoundary } from "@/components/InvitationErrorBoundary";
 import BlogList from "./pages/BlogList";
 import BlogDetail from "./pages/BlogDetail";
 import TemplateShowcase from "./pages/TemplateShowcase";
@@ -33,7 +34,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/create" element={<Create />} />
             <Route path="/guests" element={<GuestManagement />} />
-            <Route path="/invite/:slug" element={<PublicInvitation />} />
+            <Route path="/invite/:slug" element={<InvitationErrorBoundary><PublicInvitation /></InvitationErrorBoundary>} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/templates" element={<TemplateShowcase />} />
