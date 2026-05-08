@@ -2012,6 +2012,25 @@ export const getTemplateById = (id: string): Template | undefined => {
   return processedTemplates.find((t) => t.id === id);
 };
 
+/**
+ * Resolve a template safely. Falls back to the first template of the given
+ * event type, or any template, so an unknown/legacy templateId never causes
+ * a blank/error screen on a published invitation.
+ */
+export const resolveTemplate = (id: string, eventType?: EventType): Template => {
+  const exact = processedTemplates.find((t) => t.id === id);
+  if (exact) return exact;
+  if (eventType) {
+    const byEvent = processedTemplates.find((t) => t.eventTypes.includes(eventType));
+    if (byEvent) {
+      console.warn(`[templates] Unknown templateId "${id}" — falling back to "${byEvent.id}" for event "${eventType}"`);
+      return byEvent;
+    }
+  }
+  console.warn(`[templates] Unknown templateId "${id}" — falling back to first template`);
+  return processedTemplates[0];
+};
+
 export const getFreeTemplateCount = (eventType: EventType): number => {
   return processedTemplates.filter((t) => t.eventTypes.includes(eventType) && !t.isPremium).length;
 };
