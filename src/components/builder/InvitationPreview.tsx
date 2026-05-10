@@ -27,10 +27,16 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
   const isLamaran = invitation.eventType === "lamaran";
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig.features;
-  // Built-in template background (shown when user hasn't uploaded a cover image)
-  const templateCoverBg =
-    invitation.customBackgrounds?.cover ||
-    template.defaultBackgrounds?.cover;
+  // Merge user backgrounds over template defaults so the editor preview matches
+  // the public invitation behavior across every section.
+  const mergedBg = {
+    ...(template.defaultBackgrounds || {}),
+    ...(invitation.customBackgrounds || {}),
+  };
+  const templateCoverBg = invitation.coverImage || mergedBg.cover;
+  // Single background applied to the whole preview (all 5 built-in templates ship
+  // with the same image per section, so a single root layer covers all sections).
+  const rootBg = mergedBg.cover || mergedBg.names;
   
   const decorProps = {
     style: culturalStyle,
@@ -73,6 +79,29 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
           : '"Plus Jakarta Sans", sans-serif',
       }}
     >
+      {/* Built-in template background — covers ALL sections (top to bottom) */}
+      {rootBg && (
+        <>
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: `url(${rootBg})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'repeat-y',
+              backgroundPosition: 'center top',
+            }}
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}b0 50%, ${template.colorScheme.background}80 100%)`,
+            }}
+          />
+        </>
+      )}
+
       {/* Background Pattern */}
       <PatternOverlay style={culturalStyle} />
       <CulturalIconsOverlay style={culturalStyle} primaryColor={template.colorScheme.primary} templateId={template.id} />
