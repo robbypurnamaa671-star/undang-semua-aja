@@ -1,4 +1,11 @@
 import { EventType } from './event-types';
+import royalGoldBg from '@/assets/template-bg/royal-gold.jpg';
+import floralRomanceBg from '@/assets/template-bg/floral-romance.jpg';
+import islamicEmeraldBg from '@/assets/template-bg/islamic-emerald.jpg';
+import pastelCelebrationBg from '@/assets/template-bg/pastel-celebration.jpg';
+import babyCloudBg from '@/assets/template-bg/baby-cloud.jpg';
+
+import type { CustomBackgrounds } from './invitation';
 
 export interface TemplateSection {
   id: string;
@@ -22,6 +29,13 @@ export interface Template {
   sections: TemplateSection[];
   style: 'classic' | 'modern' | 'minimalist' | 'elegant' | 'rustic' | 'custom';
   isFullCustom?: boolean;
+  /**
+   * Built-in background images per section. When the template is rendered and
+   * the user has not uploaded their own backgrounds, these are used as fallback.
+   * Templates that ship with `defaultBackgrounds` behave like Full Custom
+   * (background images per section) but require zero setup from the user.
+   */
+  defaultBackgrounds?: CustomBackgrounds;
 }
 
 const defaultSections: TemplateSection[] = [
