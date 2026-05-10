@@ -27,6 +27,10 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
   const isLamaran = invitation.eventType === "lamaran";
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig.features;
+  // Built-in template background (shown when user hasn't uploaded a cover image)
+  const templateCoverBg =
+    invitation.customBackgrounds?.cover ||
+    template.defaultBackgrounds?.cover;
   
   const decorProps = {
     style: culturalStyle,
@@ -77,14 +81,14 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
       <section 
         className="min-h-[420px] flex flex-col items-center justify-center text-center p-6 relative overflow-hidden"
         style={{ 
-          background: invitation.coverImage 
+          background: (invitation.coverImage || templateCoverBg)
             ? undefined 
             : `linear-gradient(180deg, ${template.colorScheme.secondary}40 0%, ${template.colorScheme.background} 100%)` 
         }}
       >
-        {invitation.coverImage && (
+        {(invitation.coverImage || templateCoverBg) && (
           <>
-            <img src={invitation.coverImage} alt="Cover" className="absolute inset-0 w-full h-full object-cover" />
+            <img src={invitation.coverImage || templateCoverBg} alt="Cover" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${template.colorScheme.background}80 0%, ${template.colorScheme.background}f0 100%)` }} />
           </>
         )}
