@@ -1,4 +1,11 @@
 import { EventType } from './event-types';
+import royalGoldBg from '@/assets/template-bg/royal-gold.jpg';
+import floralRomanceBg from '@/assets/template-bg/floral-romance.jpg';
+import islamicEmeraldBg from '@/assets/template-bg/islamic-emerald.jpg';
+import pastelCelebrationBg from '@/assets/template-bg/pastel-celebration.jpg';
+import babyCloudBg from '@/assets/template-bg/baby-cloud.jpg';
+
+import type { CustomBackgrounds } from './invitation';
 
 export interface TemplateSection {
   id: string;
@@ -22,6 +29,13 @@ export interface Template {
   sections: TemplateSection[];
   style: 'classic' | 'modern' | 'minimalist' | 'elegant' | 'rustic' | 'custom';
   isFullCustom?: boolean;
+  /**
+   * Built-in background images per section. When the template is rendered and
+   * the user has not uploaded their own backgrounds, these are used as fallback.
+   * Templates that ship with `defaultBackgrounds` behave like Full Custom
+   * (background images per section) but require zero setup from the user.
+   */
+  defaultBackgrounds?: CustomBackgrounds;
 }
 
 const defaultSections: TemplateSection[] = [
@@ -1733,6 +1747,130 @@ const _templates: Template[] = [
   },
 
   // ── Full Custom Template (available for all event types) ──
+  // ═══════════════════════════════════════════════════════════
+  // PREMIUM BUILT-IN BACKGROUND TEMPLATES (5)
+  // High-quality background images, no upload needed
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: 'wedding-royal-gold-luxe',
+    name: 'Royal Gold Luxe',
+    description: 'Pernikahan ultra mewah hitam emas dengan ornamen baroque & partikel emas',
+    eventTypes: ['wedding', 'lamaran'],
+    previewImage: royalGoldBg,
+    isPremium: false,
+    isFullCustom: true,
+    colorScheme: { primary: '#D4AF37', secondary: '#1a1410', background: '#0a0a0a', text: '#f5e6c4' },
+    sections: defaultSections,
+    style: 'elegant',
+    defaultBackgrounds: {
+      cover: royalGoldBg,
+      names: royalGoldBg,
+      countdown: royalGoldBg,
+      datetime: royalGoldBg,
+      location: royalGoldBg,
+      gallery: royalGoldBg,
+      rsvp: royalGoldBg,
+      guestbook: royalGoldBg,
+      envelope: royalGoldBg,
+      closing: royalGoldBg,
+    },
+  },
+  {
+    id: 'wedding-floral-romance',
+    name: 'Floral Romance',
+    description: 'Pernikahan watercolor mawar putih & peony pink dengan eucalyptus emas',
+    eventTypes: ['wedding', 'lamaran'],
+    previewImage: floralRomanceBg,
+    isPremium: false,
+    isFullCustom: true,
+    colorScheme: { primary: '#b08968', secondary: '#f5e6d3', background: '#fff8f0', text: '#4a3728' },
+    sections: defaultSections,
+    style: 'elegant',
+    defaultBackgrounds: {
+      cover: floralRomanceBg,
+      names: floralRomanceBg,
+      countdown: floralRomanceBg,
+      datetime: floralRomanceBg,
+      location: floralRomanceBg,
+      gallery: floralRomanceBg,
+      rsvp: floralRomanceBg,
+      guestbook: floralRomanceBg,
+      envelope: floralRomanceBg,
+      closing: floralRomanceBg,
+    },
+  },
+  {
+    id: 'islamic-emerald-mosque',
+    name: 'Emerald Islamic',
+    description: 'Tema Islami emerald hijau dengan ornamen arabesque emas, bulan sabit & masjid',
+    eventTypes: ['khitanan', 'aqiqah', 'pengajian', 'tahlilan', 'bukber', 'wedding'],
+    previewImage: islamicEmeraldBg,
+    isPremium: false,
+    isFullCustom: true,
+    colorScheme: { primary: '#D4AF37', secondary: '#1B4D2E', background: '#0F3522', text: '#F5E6C4' },
+    sections: defaultSections,
+    style: 'elegant',
+    defaultBackgrounds: {
+      cover: islamicEmeraldBg,
+      names: islamicEmeraldBg,
+      countdown: islamicEmeraldBg,
+      datetime: islamicEmeraldBg,
+      location: islamicEmeraldBg,
+      gallery: islamicEmeraldBg,
+      rsvp: islamicEmeraldBg,
+      guestbook: islamicEmeraldBg,
+      envelope: islamicEmeraldBg,
+      closing: islamicEmeraldBg,
+    },
+  },
+  {
+    id: 'birthday-pastel-celebration',
+    name: 'Pastel Celebration',
+    description: 'Ulang tahun dreamy gradasi pastel pink-ungu-mint dengan balon emas & confetti',
+    eventTypes: ['birthday', 'arisan', 'family', 'wisuda', 'acara_umum'],
+    previewImage: pastelCelebrationBg,
+    isPremium: false,
+    isFullCustom: true,
+    colorScheme: { primary: '#C9A961', secondary: '#F5C2E7', background: '#FFF5F8', text: '#5A3D5C' },
+    sections: defaultSections,
+    style: 'modern',
+    defaultBackgrounds: {
+      cover: pastelCelebrationBg,
+      names: pastelCelebrationBg,
+      countdown: pastelCelebrationBg,
+      datetime: pastelCelebrationBg,
+      location: pastelCelebrationBg,
+      gallery: pastelCelebrationBg,
+      rsvp: pastelCelebrationBg,
+      guestbook: pastelCelebrationBg,
+      envelope: pastelCelebrationBg,
+      closing: pastelCelebrationBg,
+    },
+  },
+  {
+    id: 'baby-cloud-dream',
+    name: 'Baby Cloud Dream',
+    description: 'Aqiqah & syukuran bayi watercolor langit awan dengan bulan sabit & bintang emas',
+    eventTypes: ['aqiqah', 'khitanan', 'birthday', 'family', 'syukuran_rumah'],
+    previewImage: babyCloudBg,
+    isPremium: false,
+    isFullCustom: true,
+    colorScheme: { primary: '#D4A574', secondary: '#B8D4E3', background: '#FBF5E9', text: '#4A6B7C' },
+    sections: defaultSections,
+    style: 'modern',
+    defaultBackgrounds: {
+      cover: babyCloudBg,
+      names: babyCloudBg,
+      countdown: babyCloudBg,
+      datetime: babyCloudBg,
+      location: babyCloudBg,
+      gallery: babyCloudBg,
+      rsvp: babyCloudBg,
+      guestbook: babyCloudBg,
+      envelope: babyCloudBg,
+      closing: babyCloudBg,
+    },
+  },
   {
     id: 'full-custom',
     name: 'Full Custom',

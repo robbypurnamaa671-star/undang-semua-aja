@@ -52,7 +52,13 @@ export default function PublicInvitation() {
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig?.features;
   const isFullCustom = template?.isFullCustom === true;
-  const customBg = invitation?.customBackgrounds || {};
+  // Merge order: user-uploaded backgrounds override template defaults.
+  // This lets new built-in templates ship with high-quality background images
+  // while still allowing the user to override any section they wish.
+  const customBg = {
+    ...(template?.defaultBackgrounds || {}),
+    ...(invitation?.customBackgrounds || {}),
+  };
 
   // Parallax scroll for hero section
   const { scrollY } = useScroll();
