@@ -4,6 +4,11 @@ import floralRomanceBg from '@/assets/template-bg/floral-romance.jpg';
 import islamicEmeraldBg from '@/assets/template-bg/islamic-emerald.jpg';
 import pastelCelebrationBg from '@/assets/template-bg/pastel-celebration.jpg';
 import babyCloudBg from '@/assets/template-bg/baby-cloud.jpg';
+import rusticBurgundyBg from '@/assets/template-bg/rustic-burgundy.jpg';
+import tropicalParadiseBg from '@/assets/template-bg/tropical-paradise.jpg';
+import ottomanSapphireBg from '@/assets/template-bg/ottoman-sapphire.jpg';
+import academicLaurelBg from '@/assets/template-bg/academic-laurel.jpg';
+import vintageBotanicalBg from '@/assets/template-bg/vintage-botanical.jpg';
 
 import type { CustomBackgrounds } from './invitation';
 
