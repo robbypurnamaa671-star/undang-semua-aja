@@ -318,8 +318,60 @@ export default function Create() {
                     {/* Template Preview */}
                     {(() => {
                       const cs = getTemplateCulturalStyle(template.id);
-                       const templateBackground = template.defaultBackgrounds?.cover || template.defaultBackgrounds?.names;
-                      return (
+                       const dbg = template.defaultBackgrounds;
+                       const templateBackground = dbg?.cover || dbg?.names;
+                       // When template has full default backgrounds, render a vertical
+                       // stack of section bands so the card looks like the actual
+                       // invitation preview from top to bottom.
+                       if (dbg) {
+                         const sections: Array<{ key: string; src?: string }> = [
+                           { key: "cover", src: dbg.cover || dbg.names },
+                           { key: "names", src: dbg.names || dbg.cover },
+                           { key: "datetime", src: dbg.datetime || dbg.countdown || dbg.cover },
+                           { key: "gallery", src: dbg.gallery || dbg.location || dbg.cover },
+                           { key: "rsvp", src: dbg.rsvp || dbg.guestbook || dbg.cover },
+                           { key: "closing", src: dbg.closing || dbg.envelope || dbg.cover },
+                         ];
+                         return (
+                           <div
+                             className="aspect-[3/4] relative overflow-hidden flex flex-col"
+                             style={{ backgroundColor: template.colorScheme.background }}
+                           >
+                             {sections.map((s) => (
+                               <div
+                                 key={s.key}
+                                 className="flex-1 bg-center bg-cover"
+                                 style={{ backgroundImage: s.src ? `url(${s.src})` : undefined }}
+                               />
+                             ))}
+                             {/* Title overlay at bottom */}
+                             <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+                               <h4
+                                 className="font-serif text-base font-semibold text-white text-center drop-shadow"
+                               >
+                                 {template.name}
+                               </h4>
+                               <div className="flex justify-center gap-2 mt-2">
+                                 <div
+                                   className="w-4 h-4 rounded-full border-2 border-white shadow"
+                                   style={{ backgroundColor: template.colorScheme.primary }}
+                                 />
+                                 <div
+                                   className="w-4 h-4 rounded-full border-2 border-white shadow"
+                                   style={{ backgroundColor: template.colorScheme.secondary }}
+                                 />
+                               </div>
+                             </div>
+                             {template.isPremium && (
+                               <Badge className="absolute top-3 right-3 z-10 bg-primary text-primary-foreground shadow-lg">
+                                 <Crown className="w-3 h-3 mr-1" />
+                                 Premium
+                               </Badge>
+                             )}
+                           </div>
+                         );
+                       }
+                       return (
                         <div 
                           className="aspect-[3/4] relative flex flex-col items-center justify-center p-6 overflow-hidden"
                           style={{ 
