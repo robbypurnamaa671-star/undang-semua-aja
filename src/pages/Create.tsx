@@ -318,16 +318,22 @@ export default function Create() {
                     {/* Template Preview */}
                     {(() => {
                       const cs = getTemplateCulturalStyle(template.id);
+                       const templateBackground = template.defaultBackgrounds?.cover || template.defaultBackgrounds?.names;
                       return (
                         <div 
                           className="aspect-[3/4] relative flex flex-col items-center justify-center p-6 overflow-hidden"
                           style={{ 
                             backgroundColor: template.colorScheme.background,
-                            ...(cs.backgroundPattern ? { backgroundImage: cs.backgroundPattern } : {}),
+                             backgroundImage: templateBackground ? `url(${templateBackground})` : cs.backgroundPattern,
+                             backgroundSize: templateBackground ? "cover" : undefined,
+                             backgroundPosition: "center",
                           }}
                         >
+                           {templateBackground && (
+                             <div className="absolute inset-0 bg-background/25" aria-hidden="true" />
+                           )}
                           {/* Corner ornaments */}
-                          {cs.cornerMotif !== 'none' && (
+                           {cs.cornerMotif !== 'none' && !templateBackground && (
                             <>
                               <span className="absolute top-2 left-3 text-base opacity-25 select-none" style={{ color: template.colorScheme.primary }}>
                                 {cs.culturalMotifs[0]}
@@ -345,12 +351,12 @@ export default function Create() {
                           )}
 
                           {/* Greeting snippet */}
-                          <p className="text-[9px] text-center opacity-50 mb-2 px-4 line-clamp-2" style={{ color: template.colorScheme.primary }}>
+                           <p className="relative z-10 text-[9px] text-center opacity-70 mb-2 px-4 line-clamp-2" style={{ color: template.colorScheme.primary }}>
                             {cs.greeting.split('\n')[0]}
                           </p>
 
                           <div 
-                            className="w-14 h-14 rounded-full mb-3 flex items-center justify-center"
+                             className="relative z-10 w-14 h-14 rounded-full mb-3 flex items-center justify-center bg-card/80 backdrop-blur-sm"
                             style={{ backgroundColor: template.colorScheme.primary + '15' }}
                           >
                             {(() => {
@@ -361,23 +367,23 @@ export default function Create() {
                             })()}
                           </div>
                           <h4 
-                            className="font-serif text-lg font-semibold text-center mb-1"
+                             className="relative z-10 font-serif text-lg font-semibold text-center mb-1"
                             style={{ color: template.colorScheme.text }}
                           >
                             {template.name}
                           </h4>
                           <p 
-                            className="text-xs text-center opacity-70 px-2 line-clamp-2"
+                             className="relative z-10 text-xs text-center opacity-80 px-2 line-clamp-2"
                             style={{ color: template.colorScheme.text }}
                           >
                             {template.description}
                           </p>
                           
                           {/* Cultural motif line */}
-                          <CulturalMotifLine style={cs} primaryColor={template.colorScheme.primary} />
+                           {!templateBackground && <CulturalMotifLine style={cs} primaryColor={template.colorScheme.primary} />}
                           
                           {/* Color preview */}
-                          <div className="flex gap-2 mt-3">
+                           <div className="relative z-10 flex gap-2 mt-3">
                             <div 
                               className="w-5 h-5 rounded-full border-2 border-white shadow"
                               style={{ backgroundColor: template.colorScheme.primary }}
@@ -390,7 +396,7 @@ export default function Create() {
                           
                           {/* Premium Badge */}
                           {template.isPremium && (
-                            <Badge className="absolute top-3 right-3 bg-primary text-primary-foreground shadow-lg">
+                             <Badge className="absolute top-3 right-3 z-10 bg-primary text-primary-foreground shadow-lg">
                               <Crown className="w-3 h-3 mr-1" />
                               Premium
                             </Badge>
