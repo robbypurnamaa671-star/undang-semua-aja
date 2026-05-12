@@ -50,7 +50,7 @@ export function TemplatesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 max-w-5xl mx-auto"
         >
           {featuredTemplates.map((template) => (
             <motion.div key={template.id} variants={item}>
