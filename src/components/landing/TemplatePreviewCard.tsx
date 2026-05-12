@@ -73,7 +73,7 @@ export function TemplatePreviewCard({ template }: Props) {
       <div
         ref={wrapperRef}
         className="aspect-[9/16] relative overflow-hidden bg-muted"
-        style={{ backgroundColor: template.colorScheme.background, touchAction: "pan-y" }}
+        style={{ backgroundColor: template.colorScheme.background }}
       >
         {/* Skeleton placeholder */}
         {!ready && (
