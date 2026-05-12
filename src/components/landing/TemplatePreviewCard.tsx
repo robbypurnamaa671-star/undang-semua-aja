@@ -69,11 +69,11 @@ export function TemplatePreviewCard({ template }: Props) {
   );
 
   return (
-    <div className="card-interactive group overflow-hidden relative">
+    <div className="card-interactive group overflow-hidden relative max-w-[240px] mx-auto">
       <div
         ref={wrapperRef}
-        className="aspect-[3/4] relative overflow-hidden bg-muted"
-        style={{ backgroundColor: template.colorScheme.background }}
+        className="aspect-[9/16] relative overflow-hidden bg-muted"
+        style={{ backgroundColor: template.colorScheme.background, touchAction: "pan-y" }}
       >
         {/* Skeleton placeholder */}
         {!ready && (
