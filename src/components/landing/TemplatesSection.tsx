@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { templates } from "@/lib/templates";
-import { getTemplateCulturalStyle } from "@/lib/template-styles";
-import { CulturalMotifLine } from "@/components/invitation/TemplateDecorations";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,8 +21,11 @@ const item = {
 };
 
 export function TemplatesSection() {
-  // Show 6 featured templates (mix of free and premium)
-  const featuredTemplates = templates.slice(0, 6);
+  // Featured: only templates that ship with full background images so the
+  // preview card can mirror the actual mobile invitation preview.
+  const featuredTemplates = templates
+    .filter((t) => !!t.defaultBackgrounds)
+    .slice(0, 6);
   
   return (
     <section id="template" className="py-12 bg-background">
@@ -51,113 +52,93 @@ export function TemplatesSection() {
           viewport={{ once: true }}
           className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5"
         >
-          {featuredTemplates.map((template) => (
-            <motion.div 
-              key={template.id} 
-              variants={item}
-              className="card-interactive group overflow-hidden relative"
-            >
-              {/* Template Preview */}
-              {(() => {
-                const cs = getTemplateCulturalStyle(template.id);
-                const eventIcon = template.eventTypes.includes('wedding') ? '💒' :
-                  template.eventTypes.includes('khitanan') ? '🎉' :
-                  template.eventTypes.includes('birthday') ? '🎂' :
-                  template.eventTypes.includes('hajatan') ? '🙏' : '👨‍👩‍👧‍👦';
-                return (
-                  <div 
-                    className="aspect-[3/4] relative overflow-hidden"
-                    style={{ 
-                      backgroundColor: template.colorScheme.background,
-                      ...(cs.backgroundPattern ? { backgroundImage: cs.backgroundPattern } : {}),
-                    }}
-                  >
-                    {/* Corner ornaments */}
-                    {cs.cornerMotif !== 'none' && (
-                      <>
-                        <span className="absolute top-2 left-3 text-sm opacity-20 select-none" style={{ color: template.colorScheme.primary }}>{cs.culturalMotifs[0]}</span>
-                        <span className="absolute top-2 right-3 text-sm opacity-20 select-none" style={{ color: template.colorScheme.primary, transform: 'scaleX(-1)' }}>{cs.culturalMotifs[0]}</span>
-                        <span className="absolute bottom-14 left-3 text-sm opacity-20 select-none" style={{ color: template.colorScheme.primary, transform: 'scaleY(-1)' }}>{cs.culturalMotifs[0]}</span>
-                        <span className="absolute bottom-14 right-3 text-sm opacity-20 select-none" style={{ color: template.colorScheme.primary, transform: 'scale(-1,-1)' }}>{cs.culturalMotifs[0]}</span>
-                      </>
-                    )}
-
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-                      {/* Greeting snippet */}
-                      <p className="text-[8px] text-center opacity-40 mb-2 px-3 line-clamp-1" style={{ color: template.colorScheme.primary }}>
-                        {cs.greeting.split('\n')[0]}
-                      </p>
-
-                      <div 
-                        className="w-14 h-14 rounded-full mb-3 flex items-center justify-center"
-                        style={{ backgroundColor: template.colorScheme.primary + '15' }}
+          {featuredTemplates.map((template) => {
+            const dbg = template.defaultBackgrounds!;
+            const sections: Array<{ key: string; src?: string; label: string }> = [
+              { key: "cover", src: dbg.cover || dbg.names, label: "Pembuka" },
+              { key: "names", src: dbg.names || dbg.cover, label: template.name },
+              { key: "countdown", src: dbg.countdown || dbg.datetime || dbg.cover, label: "Hitung Mundur" },
+              { key: "datetime", src: dbg.datetime || dbg.countdown || dbg.cover, label: "Waktu & Tempat" },
+              { key: "location", src: dbg.location || dbg.datetime || dbg.cover, label: "Lokasi" },
+              { key: "gallery", src: dbg.gallery || dbg.location || dbg.cover, label: "Galeri" },
+              { key: "rsvp", src: dbg.rsvp || dbg.guestbook || dbg.cover, label: "RSVP" },
+              { key: "guestbook", src: dbg.guestbook || dbg.rsvp || dbg.cover, label: "Buku Tamu" },
+              { key: "envelope", src: dbg.envelope || dbg.gallery || dbg.cover, label: "Amplop Digital" },
+              { key: "closing", src: dbg.closing || dbg.envelope || dbg.cover, label: "Penutup" },
+            ];
+            return (
+              <motion.div
+                key={template.id}
+                variants={item}
+                className="card-interactive group overflow-hidden relative"
+              >
+                {/* Scrollable mobile-like preview */}
+                <div
+                  className="aspect-[3/4] relative overflow-y-auto overscroll-contain scrollbar-thin"
+                  style={{ backgroundColor: template.colorScheme.background }}
+                >
+                  <div className="flex flex-col">
+                    {sections.map((s) => (
+                      <div
+                        key={s.key}
+                        className="relative w-full bg-center bg-cover"
+                        style={{
+                          height: "180px",
+                          backgroundImage: s.src ? `url(${s.src})` : undefined,
+                        }}
                       >
-                        <span className="text-2xl">{eventIcon}</span>
+                        <div className="absolute inset-x-0 bottom-0 px-2 py-1 bg-gradient-to-t from-black/60 to-transparent">
+                          <p className="text-[10px] text-white/90 text-center font-medium drop-shadow line-clamp-1">
+                            {s.label}
+                          </p>
+                        </div>
                       </div>
-                      <h4 
-                        className="font-serif text-lg font-semibold text-center mb-1"
-                        style={{ color: template.colorScheme.text }}
-                      >
-                        {template.name}
-                      </h4>
-                      <p 
-                        className="text-xs text-center opacity-70 px-2 line-clamp-2"
-                        style={{ color: template.colorScheme.text }}
-                      >
-                        {template.description}
-                      </p>
-                      
-                      <CulturalMotifLine style={cs} primaryColor={template.colorScheme.primary} />
-                      
-                      <div className="flex gap-2 mt-3">
-                        <div 
-                          className="w-5 h-5 rounded-full border-2 border-white shadow"
-                          style={{ backgroundColor: template.colorScheme.primary }}
-                        />
-                        <div 
-                          className="w-5 h-5 rounded-full border-2 border-white shadow"
-                          style={{ backgroundColor: template.colorScheme.secondary }}
-                        />
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                );
-              })()}
 
-              {/* Badge */}
-              <div className="absolute top-3 right-3 z-10">
-                {template.isPremium ? (
-                  <Badge className="bg-primary text-primary-foreground shadow-lg">
-                    <Crown className="w-3 h-3 mr-1" />
-                    Premium
-                  </Badge>
-                ) : (
-                  <Badge variant="outline" className="bg-background/90 text-primary border-primary">
-                    Gratis
-                  </Badge>
-                )}
-              </div>
-              
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-300 z-10" />
-              
-              {/* Template Info */}
-              <div className="p-4 bg-card">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-semibold">{template.name}</h4>
-                    <p className="text-sm text-muted-foreground capitalize">
-                      {template.eventTypes[0]}
-                    </p>
+                  {/* Sticky title bar at top */}
+                  <div className="sticky top-0 inset-x-0 z-10 px-3 py-2 bg-gradient-to-b from-black/70 via-black/40 to-transparent pointer-events-none">
+                    <h3 className="font-serif text-sm font-semibold text-white text-center drop-shadow line-clamp-1">
+                      {template.name}
+                    </h3>
                   </div>
-                  <Badge variant="secondary" className="capitalize">
-                    {template.isPremium && <Crown className="w-3 h-3 mr-1" />}
-                    {template.style}
-                  </Badge>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Badge */}
+                <div className="absolute top-3 right-3 z-20">
+                  {template.isPremium ? (
+                    <Badge className="bg-primary text-primary-foreground shadow-lg">
+                      <Crown className="w-3 h-3 mr-1" />
+                      Premium
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline" className="bg-background/90 text-primary border-primary">
+                      Gratis
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Template Info */}
+                <div className="p-4 bg-card">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="min-w-0">
+                      <h4 className="font-semibold truncate">{template.name}</h4>
+                      <p className="text-sm text-muted-foreground capitalize truncate">
+                        {template.eventTypes[0]}
+                      </p>
+                    </div>
+                    <Badge variant="secondary" className="capitalize shrink-0">
+                      {template.isPremium && <Crown className="w-3 h-3 mr-1" />}
+                      {template.style}
+                    </Badge>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-2 italic">
+                    Geser ke bawah untuk lihat preview penuh
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
         </motion.div>
         
         {/* CTA */}
