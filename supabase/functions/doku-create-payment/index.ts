@@ -146,10 +146,10 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Save subscription record using service role
+    // Persist subscription in the background so we can return the payment URL
+    // to the client as fast as possible. Webhook still reconciles status later.
     const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
-
-    const { error: insertError } = await supabaseAdmin
+    const insertPromise = supabaseAdmin
       .from("subscriptions")
       .insert({
         user_id: userId,
@@ -158,11 +158,15 @@ Deno.serve(async (req: Request) => {
         status: "pending",
         doku_payment_url: dokuData.response?.payment?.url || null,
         doku_payment_token: dokuData.response?.payment?.token || null,
+      })
+      .then(({ error }) => {
+        if (error) console.error("Background insert error:", error);
       });
 
-    if (insertError) {
-      console.error("Insert error:", insertError);
-      throw new Error(`Failed to save subscription: ${insertError.message}`);
+    // @ts-ignore - EdgeRuntime is provided by Supabase Deno runtime
+    if (typeof EdgeRuntime !== "undefined" && EdgeRuntime?.waitUntil) {
+      // @ts-ignore
+      EdgeRuntime.waitUntil(insertPromise);
     }
 
     return new Response(
