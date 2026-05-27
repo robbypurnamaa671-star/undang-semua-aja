@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState, useLayoutEffect } from "react";
-import { Crown } from "lucide-react";
+import { Crown, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Template } from "@/lib/templates";
 import { InvitationPreview } from "@/components/builder/InvitationPreview";
 import { createDefaultInvitation } from "@/lib/invitation";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface Props {
   template: Template;
@@ -19,6 +22,7 @@ export function TemplatePreviewCard({ template }: Props) {
   const [visible, setVisible] = useState(false);
   const [scale, setScale] = useState(1);
   const [ready, setReady] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // Lazy-mount when card scrolls near viewport
   useEffect(() => {
@@ -69,7 +73,13 @@ export function TemplatePreviewCard({ template }: Props) {
   );
 
   return (
-    <div className="card-interactive group overflow-hidden relative max-w-[240px] mx-auto">
+    <>
+    <button
+      type="button"
+      onClick={() => setOpen(true)}
+      className="card-interactive group overflow-hidden relative max-w-[240px] mx-auto w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
+      aria-label={`Lihat preview ${template.name}`}
+    >
       <div
         ref={wrapperRef}
         className="aspect-[9/16] relative overflow-hidden bg-muted"
@@ -113,6 +123,13 @@ export function TemplatePreviewCard({ template }: Props) {
             {template.name}
           </h3>
         </div>
+
+        {/* Hover overlay */}
+        <div className="absolute inset-0 z-20 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+          <span className="bg-primary text-primary-foreground rounded-full px-3 py-1.5 text-xs font-semibold flex items-center gap-1 shadow-lg">
+            <Eye className="w-3.5 h-3.5" /> Lihat Preview
+          </span>
+        </div>
       </div>
 
       {/* Badge */}
@@ -143,10 +160,45 @@ export function TemplatePreviewCard({ template }: Props) {
             {template.style}
           </Badge>
         </div>
-        <p className="text-[11px] text-muted-foreground mt-2 italic">
-          Geser ke bawah untuk lihat preview penuh
+        <p className="text-[11px] text-primary mt-2 font-medium">
+          Klik untuk lihat preview penuh →
         </p>
       </div>
-    </div>
+    </button>
+
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="max-w-sm p-0 gap-0 overflow-hidden max-h-[92vh] flex flex-col">
+        <DialogTitle className="sr-only">Preview {template.name}</DialogTitle>
+        <div className="px-4 py-3 border-b flex items-center justify-between bg-card">
+          <div className="min-w-0">
+            <h3 className="font-serif font-semibold truncate">{template.name}</h3>
+            <p className="text-xs text-muted-foreground capitalize truncate">
+              {template.eventTypes[0]} · {template.style}
+            </p>
+          </div>
+          {template.isPremium ? (
+            <Badge className="bg-primary text-primary-foreground shrink-0">
+              <Crown className="w-3 h-3 mr-1" /> Premium
+            </Badge>
+          ) : (
+            <Badge variant="outline" className="text-primary border-primary shrink-0">Gratis</Badge>
+          )}
+        </div>
+        <div
+          className="flex-1 overflow-y-auto overscroll-contain"
+          style={{ backgroundColor: template.colorScheme.background }}
+        >
+          <InvitationPreview template={template} invitation={invitation} />
+        </div>
+        <div className="p-3 border-t bg-card">
+          <Button asChild className="w-full btn-hero">
+            <Link to={`/register?template=${template.id}`}>
+              Pakai Template Ini
+            </Link>
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
