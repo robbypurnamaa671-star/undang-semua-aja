@@ -32,21 +32,56 @@ export function PaymentDialog({
   const handlePayment = async () => {
     setIsProcessing(true);
 
+    // Open a blank tab synchronously inside the click handler so the browser
+    // does not block the popup, and the user immediately sees a new tab with a
+    // loading state while we wait for DOKU. Without this, the wait happens
+    // before any tab opens and the experience feels frozen.
+    const paymentWindow = window.open("about:blank", "_blank");
+    if (paymentWindow) {
+      paymentWindow.document.write(`
+        <!doctype html><html lang="id"><head><meta charset="utf-8" />
+        <title>Menyiapkan pembayaran…</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <style>
+          body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+               background:#faf7f2;color:#3a2f25;min-height:100vh;display:flex;align-items:center;
+               justify-content:center;text-align:center;padding:24px;}
+          .box{max-width:360px}
+          .spinner{width:44px;height:44px;border:3px solid #e8d9b8;border-top-color:#b8893b;
+                   border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 18px}
+          @keyframes spin{to{transform:rotate(360deg)}}
+          h1{font-size:18px;margin:0 0 6px;font-weight:600}
+          p{font-size:14px;margin:0;color:#7a6a55}
+        </style></head><body><div class="box">
+        <div class="spinner"></div>
+        <h1>Menyiapkan halaman pembayaran…</h1>
+        <p>Mohon tunggu sebentar, kami sedang menghubungkan ke DOKU.</p>
+        </div></body></html>
+      `);
+      paymentWindow.document.close();
+    }
+
     try {
       const paymentUrl = await createPayment();
 
       if (paymentUrl) {
-        // Open DOKU checkout page in new tab
-        window.open(paymentUrl, "_blank");
-        toast.success("Halaman pembayaran DOKU telah dibuka", {
+        if (paymentWindow && !paymentWindow.closed) {
+          paymentWindow.location.replace(paymentUrl);
+        } else {
+          // Popup blocked — fall back to opening in same tab
+          window.location.href = paymentUrl;
+        }
+        toast.success("Halaman pembayaran DOKU siap", {
           description:
             "Selesaikan pembayaran di tab baru. Status akan diperbarui otomatis.",
         });
         onOpenChange(false);
       } else {
+        paymentWindow?.close();
         toast.error("Gagal membuat pembayaran");
       }
     } catch (err) {
+      paymentWindow?.close();
       console.error("Payment error:", err);
       toast.error("Gagal memproses pembayaran", {
         description:
@@ -124,7 +159,7 @@ export function PaymentDialog({
               {isProcessing ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Memproses...
+                  Menghubungkan ke DOKU…
                 </>
               ) : (
                 <>
