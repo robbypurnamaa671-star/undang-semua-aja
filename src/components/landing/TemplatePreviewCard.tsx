@@ -101,7 +101,7 @@ export function TemplatePreviewCard({ template }: Props) {
         {/* Real preview, scaled to fit */}
         {visible && (
           <div
-            className={`absolute inset-0 overflow-y-auto overscroll-contain scrollbar-thin transition-opacity duration-300 ${
+            className={`absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-300 ${
               ready ? "opacity-100" : "opacity-0"
             }`}
           >
