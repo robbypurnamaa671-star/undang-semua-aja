@@ -23,9 +23,7 @@ const item = {
 export function TemplatesSection() {
   // Featured: only templates that ship with full background images so the
   // preview card can mirror the actual mobile invitation preview.
-  const featuredTemplates = templates
-    .filter((t) => !!t.defaultBackgrounds)
-    .slice(0, 6);
+  const featuredTemplates = templates.filter((t) => !!t.defaultBackgrounds);
   
   return (
     <section id="template" className="py-12 bg-background">
