@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, useLayoutEffect } from "react";
-import { Crown, Eye } from "lucide-react";
+import { useEffect, useRef, useState, useLayoutEffect, useMemo } from "react";
+import { Crown, Eye, Music, Pause, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Template } from "@/lib/templates";
 import { InvitationPreview } from "@/components/builder/InvitationPreview";
-import { createDefaultInvitation } from "@/lib/invitation";
+import { createDemoInvitation, DEMO_MUSIC_URL } from "@/lib/demo-invitation";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -23,6 +23,8 @@ export function TemplatePreviewCard({ template }: Props) {
   const [scale, setScale] = useState(1);
   const [ready, setReady] = useState(false);
   const [open, setOpen] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playing, setPlaying] = useState(false);
 
   // Lazy-mount when card scrolls near viewport
   useEffect(() => {
@@ -67,10 +69,26 @@ export function TemplatePreviewCard({ template }: Props) {
     return () => cancelAnimationFrame(id);
   }, [visible]);
 
-  const invitation = createDefaultInvitation(
-    template.eventTypes[0],
-    template.id
-  );
+  const invitation = useMemo(() => createDemoInvitation(template), [template]);
+
+  // Pause music when modal closes
+  useEffect(() => {
+    if (!open && audioRef.current) {
+      audioRef.current.pause();
+      setPlaying(false);
+    }
+  }, [open]);
+
+  const toggleMusic = () => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (a.paused) {
+      a.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    } else {
+      a.pause();
+      setPlaying(false);
+    }
+  };
 
   return (
     <>
@@ -176,14 +194,28 @@ export function TemplatePreviewCard({ template }: Props) {
               {template.eventTypes[0]} · {template.style}
             </p>
           </div>
-          {template.isPremium ? (
-            <Badge className="bg-primary text-primary-foreground shrink-0">
-              <Crown className="w-3 h-3 mr-1" /> Premium
-            </Badge>
-          ) : (
-            <Badge variant="outline" className="text-primary border-primary shrink-0">Gratis</Badge>
-          )}
+          <div className="flex items-center gap-2 shrink-0">
+            <Button
+              type="button"
+              size="sm"
+              variant={playing ? "default" : "outline"}
+              onClick={toggleMusic}
+              className="h-8 px-2 gap-1"
+              aria-label={playing ? "Jeda musik" : "Putar musik"}
+            >
+              {playing ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+              <Music className="w-3.5 h-3.5" />
+            </Button>
+            {template.isPremium ? (
+              <Badge className="bg-primary text-primary-foreground">
+                <Crown className="w-3 h-3 mr-1" /> Premium
+              </Badge>
+            ) : (
+              <Badge variant="outline" className="text-primary border-primary">Gratis</Badge>
+            )}
+          </div>
         </div>
+        <audio ref={audioRef} src={DEMO_MUSIC_URL} preload="none" loop />
         <div
           className="flex-1 overflow-y-auto overscroll-contain"
           style={{ backgroundColor: template.colorScheme.background }}
