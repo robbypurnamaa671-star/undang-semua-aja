@@ -18,6 +18,7 @@ import TemplateShowcase from "./pages/TemplateShowcase";
 import NotFound from "./pages/NotFound";
 import SeoPage from "./pages/SeoPage";
 import GameInvitationDemo from "./pages/GameInvitationDemo";
+import PlatformerInvitationDemo from "./pages/PlatformerInvitationDemo";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
             
             <Route path="/p/:slug" element={<SeoPage />} />
             <Route path="/demo/game-invitation" element={<GameInvitationDemo />} />
+            <Route path="/demo/platformer-invitation" element={<PlatformerInvitationDemo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
