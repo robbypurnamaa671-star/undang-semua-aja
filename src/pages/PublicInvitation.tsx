@@ -34,6 +34,10 @@ export default function PublicInvitation() {
   
   const { invitation, isLoading, error, refetch } = usePublicInvitation(slug || "");
   const [isOpen, setIsOpen] = useState(false);
+  // For templates with `gameType`, the visitor first plays a short game
+  // (rendered in an iframe gate). Once they finish or skip, the normal
+  // "Buka Undangan" cover appears.
+  const [gamePassed, setGamePassed] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const audioRef = useRef<HTMLAudioElement | null>(null);
