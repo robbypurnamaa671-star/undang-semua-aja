@@ -10,6 +10,11 @@ import { Heart, Upload, RotateCcw, Sparkles } from "lucide-react";
  * undangan "terbuka" dengan animasi.
  */
 
+const _params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+const COUPLE_GROOM = _params.get("groom") || "Raka";
+const COUPLE_BRIDE = _params.get("bride") || "Aulia";
+const COUPLE_DATE = _params.get("date") || "Sabtu, 12 September 2026";
+
 const DEFAULT_PHOTOS = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=70",
   "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&q=70",
