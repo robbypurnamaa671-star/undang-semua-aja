@@ -28,12 +28,16 @@ type Scene = "cover" | "meeting" | "love" | "proposal" | "wedding" | "invitation
 
 const SCENES: Scene[] = ["cover", "meeting", "love", "proposal", "wedding", "invitation"];
 
-const NAMES = { groom: "Raka", bride: "Aulia" };
+const params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+const NAMES = {
+  groom: params.get("groom") || "Raka",
+  bride: params.get("bride") || "Aulia",
+};
 const WEDDING = {
-  date: "Sabtu, 12 September 2026",
-  time: "08:00 WIB",
-  location: "Graha Bahagia, Jakarta",
-  mapsUrl: "https://maps.google.com/?q=Monas+Jakarta",
+  date: params.get("date") || "Sabtu, 12 September 2026",
+  time: params.get("time") || "08:00 WIB",
+  location: params.get("location") || "Graha Bahagia, Jakarta",
+  mapsUrl: params.get("maps") || "https://maps.google.com/?q=Monas+Jakarta",
 };
 
 const STORAGE_KEY = "love-story-adventure-progress";
