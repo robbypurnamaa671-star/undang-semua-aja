@@ -16,6 +16,10 @@ import { Heart, RotateCcw, Sparkles, Star, Trophy, ArrowDown } from "lucide-reac
  * - Tiap lantai punya "misi mini": tap hati untuk membuka konten section.
  */
 
+const _params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+const COUPLE = `${_params.get("groom") || "Raka"} \u0026 ${_params.get("bride") || "Aulia"}`;
+const COUPLE_DATE = _params.get("date") || "Sabtu, 12 September 2026";
+
 const SECTIONS = [
   {
     key: "cover",
@@ -25,9 +29,9 @@ const SECTIONS = [
     content: (
       <>
         <h1 className="text-4xl md:text-6xl font-serif mt-3 bg-gradient-to-r from-[#7a4f1d] via-[#c0392b] to-[#7a4f1d] bg-clip-text text-transparent">
-          Raka &amp; Aulia
+          {COUPLE}
         </h1>
-        <p className="mt-3 italic opacity-70">Sabtu, 12 September 2026</p>
+        <p className="mt-3 italic opacity-70">{COUPLE_DATE}</p>
       </>
     ),
   },
