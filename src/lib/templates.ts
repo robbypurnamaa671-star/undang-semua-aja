@@ -41,6 +41,13 @@ export interface Template {
    * (background images per section) but require zero setup from the user.
    */
   defaultBackgrounds?: CustomBackgrounds;
+  /**
+   * Optional interactive game intro shown BEFORE the invitation reveal.
+   * Each value maps to a route under /demo/* used inside an iframe gate.
+   * When set, the public invitation renders the game first, then transitions
+   * to the normal invitation flow once the visitor finishes or taps continue.
+   */
+  gameType?: 'memory' | 'platformer' | 'platformer-v2' | 'love-story';
 }
 
 const defaultSections: TemplateSection[] = [
