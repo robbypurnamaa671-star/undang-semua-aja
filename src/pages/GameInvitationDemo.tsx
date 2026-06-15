@@ -10,6 +10,11 @@ import { Heart, Upload, RotateCcw, Sparkles } from "lucide-react";
  * undangan "terbuka" dengan animasi.
  */
 
+const _params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+const COUPLE_GROOM = _params.get("groom") || "Raka";
+const COUPLE_BRIDE = _params.get("bride") || "Aulia";
+const COUPLE_DATE = _params.get("date") || "Sabtu, 12 September 2026";
+
 const DEFAULT_PHOTOS = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=70",
   "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&q=70",
@@ -114,7 +119,7 @@ export default function GameInvitationDemo() {
       <div className="max-w-md mx-auto px-4 py-8 font-serif">
         <header className="text-center mb-6">
           <p className="text-xs uppercase tracking-[0.3em] text-[#b08642]">The Wedding of</p>
-          <h1 className="text-3xl mt-2 mb-1">Raka & Aulia</h1>
+          <h1 className="text-3xl mt-2 mb-1">{COUPLE_GROOM} & {COUPLE_BRIDE}</h1>
           <p className="text-sm italic opacity-70">Cocokkan kenangan kami untuk membuka undangan</p>
         </header>
 
@@ -178,8 +183,8 @@ export default function GameInvitationDemo() {
             <div className="bg-gradient-to-b from-[#fdf6ec] to-[#eccfa3] rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl border border-[#b08642] animate-in zoom-in-95">
               <Sparkles className="w-8 h-8 mx-auto text-[#b08642] mb-2" />
               <p className="text-xs uppercase tracking-[0.3em] text-[#b08642]">Undangan Terbuka</p>
-              <h2 className="text-2xl font-serif mt-3">Raka & Aulia</h2>
-              <p className="text-sm italic mt-1 opacity-70">Sabtu, 12 September 2026</p>
+              <h2 className="text-2xl font-serif mt-3">{COUPLE_GROOM} & {COUPLE_BRIDE}</h2>
+              <p className="text-sm italic mt-1 opacity-70">{COUPLE_DATE}</p>
               <div className="my-4 h-px bg-[#b08642]/40" />
               <p className="text-sm leading-relaxed">
                 Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara pernikahan kami.

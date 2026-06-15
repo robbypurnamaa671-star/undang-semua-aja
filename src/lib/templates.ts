@@ -41,6 +41,13 @@ export interface Template {
    * (background images per section) but require zero setup from the user.
    */
   defaultBackgrounds?: CustomBackgrounds;
+  /**
+   * Optional interactive game intro shown BEFORE the invitation reveal.
+   * Each value maps to a route under /demo/* used inside an iframe gate.
+   * When set, the public invitation renders the game first, then transitions
+   * to the normal invitation flow once the visitor finishes or taps continue.
+   */
+  gameType?: 'memory' | 'platformer' | 'platformer-v2' | 'love-story';
 }
 
 const defaultSections: TemplateSection[] = [
@@ -2243,6 +2250,56 @@ const _templates: Template[] = [
     colorScheme: { primary: '#7B2D8E', secondary: '#D4A5D8', background: '#FAF5FF', text: '#3C1053' },
     sections: defaultSections,
     style: 'elegant',
+  },
+
+  // ── NEW: Interactive Game Wedding Templates ──
+  {
+    id: 'wedding-game-love-story',
+    name: 'Love Story Adventure',
+    description: 'Undangan interaktif: tamu memainkan kisah cinta singkat 6 babak sebelum undangan terbuka',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-game-love-story.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#e11d48', secondary: '#fecdd3', background: '#fff1f2', text: '#5a2a1a' },
+    sections: defaultSections,
+    style: 'modern',
+    gameType: 'love-story',
+  },
+  {
+    id: 'wedding-game-platformer-v2',
+    name: 'Petualangan Cinta',
+    description: 'Undangan game platformer: kumpulkan hati & bintang sambil menuruni cerita pasangan',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-game-platformer-v2.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#b08642', secondary: '#fde68a', background: '#fdf6ec', text: '#5c3a14' },
+    sections: defaultSections,
+    style: 'modern',
+    gameType: 'platformer-v2',
+  },
+  {
+    id: 'wedding-game-platformer',
+    name: 'Lompat Cinta Klasik',
+    description: 'Karakter pengantin membantu tamu menjelajah tiap babak undangan dengan lompatan ringan',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-game-platformer.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#7a4f1d', secondary: '#f5e6d3', background: '#fdf6ec', text: '#4a2c1a' },
+    sections: defaultSections,
+    style: 'classic',
+    gameType: 'platformer',
+  },
+  {
+    id: 'wedding-game-memory',
+    name: 'Memory of Us',
+    description: 'Game cocokkan kartu foto kenangan; setelah semua cocok, undangan terbuka otomatis',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-game-memory.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#b08642', secondary: '#eccfa3', background: '#fdf6ec', text: '#4a2c1a' },
+    sections: defaultSections,
+    style: 'elegant',
+    gameType: 'memory',
   },
 ];
 

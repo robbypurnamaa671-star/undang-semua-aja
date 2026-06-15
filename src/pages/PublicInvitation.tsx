@@ -34,6 +34,10 @@ export default function PublicInvitation() {
   
   const { invitation, isLoading, error, refetch } = usePublicInvitation(slug || "");
   const [isOpen, setIsOpen] = useState(false);
+  // For templates with `gameType`, the visitor first plays a short game
+  // (rendered in an iframe gate). Once they finish or skip, the normal
+  // "Buka Undangan" cover appears.
+  const [gamePassed, setGamePassed] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -563,9 +567,47 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         <Watermark templateColors={{ primary: template.colorScheme.primary, background: template.colorScheme.background }} />
       )}
 
+      {/* Game intro gate — for templates with gameType. The visitor plays a
+          short interactive game (via iframe) before the normal "Buka
+          Undangan" cover is shown. */}
+      {template.gameType && !gamePassed && (() => {
+        const gameRoute =
+          template.gameType === "memory" ? "/demo/game-invitation"
+          : template.gameType === "platformer" ? "/demo/platformer-invitation"
+          : template.gameType === "platformer-v2" ? "/demo/platformer-invitation-v2"
+          : "/demo/love-story-adventure";
+        const groom = encodeURIComponent(invitation.names?.[0] || "");
+        const bride = encodeURIComponent(invitation.names?.[1] || invitation.names?.[0] || "");
+        const date = encodeURIComponent(formatDate(invitation.eventDate) || "");
+        const src = `${gameRoute}?embed=1&groom=${groom}&bride=${bride}&date=${date}`;
+        return (
+          <div className="fixed inset-0 z-[60] bg-black flex flex-col">
+            <iframe
+              src={src}
+              title={`Game intro ${template.name}`}
+              className="flex-1 w-full border-0"
+              allow="autoplay"
+            />
+            <button
+              onClick={() => setGamePassed(true)}
+              className="absolute top-3 right-3 z-[61] px-3 py-1.5 rounded-full bg-white/90 backdrop-blur text-foreground text-xs font-semibold shadow-lg hover:bg-white"
+            >
+              Lewati →
+            </button>
+            <button
+              onClick={() => setGamePassed(true)}
+              className="absolute bottom-4 inset-x-0 z-[61] mx-auto w-fit px-5 py-2.5 rounded-full font-semibold shadow-xl text-sm"
+              style={{ background: template.colorScheme.primary, color: "#fff" }}
+            >
+              Lanjut ke Undangan ❤
+            </button>
+          </div>
+        );
+      })()}
+
       {/* Cover / Opening */}
       <AnimatePresence>
-        {!isOpen && (
+        {!isOpen && (!template.gameType || gamePassed) && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}

@@ -12,6 +12,10 @@ import { Heart, ArrowDown, RotateCcw } from "lucide-react";
  * undangan dari atas ke bawah.
  */
 
+const _params = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
+const COUPLE = `${_params.get("groom") || "Raka"} & ${_params.get("bride") || "Aulia"}`;
+const COUPLE_DATE = _params.get("date") || "Sabtu, 12 September 2026";
+
 const SECTIONS = [
   {
     key: "cover",
@@ -19,8 +23,8 @@ const SECTIONS = [
     title: "The Wedding of",
     content: (
       <>
-        <h1 className="text-4xl md:text-5xl font-serif mt-3">Raka & Aulia</h1>
-        <p className="mt-3 italic opacity-70">Sabtu, 12 September 2026</p>
+        <h1 className="text-4xl md:text-5xl font-serif mt-3">{COUPLE}</h1>
+        <p className="mt-3 italic opacity-70">{COUPLE_DATE}</p>
         <p className="mt-6 text-sm opacity-70">Lompat turun bersama karakter kami ↓</p>
       </>
     ),
