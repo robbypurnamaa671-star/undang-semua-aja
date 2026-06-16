@@ -61,7 +61,7 @@ export default function Create() {
   const preselectedEvent = searchParams.get("event") as EventType | null;
   const editId = searchParams.get("edit");
   
-  const [step, setStep] = useState<Step>(preselectedEvent ? "template" : "event");
+  const [step, setStep] = useState<Step>(preselectedEvent ? "category" : "event");
   const [selectedEventType, setSelectedEventType] = useState<EventType | null>(preselectedEvent);
   const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
