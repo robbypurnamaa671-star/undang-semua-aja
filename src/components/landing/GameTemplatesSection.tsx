@@ -62,7 +62,7 @@ function GameCard({
     <>
       <motion.div
         variants={item}
-        className="group shrink-0 w-[150px] sm:w-[170px] lg:w-[185px] rounded-xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+        className="group shrink-0 snap-start w-[150px] sm:w-[170px] lg:w-[185px] rounded-xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-lg transition-shadow flex flex-col"
       >
         {/* Live playable iframe preview — compact */}
         <div
@@ -201,7 +201,7 @@ export function GameTemplatesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="flex flex-nowrap gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory"
+          className="flex flex-nowrap gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 -mx-4 px-4 sm:-mx-2 sm:px-2 lg:mx-0 lg:px-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {gameTemplates.map((t) => {
             const url = getRoute(t.gameType);
