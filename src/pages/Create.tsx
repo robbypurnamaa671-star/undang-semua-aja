@@ -350,7 +350,65 @@ export default function Create() {
           )}
           
           {/* Step 2: Template Selection */}
-          {step === "template" && selectedEventType && (
+          {step === "category" && selectedEventType && (
+            <motion.div
+              key="category"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-5xl mx-auto"
+            >
+              <div className="text-center mb-12">
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
+                  Pilih <span className="text-gradient">Kategori Template</span>
+                </h1>
+                <p className="text-muted-foreground text-lg">
+                  Tentukan gaya undangan yang Anda inginkan sebelum memilih desain
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
+                {(["suku", "premium", "game"] as TemplateCategory[]).map((cat) => {
+                  const meta = CATEGORY_META[cat];
+                  const Icon = meta.icon;
+                  const count = categoryCounts[cat];
+                  const disabled = count === 0;
+                  return (
+                    <motion.button
+                      key={cat}
+                      whileHover={!disabled ? { scale: 1.02 } : undefined}
+                      whileTap={!disabled ? { scale: 0.98 } : undefined}
+                      onClick={() => !disabled && handleCategorySelect(cat)}
+                      disabled={disabled}
+                      className={`card-interactive p-6 text-left border-2 relative overflow-hidden bg-gradient-to-br ${meta.gradient} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                    >
+                      <div className="relative z-10">
+                        <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center mb-4 shadow-sm">
+                          <Icon className="w-6 h-6 text-primary" />
+                        </div>
+                        <h3 className="font-serif text-xl font-semibold mb-1">{meta.label}</h3>
+                        <p className="text-sm text-muted-foreground mb-4">{meta.description}</p>
+                        <div className="flex items-center justify-between">
+                          <Badge variant="secondary" className="text-xs">
+                            {count} template
+                          </Badge>
+                          {!disabled && (
+                            <span className="flex items-center text-primary font-medium text-sm">
+                              Lihat <ArrowRight className="w-4 h-4 ml-1" />
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 3: Template Selection */}
+          {step === "template" && selectedEventType && selectedCategory && (
             <motion.div
               key="template"
               initial={{ opacity: 0, x: 20 }}
@@ -361,12 +419,18 @@ export default function Create() {
             >
               <div className="text-center mb-12">
                 <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
-                  Pilih <span className="text-gradient">Template</span>
+                  Pilih <span className="text-gradient">{CATEGORY_META[selectedCategory].label}</span>
                 </h1>
                 <p className="text-muted-foreground text-lg">
-                  Pilih desain yang sesuai dengan selera Anda
+                  {CATEGORY_META[selectedCategory].description}
                 </p>
               </div>
+
+              {templates.length === 0 && (
+                <div className="text-center py-12 text-muted-foreground">
+                  Belum ada template untuk kategori ini pada jenis acara terpilih.
+                </div>
+              )}
               
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {templates.map((template) => (
