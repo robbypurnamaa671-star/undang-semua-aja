@@ -62,7 +62,7 @@ function GameCard({
     <>
       <motion.div
         variants={item}
-        className="group shrink-0 w-[150px] sm:w-[170px] lg:w-[185px] rounded-xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-lg transition-shadow flex flex-col"
+        className="group shrink-0 snap-start w-[150px] sm:w-[170px] lg:w-[185px] rounded-xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-lg transition-shadow flex flex-col"
       >
         {/* Live playable iframe preview — compact */}
         <div
