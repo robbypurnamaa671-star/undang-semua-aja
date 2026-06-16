@@ -276,16 +276,23 @@ export default function Create() {
             </div>
             <div className="w-8 h-0.5 bg-border" />
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-              step === "template" ? "bg-primary text-primary-foreground" : 
+              step === "category" ? "bg-primary text-primary-foreground" :
+              step === "template" || step === "builder" ? "bg-hajatan text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}>
+              {step === "template" || step === "builder" ? <Check className="w-4 h-4" /> : "2"}
+            </div>
+            <div className="w-8 h-0.5 bg-border" />
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+              step === "template" ? "bg-primary text-primary-foreground" :
               step === "builder" ? "bg-hajatan text-primary-foreground" : "bg-muted text-muted-foreground"
             }`}>
-              {step === "builder" ? <Check className="w-4 h-4" /> : "2"}
+              {step === "builder" ? <Check className="w-4 h-4" /> : "3"}
             </div>
             <div className="w-8 h-0.5 bg-border" />
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
               step === "builder" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
             }`}>
-              3
+              4
             </div>
           </div>
           
