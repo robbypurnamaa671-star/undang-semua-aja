@@ -201,7 +201,7 @@ export function GameTemplatesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="flex flex-nowrap gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 -mx-4 px-4 sm:-mx-2 sm:px-2 lg:mx-0 lg:px-0 scrollbar-hide"
+          className="flex flex-nowrap gap-3 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-3 -mx-4 px-4 sm:-mx-2 sm:px-2 lg:mx-0 lg:px-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {gameTemplates.map((t) => {
             const url = getRoute(t.gameType);
