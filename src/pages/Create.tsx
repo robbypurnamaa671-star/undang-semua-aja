@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Crown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Crown, Sparkles, Gamepad2, Palette } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
 import logo from "@/assets/logo.svg";
@@ -19,7 +19,42 @@ import { useInvitations, dbToInvitation, DbInvitation } from "@/hooks/use-invita
 import { useSubscription } from "@/hooks/use-subscription";
 import { supabase } from "@/integrations/supabase/client";
 
-type Step = "event" | "template" | "builder";
+type Step = "event" | "category" | "template" | "builder";
+type TemplateCategory = "suku" | "premium" | "game";
+
+const SUKU_KEYWORDS = [
+  "jawa","sunda","madura","batak","minang","betawi","bugis","banten","banjar",
+  "bali","sasak","aceh","dayak","makassar","melayu","toraja","ambon","papua",
+  "tionghoa","lampung","jogja","nusantara","adat",
+];
+
+function getTemplateCategory(t: Template): TemplateCategory {
+  if (t.gameType) return "game";
+  const hay = `${t.id} ${t.name} ${t.description}`.toLowerCase();
+  if (SUKU_KEYWORDS.some((k) => hay.includes(k))) return "suku";
+  return "premium";
+}
+
+const CATEGORY_META: Record<TemplateCategory, { label: string; description: string; icon: typeof Sparkles; gradient: string }> = {
+  suku: {
+    label: "Tema Suku & Adat",
+    description: "Nuansa kearifan lokal Nusantara — Jawa, Sunda, Bali, Batak, Minang, dan lainnya",
+    icon: Palette,
+    gradient: "from-amber-500/15 to-rose-500/15",
+  },
+  premium: {
+    label: "Premium & Modern",
+    description: "Desain elegan, minimalis, dan kontemporer untuk tampilan eksklusif",
+    icon: Sparkles,
+    gradient: "from-primary/15 to-fuchsia-500/15",
+  },
+  game: {
+    label: "Game Interaktif",
+    description: "Undangan interaktif berupa mini game yang seru sebelum tamu membuka detail acara",
+    icon: Gamepad2,
+    gradient: "from-emerald-500/15 to-sky-500/15",
+  },
+};
 
 export default function Create() {
   const [searchParams] = useSearchParams();
@@ -28,6 +63,7 @@ export default function Create() {
   
   const [step, setStep] = useState<Step>(preselectedEvent ? "template" : "event");
   const [selectedEventType, setSelectedEventType] = useState<EventType | null>(preselectedEvent);
+  const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -92,6 +128,11 @@ export default function Create() {
   
   const handleEventSelect = (eventType: EventType) => {
     setSelectedEventType(eventType);
+    setStep("category");
+  };
+
+  const handleCategorySelect = (category: TemplateCategory) => {
+    setSelectedCategory(category);
     setStep("template");
   };
   
@@ -104,11 +145,14 @@ export default function Create() {
   };
   
   const handleBack = () => {
-    if (step === "template") {
+    if (step === "category") {
       setStep("event");
       setSelectedEventType(null);
+    } else if (step === "template") {
+      setStep("category");
+      setSelectedCategory(null);
     } else if (step === "builder") {
-      setStep("template");
+      setStep(selectedCategory ? "template" : "template");
       setSelectedTemplate(null);
       setInvitation(null);
     }
@@ -178,7 +222,18 @@ export default function Create() {
     setShowPaymentDialog(false);
   };
   
-  const templates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
+  const baseTemplates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
+  const templates = selectedCategory
+    ? baseTemplates.filter((t) => getTemplateCategory(t) === selectedCategory)
+    : baseTemplates;
+  const categoryCounts = baseTemplates.reduce(
+    (acc, t) => {
+      const c = getTemplateCategory(t);
+      acc[c] = (acc[c] || 0) + 1;
+      return acc;
+    },
+    { suku: 0, premium: 0, game: 0 } as Record<TemplateCategory, number>,
+  );
 
   if (authLoading || isLoadingEdit) {
     return (
