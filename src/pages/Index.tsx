@@ -38,8 +38,8 @@ const Index = () => {
       <HeroSection />
       <EventTypesSection />
       <FeaturesSection />
-      <GameTemplatesSection />
       <TemplatesSection />
+      <GameTemplatesSection />
       <HowItWorksSection />
       <PricingSection />
       <FAQSection />

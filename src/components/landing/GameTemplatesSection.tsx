@@ -7,8 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { templates } from "@/lib/templates";
 
-type GameType = NonNullable<ReturnType<typeof getRoute>>;
-
 function getRoute(gameType: string | undefined): string | null {
   switch (gameType) {
     case "memory":
@@ -37,11 +35,11 @@ const TAGLINES: Record<string, string> = {
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0 },
 };
 
@@ -64,9 +62,9 @@ function GameCard({
     <>
       <motion.div
         variants={item}
-        className="group rounded-2xl overflow-hidden border border-border bg-card shadow-md hover:shadow-2xl transition-shadow flex flex-col"
+        className="group shrink-0 w-[150px] sm:w-[170px] lg:w-[185px] rounded-xl overflow-hidden border border-border bg-card shadow-sm hover:shadow-lg transition-shadow flex flex-col"
       >
-        {/* Live playable iframe preview */}
+        {/* Live playable iframe preview — compact */}
         <div
           className="relative aspect-[9/16] overflow-hidden cursor-pointer"
           style={{ background: colors.background }}
@@ -88,49 +86,43 @@ function GameCard({
           />
 
           {/* Top badges */}
-          <div className="absolute top-2 left-2 right-2 z-20 flex items-center justify-between pointer-events-none">
+          <div className="absolute top-1.5 left-1.5 right-1.5 z-20 flex items-center justify-between pointer-events-none">
             <Badge
-              className="shadow-md gap-1 backdrop-blur"
+              className="text-[9px] px-1.5 py-0.5 shadow-md gap-1 backdrop-blur"
               style={{ background: colors.primary, color: "#fff" }}
             >
-              <Gamepad2 className="w-3 h-3" /> GAME
-            </Badge>
-            <Badge className="bg-primary text-primary-foreground shadow-md">
-              <Crown className="w-3 h-3 mr-1" /> Premium
+              <Gamepad2 className="w-2.5 h-2.5" /> GAME
             </Badge>
           </div>
 
-          {/* Bottom "Play" CTA — keeps card tappable to enlarge */}
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               setOpen(true);
             }}
-            className="absolute bottom-2 left-2 right-2 z-20 mx-auto w-fit px-3 py-1.5 rounded-full bg-white/95 text-foreground text-xs font-semibold shadow-lg flex items-center gap-1.5 hover:scale-105 transition-transform"
+            className="absolute bottom-1.5 left-1.5 right-1.5 z-20 mx-auto w-fit px-2 py-1 rounded-full bg-white/95 text-foreground text-[10px] font-semibold shadow-md flex items-center gap-1 hover:scale-105 transition-transform"
           >
-            <Play className="w-3 h-3 fill-current" /> Mainkan Layar Penuh
+            <Play className="w-2.5 h-2.5 fill-current" /> Layar Penuh
           </button>
         </div>
 
-        <div className="p-4 flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <h3 className="font-serif font-semibold text-base flex-1 truncate">
-              {name}
-            </h3>
-          </div>
-          <p className="text-xs text-muted-foreground line-clamp-2 min-h-[2.4em]">
+        <div className="p-2 flex flex-col gap-1">
+          <h3 className="font-serif font-semibold text-xs leading-tight truncate">
+            {name}
+          </h3>
+          <p className="text-[10px] text-muted-foreground line-clamp-2 min-h-[2.4em]">
             {description}
           </p>
           <Button
             asChild
             size="sm"
-            className="mt-1 w-full"
+            className="mt-1 w-full h-7 text-[10px]"
             style={{ background: colors.primary, color: "#fff" }}
           >
             <Link to={`/register?template=${templateId}`}>
-              <Sparkles className="w-3.5 h-3.5 mr-1" />
-              Pakai Template Ini
+              <Sparkles className="w-3 h-3 mr-1" />
+              Pilih
             </Link>
           </Button>
         </div>
@@ -183,24 +175,24 @@ export function GameTemplatesSection() {
   if (gameTemplates.length === 0) return null;
 
   return (
-    <section id="template-game" className="py-12 bg-gradient-to-b from-rose-50/40 via-background to-amber-50/40">
+    <section id="template-game" className="py-10 bg-gradient-to-b from-amber-50/30 via-background to-rose-50/30">
       <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className="text-center mb-5"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold mb-3">
-            <Gamepad2 className="w-3.5 h-3.5" /> BARU · Interaktif
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-100 text-rose-700 text-[10px] font-semibold mb-2">
+            <Gamepad2 className="w-3 h-3" /> BARU · Interaktif
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold mb-2">
             Template <span className="text-gradient">Game Undangan</span>
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
-            Undangan yang bisa <strong>dimainkan</strong> oleh tamu sebelum dibuka.
-            Tap kartu di bawah untuk mencoba langsung — semua sudah playable.
+          <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
+            Undangan yang bisa <strong>dimainkan</strong> tamu sebelum dibuka.
+            Geser kartu untuk melihat semua pilihan, tap untuk mencoba.
           </p>
         </motion.div>
 
@@ -209,7 +201,7 @@ export function GameTemplatesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-8 max-w-6xl mx-auto"
+          className="flex flex-nowrap gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory"
         >
           {gameTemplates.map((t) => {
             const url = getRoute(t.gameType);
