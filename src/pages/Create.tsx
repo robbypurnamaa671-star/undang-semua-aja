@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Crown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Crown, Sparkles, Gamepad2, Palette } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
 import logo from "@/assets/logo.svg";
@@ -19,15 +19,51 @@ import { useInvitations, dbToInvitation, DbInvitation } from "@/hooks/use-invita
 import { useSubscription } from "@/hooks/use-subscription";
 import { supabase } from "@/integrations/supabase/client";
 
-type Step = "event" | "template" | "builder";
+type Step = "event" | "category" | "template" | "builder";
+type TemplateCategory = "suku" | "premium" | "game";
+
+const SUKU_KEYWORDS = [
+  "jawa","sunda","madura","batak","minang","betawi","bugis","banten","banjar",
+  "bali","sasak","aceh","dayak","makassar","melayu","toraja","ambon","papua",
+  "tionghoa","lampung","jogja","nusantara","adat",
+];
+
+function getTemplateCategory(t: Template): TemplateCategory {
+  if (t.gameType) return "game";
+  const hay = `${t.id} ${t.name} ${t.description}`.toLowerCase();
+  if (SUKU_KEYWORDS.some((k) => hay.includes(k))) return "suku";
+  return "premium";
+}
+
+const CATEGORY_META: Record<TemplateCategory, { label: string; description: string; icon: typeof Sparkles; gradient: string }> = {
+  suku: {
+    label: "Tema Suku & Adat",
+    description: "Nuansa kearifan lokal Nusantara — Jawa, Sunda, Bali, Batak, Minang, dan lainnya",
+    icon: Palette,
+    gradient: "from-amber-500/15 to-rose-500/15",
+  },
+  premium: {
+    label: "Premium & Modern",
+    description: "Desain elegan, minimalis, dan kontemporer untuk tampilan eksklusif",
+    icon: Sparkles,
+    gradient: "from-primary/15 to-fuchsia-500/15",
+  },
+  game: {
+    label: "Game Interaktif",
+    description: "Undangan interaktif berupa mini game yang seru sebelum tamu membuka detail acara",
+    icon: Gamepad2,
+    gradient: "from-emerald-500/15 to-sky-500/15",
+  },
+};
 
 export default function Create() {
   const [searchParams] = useSearchParams();
   const preselectedEvent = searchParams.get("event") as EventType | null;
   const editId = searchParams.get("edit");
   
-  const [step, setStep] = useState<Step>(preselectedEvent ? "template" : "event");
+  const [step, setStep] = useState<Step>(preselectedEvent ? "category" : "event");
   const [selectedEventType, setSelectedEventType] = useState<EventType | null>(preselectedEvent);
+  const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -92,6 +128,11 @@ export default function Create() {
   
   const handleEventSelect = (eventType: EventType) => {
     setSelectedEventType(eventType);
+    setStep("category");
+  };
+
+  const handleCategorySelect = (category: TemplateCategory) => {
+    setSelectedCategory(category);
     setStep("template");
   };
   
@@ -104,11 +145,14 @@ export default function Create() {
   };
   
   const handleBack = () => {
-    if (step === "template") {
+    if (step === "category") {
       setStep("event");
       setSelectedEventType(null);
+    } else if (step === "template") {
+      setStep("category");
+      setSelectedCategory(null);
     } else if (step === "builder") {
-      setStep("template");
+      setStep(selectedCategory ? "template" : "template");
       setSelectedTemplate(null);
       setInvitation(null);
     }
@@ -178,7 +222,18 @@ export default function Create() {
     setShowPaymentDialog(false);
   };
   
-  const templates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
+  const baseTemplates = selectedEventType ? getTemplatesByEventType(selectedEventType) : [];
+  const templates = selectedCategory
+    ? baseTemplates.filter((t) => getTemplateCategory(t) === selectedCategory)
+    : baseTemplates;
+  const categoryCounts = baseTemplates.reduce(
+    (acc, t) => {
+      const c = getTemplateCategory(t);
+      acc[c] = (acc[c] || 0) + 1;
+      return acc;
+    },
+    { suku: 0, premium: 0, game: 0 } as Record<TemplateCategory, number>,
+  );
 
   if (authLoading || isLoadingEdit) {
     return (
@@ -221,16 +276,23 @@ export default function Create() {
             </div>
             <div className="w-8 h-0.5 bg-border" />
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-              step === "template" ? "bg-primary text-primary-foreground" : 
+              step === "category" ? "bg-primary text-primary-foreground" :
+              step === "template" || step === "builder" ? "bg-hajatan text-primary-foreground" : "bg-muted text-muted-foreground"
+            }`}>
+              {step === "template" || step === "builder" ? <Check className="w-4 h-4" /> : "2"}
+            </div>
+            <div className="w-8 h-0.5 bg-border" />
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+              step === "template" ? "bg-primary text-primary-foreground" :
               step === "builder" ? "bg-hajatan text-primary-foreground" : "bg-muted text-muted-foreground"
             }`}>
-              {step === "builder" ? <Check className="w-4 h-4" /> : "2"}
+              {step === "builder" ? <Check className="w-4 h-4" /> : "3"}
             </div>
             <div className="w-8 h-0.5 bg-border" />
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
               step === "builder" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
             }`}>
-              3
+              4
             </div>
           </div>
           
@@ -288,7 +350,65 @@ export default function Create() {
           )}
           
           {/* Step 2: Template Selection */}
-          {step === "template" && selectedEventType && (
+          {step === "category" && selectedEventType && (
+            <motion.div
+              key="category"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-5xl mx-auto"
+            >
+              <div className="text-center mb-12">
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
+                  Pilih <span className="text-gradient">Kategori Template</span>
+                </h1>
+                <p className="text-muted-foreground text-lg">
+                  Tentukan gaya undangan yang Anda inginkan sebelum memilih desain
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
+                {(["suku", "premium", "game"] as TemplateCategory[]).map((cat) => {
+                  const meta = CATEGORY_META[cat];
+                  const Icon = meta.icon;
+                  const count = categoryCounts[cat];
+                  const disabled = count === 0;
+                  return (
+                    <motion.button
+                      key={cat}
+                      whileHover={!disabled ? { scale: 1.02 } : undefined}
+                      whileTap={!disabled ? { scale: 0.98 } : undefined}
+                      onClick={() => !disabled && handleCategorySelect(cat)}
+                      disabled={disabled}
+                      className={`card-interactive p-6 text-left border-2 relative overflow-hidden bg-gradient-to-br ${meta.gradient} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                    >
+                      <div className="relative z-10">
+                        <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center mb-4 shadow-sm">
+                          <Icon className="w-6 h-6 text-primary" />
+                        </div>
+                        <h3 className="font-serif text-xl font-semibold mb-1">{meta.label}</h3>
+                        <p className="text-sm text-muted-foreground mb-4">{meta.description}</p>
+                        <div className="flex items-center justify-between">
+                          <Badge variant="secondary" className="text-xs">
+                            {count} template
+                          </Badge>
+                          {!disabled && (
+                            <span className="flex items-center text-primary font-medium text-sm">
+                              Lihat <ArrowRight className="w-4 h-4 ml-1" />
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Step 3: Template Selection */}
+          {step === "template" && selectedEventType && selectedCategory && (
             <motion.div
               key="template"
               initial={{ opacity: 0, x: 20 }}
@@ -299,12 +419,18 @@ export default function Create() {
             >
               <div className="text-center mb-12">
                 <h1 className="font-serif text-3xl sm:text-4xl font-bold mb-4">
-                  Pilih <span className="text-gradient">Template</span>
+                  Pilih <span className="text-gradient">{CATEGORY_META[selectedCategory].label}</span>
                 </h1>
                 <p className="text-muted-foreground text-lg">
-                  Pilih desain yang sesuai dengan selera Anda
+                  {CATEGORY_META[selectedCategory].description}
                 </p>
               </div>
+
+              {templates.length === 0 && (
+                <div className="text-center py-12 text-muted-foreground">
+                  Belum ada template untuk kategori ini pada jenis acara terpilih.
+                </div>
+              )}
               
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {templates.map((template) => (
