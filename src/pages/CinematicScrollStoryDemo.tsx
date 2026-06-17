@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
 import { SEO } from "@/components/SEO";
 import { Calendar, MapPin, Heart, Gift, Copy, Check } from "lucide-react";
 
@@ -29,12 +35,125 @@ const PHOTOS = [
 ];
 
 // ------------------------------------------------------------------
+// Perf detection: device tier + reduced motion preference
+// ------------------------------------------------------------------
+type PerfTier = "low" | "mid" | "high";
+interface Perf {
+  tier: PerfTier;
+  reduced: boolean;
+  particleScale: number; // 0 = none, 1 = full
+  enableParallax: boolean;
+  enableHeavyShadows: boolean;
+}
+
+function detectPerf(): Perf {
+  if (typeof window === "undefined") {
+    return { tier: "high", reduced: false, particleScale: 1, enableParallax: true, enableHeavyShadows: true };
+  }
+  const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+  const cores = (navigator as any).hardwareConcurrency ?? 4;
+  const mem = (navigator as any).deviceMemory ?? 4;
+  const w = window.innerWidth;
+  const saveData = (navigator as any).connection?.saveData === true;
+  const slowNet = ["slow-2g", "2g", "3g"].includes((navigator as any).connection?.effectiveType ?? "");
+
+  let tier: PerfTier = "high";
+  if (cores <= 4 || mem <= 2 || w < 380 || saveData || slowNet) tier = "low";
+  else if (cores <= 6 || mem <= 4 || w < 768) tier = "mid";
+
+  if (reduced) {
+    return { tier: "low", reduced: true, particleScale: 0, enableParallax: false, enableHeavyShadows: false };
+  }
+  const particleScale = tier === "low" ? 0.25 : tier === "mid" ? 0.55 : 1;
+  return {
+    tier,
+    reduced: false,
+    particleScale,
+    enableParallax: tier !== "low",
+    enableHeavyShadows: tier === "high",
+  };
+}
+
+function usePerf(): Perf {
+  const [perf, setPerf] = useState<Perf>(() => detectPerf());
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setPerf(detectPerf());
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
+  return perf;
+}
+
+// Lazy-mount any subtree once it scrolls within rootMargin of the viewport.
+// Reserves min-height so layout/scroll position stays stable.
+function LazyMount({
+  children,
+  minHeight = "100vh",
+  rootMargin = "400px 0px",
+}: {
+  children: React.ReactNode;
+  minHeight?: string;
+  rootMargin?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    if (shown || !ref.current || typeof IntersectionObserver === "undefined") {
+      if (!shown) setShown(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setShown(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin }
+    );
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [shown, rootMargin]);
+  return (
+    <div ref={ref} style={{ minHeight: shown ? undefined : minHeight }}>
+      {shown ? children : null}
+    </div>
+  );
+}
+
+function useInView(ref: React.RefObject<HTMLElement>, rootMargin = "200px 0px") {
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        setInView(entries.some((e) => e.isIntersecting));
+      },
+      { rootMargin }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref, rootMargin]);
+  return inView;
+}
+
+// ------------------------------------------------------------------
 // Particles (CSS, GPU friendly)
 // ------------------------------------------------------------------
 function Particles({ count = 30, color = CHAMP, opacity = 0.5 }: { count?: number; color?: string; opacity?: number }) {
+  const perf = usePerf();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(wrapRef, "100px 0px");
+
+  const finalCount = Math.max(0, Math.round(count * perf.particleScale));
   const items = useMemo(
     () =>
-      Array.from({ length: count }).map((_, i) => ({
+      Array.from({ length: finalCount }).map((_, i) => ({
         id: i,
         left: Math.random() * 100,
         delay: Math.random() * 8,
@@ -42,11 +161,16 @@ function Particles({ count = 30, color = CHAMP, opacity = 0.5 }: { count?: numbe
         size: 2 + Math.random() * 4,
         drift: (Math.random() - 0.5) * 40,
       })),
-    [count]
+    [finalCount]
   );
+
+  if (perf.reduced || finalCount === 0) {
+    return <div ref={wrapRef} className="pointer-events-none absolute inset-0" aria-hidden />;
+  }
+
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {items.map((p) => (
+    <div ref={wrapRef} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      {inView && items.map((p) => (
         <span
           key={p.id}
           style={{
@@ -58,9 +182,13 @@ function Particles({ count = 30, color = CHAMP, opacity = 0.5 }: { count?: numbe
             background: color,
             opacity,
             borderRadius: "50%",
-            filter: "blur(0.5px)",
-            boxShadow: `0 0 8px ${color}`,
+            // Drop blur + box-shadow on low/mid: heavy on mobile GPUs.
+            ...(perf.enableHeavyShadows
+              ? { filter: "blur(0.5px)", boxShadow: `0 0 8px ${color}` }
+              : null),
             animation: `csFloat ${p.duration}s linear ${p.delay}s infinite`,
+            animationPlayState: inView ? "running" : "paused",
+            willChange: "transform, opacity",
             ["--drift" as any]: `${p.drift}px`,
           }}
         />
@@ -70,9 +198,13 @@ function Particles({ count = 30, color = CHAMP, opacity = 0.5 }: { count?: numbe
 }
 
 function Petals({ count = 14 }: { count?: number }) {
+  const perf = usePerf();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(wrapRef, "100px 0px");
+  const finalCount = Math.max(0, Math.round(count * perf.particleScale));
   const items = useMemo(
     () =>
-      Array.from({ length: count }).map((_, i) => ({
+      Array.from({ length: finalCount }).map((_, i) => ({
         id: i,
         left: Math.random() * 100,
         delay: Math.random() * 6,
@@ -80,11 +212,14 @@ function Petals({ count = 14 }: { count?: number }) {
         rotate: Math.random() * 360,
         size: 10 + Math.random() * 14,
       })),
-    [count]
+    [finalCount]
   );
+  if (perf.reduced || finalCount === 0) {
+    return <div ref={wrapRef} className="pointer-events-none absolute inset-0" aria-hidden />;
+  }
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {items.map((p) => (
+    <div ref={wrapRef} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      {inView && items.map((p) => (
         <span
           key={p.id}
           style={{
@@ -95,6 +230,8 @@ function Petals({ count = 14 }: { count?: number }) {
             height: p.size,
             transform: `rotate(${p.rotate}deg)`,
             animation: `csPetal ${p.duration}s linear ${p.delay}s infinite`,
+            animationPlayState: inView ? "running" : "paused",
+            willChange: "transform, opacity",
           }}
         >
           <svg viewBox="0 0 20 20" width="100%" height="100%">
