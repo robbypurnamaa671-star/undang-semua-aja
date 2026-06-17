@@ -332,6 +332,7 @@ function Scene({
 // ------------------------------------------------------------------
 function HeroScene() {
   const ref = useRef<HTMLDivElement>(null);
+  const perf = usePerf();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
@@ -345,7 +346,7 @@ function HeroScene() {
           background: `radial-gradient(120% 80% at 50% 30%, #2a221b 0%, #14100c 60%, #0a0806 100%)`,
         }}
       >
-        <motion.div style={{ scale }} className="absolute inset-0">
+        <motion.div style={perf.enableParallax ? { scale } : undefined} className="absolute inset-0">
           <div
             className="absolute inset-0"
             style={{
@@ -356,7 +357,10 @@ function HeroScene() {
           <Particles count={45} color={CHAMP} opacity={0.65} />
         </motion.div>
 
-        <motion.div style={{ y, opacity }} className="relative z-10 text-center px-6 max-w-2xl">
+        <motion.div
+          style={perf.enableParallax ? { y, opacity } : undefined}
+          className="relative z-10 text-center px-6 max-w-2xl"
+        >
           <motion.p
             initial={{ opacity: 0, letterSpacing: "0.1em" }}
             animate={{ opacity: 1, letterSpacing: "0.5em" }}
@@ -431,6 +435,7 @@ function HeroScene() {
 // ------------------------------------------------------------------
 function FirstMeetingScene() {
   const ref = useRef<HTMLDivElement>(null);
+  const perf = usePerf();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const yPhoto = useTransform(scrollYProgress, [0, 1], [60, -60]);
   const yText = useTransform(scrollYProgress, [0, 1], [-20, 20]);
@@ -440,12 +445,18 @@ function FirstMeetingScene() {
       <Scene id="scene-2" style={{ background: IVORY }}>
         <Particles count={20} color={CHAMP} opacity={0.35} />
         <div className="relative z-10 max-w-4xl w-full px-6 grid sm:grid-cols-2 gap-10 items-center">
-          <motion.div style={{ y: yPhoto }} className="relative">
+          <motion.div style={perf.enableParallax ? { y: yPhoto } : undefined} className="relative">
             <div
               className="aspect-[3/4] rounded-2xl overflow-hidden"
               style={{ boxShadow: `0 30px 60px -20px ${INK}40` }}
             >
-              <img src={PHOTOS[0]} alt="" loading="lazy" className="w-full h-full object-cover" />
+              <img
+                src={PHOTOS[0]}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div
               className="absolute -inset-3 rounded-2xl border pointer-events-none"
@@ -453,7 +464,7 @@ function FirstMeetingScene() {
             />
           </motion.div>
 
-          <motion.div style={{ y: yText }}>
+          <motion.div style={perf.enableParallax ? { y: yText } : undefined}>
             <div className="text-[10px] tracking-[0.5em] uppercase mb-3" style={{ color: CHAMP }}>
               Scene · 02
             </div>
@@ -484,9 +495,15 @@ function FirstMeetingScene() {
 // ------------------------------------------------------------------
 function JourneyScene() {
   const ref = useRef<HTMLDivElement>(null);
+  const perf = usePerf();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const x = useTransform(scrollYProgress, [0, 1], ["5%", "-65%"]);
-  const xSmooth = useSpring(x, { stiffness: 80, damping: 20, mass: 0.4 });
+  // Skip the spring on low-end; it adds per-frame work even when off-screen.
+  const xSmooth = useSpring(x, {
+    stiffness: perf.tier === "low" ? 120 : 80,
+    damping: perf.tier === "low" ? 30 : 20,
+    mass: 0.4,
+  });
 
   const cards = [
     { year: "2019", title: "First Date", text: "Makan malam pertama yang menjadi momen tak terlupakan.", img: PHOTOS[1] },
@@ -495,7 +512,16 @@ function JourneyScene() {
   ];
 
   return (
-    <div ref={ref} style={{ height: "260vh", background: "#0f0c08", position: "relative" }}>
+    <div
+      ref={ref}
+      style={{
+        // Slightly shorter scroll distance on low-end so the heavy sticky
+        // canvas is on-screen for less time.
+        height: perf.tier === "low" ? "200vh" : "260vh",
+        background: "#0f0c08",
+        position: "relative",
+      }}
+    >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
         <Particles count={25} color={CHAMP} opacity={0.4} />
         <div className="relative z-10 pt-16 pb-8 text-center px-6">
@@ -507,7 +533,10 @@ function JourneyScene() {
           </h2>
         </div>
         <div className="flex-1 flex items-center">
-          <motion.div style={{ x: xSmooth }} className="flex gap-6 sm:gap-10 pl-[5%] pr-[10%] will-change-transform">
+          <motion.div
+            style={{ x: perf.enableParallax ? xSmooth : x }}
+            className="flex gap-6 sm:gap-10 pl-[5%] pr-[10%] will-change-transform"
+          >
             {cards.map((c) => (
               <div
                 key={c.year}
@@ -515,11 +544,11 @@ function JourneyScene() {
                 style={{
                   background: "linear-gradient(180deg, #1c160f, #110d08)",
                   borderColor: `${CHAMP}55`,
-                  boxShadow: `0 30px 80px -30px ${CHAMP}55`,
+                  boxShadow: perf.enableHeavyShadows ? `0 30px 80px -30px ${CHAMP}55` : `0 8px 20px -10px #00000088`,
                 }}
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={c.img} alt={c.title} loading="lazy" className="w-full h-full object-cover" />
+                  <img src={c.img} alt={c.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-5 sm:p-6">
                   <div className="text-[10px] tracking-[0.4em] uppercase mb-1" style={{ color: CHAMP }}>
@@ -546,6 +575,7 @@ function JourneyScene() {
 // ------------------------------------------------------------------
 function ProposalScene() {
   const ref = useRef<HTMLDivElement>(null);
+  const perf = usePerf();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.7, 1.1, 1.3]);
   const rotate = useTransform(scrollYProgress, [0, 1], [-15, 25]);
@@ -558,7 +588,7 @@ function ProposalScene() {
       >
         <Particles count={30} color={CHAMP} opacity={0.5} />
         <motion.div
-          style={{ scale, rotate }}
+          style={perf.enableParallax ? { scale, rotate } : undefined}
           className="relative z-10 flex items-center justify-center"
         >
           <svg width="220" height="220" viewBox="0 0 220 220">
@@ -638,6 +668,7 @@ function CountdownScene() {
 // ------------------------------------------------------------------
 function VenueScene() {
   const ref = useRef<HTMLDivElement>(null);
+  const perf = usePerf();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
   const bgScale = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
@@ -646,11 +677,15 @@ function VenueScene() {
   return (
     <div ref={ref}>
       <Scene id="scene-6" style={{ background: "#0a0806" }}>
-        <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0">
+        <motion.div
+          style={perf.enableParallax ? { y: bgY, scale: bgScale } : undefined}
+          className="absolute inset-0"
+        >
           <img
             src={PHOTOS[4]}
             alt={VENUE}
             loading="lazy"
+            decoding="async"
             className="absolute inset-0 w-full h-full object-cover"
           />
           <div
@@ -661,7 +696,7 @@ function VenueScene() {
             }}
           />
         </motion.div>
-        <motion.div style={{ y: midY }} className="relative z-10 text-center px-6">
+        <motion.div style={perf.enableParallax ? { y: midY } : undefined} className="relative z-10 text-center px-6">
           <div className="text-[10px] tracking-[0.5em] uppercase mb-3" style={{ color: CHAMP_SOFT }}>
             Scene · 06
           </div>
@@ -980,11 +1015,13 @@ function ClosingScene() {
 // Scroll progress bar
 // ------------------------------------------------------------------
 function ScrollProgress() {
+  const perf = usePerf();
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  if (perf.reduced) return null;
   return (
     <motion.div
-      style={{ scaleX, transformOrigin: "0% 50%", background: CHAMP }}
+      style={{ scaleX: perf.tier === "low" ? scrollYProgress : scaleX, transformOrigin: "0% 50%", background: CHAMP }}
       className="fixed top-0 left-0 right-0 h-[2px] z-50"
     />
   );
@@ -1052,16 +1089,19 @@ export default function CinematicScrollStoryDemo() {
         className="w-full"
         style={{ background: IVORY, color: INK, fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif" }}
       >
+        {/* Hero is critical — render eagerly. The rest are lazy-mounted as
+            the user scrolls so off-screen scenes don't run scroll subscribers,
+            particle DOM, or decode images. */}
         <HeroScene />
-        <FirstMeetingScene />
-        <JourneyScene />
-        <ProposalScene />
-        <CountdownScene />
-        <VenueScene />
-        <DetailsScene />
-        <RSVPScene />
-        <GiftScene />
-        <ClosingScene />
+        <LazyMount><FirstMeetingScene /></LazyMount>
+        <LazyMount minHeight="260vh"><JourneyScene /></LazyMount>
+        <LazyMount><ProposalScene /></LazyMount>
+        <LazyMount><CountdownScene /></LazyMount>
+        <LazyMount><VenueScene /></LazyMount>
+        <LazyMount><DetailsScene /></LazyMount>
+        <LazyMount><RSVPScene /></LazyMount>
+        <LazyMount><GiftScene /></LazyMount>
+        <LazyMount><ClosingScene /></LazyMount>
       </main>
     </>
   );
