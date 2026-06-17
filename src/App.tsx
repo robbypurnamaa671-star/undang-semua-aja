@@ -21,6 +21,7 @@ import GameInvitationDemo from "./pages/GameInvitationDemo";
 import PlatformerInvitationDemo from "./pages/PlatformerInvitationDemo";
 import PlatformerInvitationDemoV2 from "./pages/PlatformerInvitationDemoV2";
 import LoveStoryAdventureDemo from "./pages/LoveStoryAdventureDemo";
+import CinematicScrollStoryDemo from "./pages/CinematicScrollStoryDemo";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/demo/platformer-invitation" element={<PlatformerInvitationDemo />} />
             <Route path="/demo/platformer-invitation-v2" element={<PlatformerInvitationDemoV2 />} />
             <Route path="/demo/love-story-adventure" element={<LoveStoryAdventureDemo />} />
+            <Route path="/preview/cinematic-scroll-story" element={<CinematicScrollStoryDemo />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
