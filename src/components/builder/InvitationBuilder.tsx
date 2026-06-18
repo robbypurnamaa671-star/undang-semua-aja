@@ -13,6 +13,7 @@ import { EventSessionsEditor } from "./EventSessionsEditor";
 import { BankAccountsEditor } from "./BankAccountsEditor";
 import { GuestListEditor } from "./GuestListEditor";
 import { SectionBackgroundsEditor } from "./SectionBackgroundsEditor";
+import { CinematicEditor } from "./CinematicEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Edit, Share2, Smartphone, Clock, Globe } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -41,6 +42,7 @@ export function InvitationBuilder({
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig.features;
   const isFullCustom = template.isFullCustom === true;
+  const isCinematic = template.isCinematic === true;
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
@@ -197,7 +199,7 @@ export function InvitationBuilder({
             </div>
             
             {/* Cover Image */}
-            {features.hasGallery && !isFullCustom && (
+            {features.hasGallery && !isFullCustom && !isCinematic && (
               <ImageUpload
                 label="Foto Cover (1080 × 1440 px)"
                 value={invitation.coverImage}
@@ -208,7 +210,7 @@ export function InvitationBuilder({
             )}
             
             {/* Gallery Images */}
-            {features.hasGallery && !isFullCustom && (
+            {features.hasGallery && !isFullCustom && !isCinematic && (
               <GalleryUpload
                 label="Galeri Foto (1080 × 1080 px)"
                 value={invitation.galleryImages}
@@ -222,6 +224,14 @@ export function InvitationBuilder({
               <SectionBackgroundsEditor
                 value={invitation.customBackgrounds || {}}
                 onChange={(backgrounds) => updateField("customBackgrounds", backgrounds)}
+              />
+            )}
+
+            {/* Cinematic Scroll Story editor (scene-specific inputs) */}
+            {isCinematic && (
+              <CinematicEditor
+                value={invitation.cinematic}
+                onChange={(next) => updateField("cinematic", next)}
               />
             )}
             
