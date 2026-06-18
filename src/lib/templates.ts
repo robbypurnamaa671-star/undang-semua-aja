@@ -133,6 +133,18 @@ const _templates: Template[] = [
     style: 'minimalist',
   },
   {
+    id: 'wedding-cinematic-scroll-story',
+    name: 'Cinematic Scroll Story',
+    description: 'Undangan sinematik 10 scene scroll-driven layaknya film pernikahan mewah',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-cinematic.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#D9B679', secondary: '#E8C98E', background: '#FBF7EF', text: '#1A1612' },
+    sections: defaultSections,
+    style: 'custom',
+    isCinematic: true,
+  },
+  {
     id: 'wedding-jawa-classic',
     name: 'Jawa Klasik',
     description: 'Tema pernikahan adat Jawa dengan nuansa coklat dan emas keraton',
