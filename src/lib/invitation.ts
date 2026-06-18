@@ -27,6 +27,26 @@ export interface CustomBackgrounds {
   closing?: string;
 }
 
+// ---- Cinematic Scroll Story template-specific config ----
+export interface CinematicJourneyCard {
+  year: string;
+  title: string;
+  text: string;
+  image?: string;
+}
+
+export interface CinematicConfig {
+  heroTagline?: string;          // tagline kecil di scene 1
+  firstMeetingYear?: string;     // "2018"
+  firstMeetingTitle?: string;    // "Pertama Kali Bertemu"
+  firstMeetingStory?: string;    // narasi pendek 2-3 kalimat
+  firstMeetingImage?: string;    // 1 foto khusus scene 2
+  journeyCards?: CinematicJourneyCard[]; // sampai 3 kartu timeline
+  proposalHeadline?: string;     // headline scene 4
+  venueHeroImage?: string;       // background besar scene 6
+  closingTagline?: string;       // tagline scene 10
+}
+
 export interface InvitationData {
   id?: string;
   userId?: string;
@@ -65,6 +85,9 @@ export interface InvitationData {
   
   // Full Custom backgrounds per section
   customBackgrounds?: CustomBackgrounds;
+
+  // Cinematic Scroll Story template-specific content (only used by that template)
+  cinematic?: CinematicConfig;
   
   // Guest list for personalized links
   guestList: string[];
@@ -129,6 +152,26 @@ export const createDefaultInvitation = (eventType: EventType, templateId: string
     closingMessage,
     closingPrayer,
     guestList: [],
+    ...(templateId === 'wedding-cinematic-scroll-story'
+      ? {
+          cinematic: {
+            heroTagline: 'A Love Story Written By Destiny',
+            firstMeetingYear: '',
+            firstMeetingTitle: 'Pertama Kali Bertemu',
+            firstMeetingStory:
+              'Sebuah pertemuan sederhana yang menjadi awal dari sebuah kisah panjang yang tidak pernah kami duga akan membawa kami ke hari ini.',
+            firstMeetingImage: '',
+            journeyCards: [
+              { year: '', title: 'First Date', text: 'Momen pertama yang tak terlupakan.' },
+              { year: '', title: 'First Adventure', text: 'Perjalanan kecil yang mempererat janji kami.' },
+              { year: '', title: 'First Dream Together', text: 'Saat kami mulai merangkai mimpi yang sama.' },
+            ],
+            proposalHeadline: 'Will You Marry Me?',
+            venueHeroImage: '',
+            closingTagline: 'We Look Forward To Celebrating With You',
+          },
+        }
+      : {}),
   };
 };
 

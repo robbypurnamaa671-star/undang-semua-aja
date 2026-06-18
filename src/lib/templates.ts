@@ -48,6 +48,13 @@ export interface Template {
    * to the normal invitation flow once the visitor finishes or taps continue.
    */
   gameType?: 'memory' | 'platformer' | 'platformer-v2' | 'love-story';
+  /**
+   * When true, the invitation is rendered with the bespoke Cinematic Scroll
+   * Story layout (10 scroll-driven scenes). The standard editor swaps in a
+   * dedicated input panel because this template uses fields that don't exist
+   * on regular templates (timeline cards, proposal headline, venue hero, etc).
+   */
+  isCinematic?: boolean;
 }
 
 const defaultSections: TemplateSection[] = [
@@ -124,6 +131,18 @@ const _templates: Template[] = [
     colorScheme: { primary: '#2c2c2c', secondary: '#e8e8e8', background: '#ffffff', text: '#1a1a1a' },
     sections: defaultSections,
     style: 'minimalist',
+  },
+  {
+    id: 'wedding-cinematic-scroll-story',
+    name: 'Cinematic Scroll Story',
+    description: 'Undangan sinematik 10 scene scroll-driven layaknya film pernikahan mewah',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-cinematic.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#D9B679', secondary: '#E8C98E', background: '#FBF7EF', text: '#1A1612' },
+    sections: defaultSections,
+    style: 'custom',
+    isCinematic: true,
   },
   {
     id: 'wedding-jawa-classic',

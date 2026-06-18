@@ -2,6 +2,7 @@ import { Template } from "@/lib/templates";
 import { InvitationData } from "@/lib/invitation";
 import { getEventTypeConfig } from "@/lib/event-types";
 import { getTemplateCulturalStyle } from "@/lib/template-styles";
+import { CinematicScrollStory } from "@/components/invitation/CinematicScrollStory";
 import { 
   CornerOrnaments, 
   Divider, 
@@ -21,6 +22,14 @@ interface InvitationPreviewProps {
 }
 
 export function InvitationPreview({ template, invitation }: InvitationPreviewProps) {
+  // Bespoke template — fully replaces the default invitation layout.
+  if (template.isCinematic) {
+    return (
+      <div className="w-full h-full overflow-y-auto">
+        <CinematicScrollStory invitation={invitation} />
+      </div>
+    );
+  }
   const eventConfig = getEventTypeConfig(invitation.eventType);
   const culturalStyle = getTemplateCulturalStyle(template.id);
   const isWedding = invitation.eventType === "wedding";
