@@ -27,6 +27,26 @@ export interface CustomBackgrounds {
   closing?: string;
 }
 
+// ---- Cinematic Scroll Story template-specific config ----
+export interface CinematicJourneyCard {
+  year: string;
+  title: string;
+  text: string;
+  image?: string;
+}
+
+export interface CinematicConfig {
+  heroTagline?: string;          // tagline kecil di scene 1
+  firstMeetingYear?: string;     // "2018"
+  firstMeetingTitle?: string;    // "Pertama Kali Bertemu"
+  firstMeetingStory?: string;    // narasi pendek 2-3 kalimat
+  firstMeetingImage?: string;    // 1 foto khusus scene 2
+  journeyCards?: CinematicJourneyCard[]; // sampai 3 kartu timeline
+  proposalHeadline?: string;     // headline scene 4
+  venueHeroImage?: string;       // background besar scene 6
+  closingTagline?: string;       // tagline scene 10
+}
+
 export interface InvitationData {
   id?: string;
   userId?: string;
@@ -65,6 +85,9 @@ export interface InvitationData {
   
   // Full Custom backgrounds per section
   customBackgrounds?: CustomBackgrounds;
+
+  // Cinematic Scroll Story template-specific content (only used by that template)
+  cinematic?: CinematicConfig;
   
   // Guest list for personalized links
   guestList: string[];
