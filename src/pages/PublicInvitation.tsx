@@ -26,6 +26,7 @@ import { MapPin, Calendar, Clock, Volume2, VolumeX, Loader2, Gift, Heart, Messag
 import { Button } from "@/components/ui/button";
 import { Watermark } from "@/components/invitation/Watermark";
 import { extractYouTubeId } from "@/lib/youtube-audio";
+import { CinematicScrollStory } from "@/components/invitation/CinematicScrollStory";
 
 export default function PublicInvitation() {
   const { slug } = useParams();
@@ -56,6 +57,7 @@ export default function PublicInvitation() {
   const hasTwoNames = isWedding || isLamaran;
   const features = eventConfig?.features;
   const isFullCustom = template?.isFullCustom === true;
+  const isCinematic = template?.isCinematic === true;
   // Merge order: user-uploaded backgrounds override template defaults.
   // This lets new built-in templates ship with high-quality background images
   // while still allowing the user to override any section they wish.
@@ -545,6 +547,14 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         canonical={`/invite/${slug}`}
         ogType="article"
       />
+    {isCinematic ? (
+      <>
+        {!invitation.isPaid && (
+          <Watermark templateColors={{ primary: template.colorScheme.primary, background: template.colorScheme.background }} />
+        )}
+        <CinematicScrollStory invitation={invitation} />
+      </>
+    ) : (
     <div 
       className="min-h-screen"
       style={{ 
