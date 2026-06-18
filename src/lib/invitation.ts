@@ -152,6 +152,26 @@ export const createDefaultInvitation = (eventType: EventType, templateId: string
     closingMessage,
     closingPrayer,
     guestList: [],
+    ...(templateId === 'wedding-cinematic-scroll-story'
+      ? {
+          cinematic: {
+            heroTagline: 'A Love Story Written By Destiny',
+            firstMeetingYear: '',
+            firstMeetingTitle: 'Pertama Kali Bertemu',
+            firstMeetingStory:
+              'Sebuah pertemuan sederhana yang menjadi awal dari sebuah kisah panjang yang tidak pernah kami duga akan membawa kami ke hari ini.',
+            firstMeetingImage: '',
+            journeyCards: [
+              { year: '', title: 'First Date', text: 'Momen pertama yang tak terlupakan.' },
+              { year: '', title: 'First Adventure', text: 'Perjalanan kecil yang mempererat janji kami.' },
+              { year: '', title: 'First Dream Together', text: 'Saat kami mulai merangkai mimpi yang sama.' },
+            ],
+            proposalHeadline: 'Will You Marry Me?',
+            venueHeroImage: '',
+            closingTagline: 'We Look Forward To Celebrating With You',
+          },
+        }
+      : {}),
   };
 };
 
