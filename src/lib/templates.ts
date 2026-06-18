@@ -48,6 +48,13 @@ export interface Template {
    * to the normal invitation flow once the visitor finishes or taps continue.
    */
   gameType?: 'memory' | 'platformer' | 'platformer-v2' | 'love-story';
+  /**
+   * When true, the invitation is rendered with the bespoke Cinematic Scroll
+   * Story layout (10 scroll-driven scenes). The standard editor swaps in a
+   * dedicated input panel because this template uses fields that don't exist
+   * on regular templates (timeline cards, proposal headline, venue hero, etc).
+   */
+  isCinematic?: boolean;
 }
 
 const defaultSections: TemplateSection[] = [
