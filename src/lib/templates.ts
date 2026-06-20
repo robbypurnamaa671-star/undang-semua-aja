@@ -55,6 +55,12 @@ export interface Template {
    * on regular templates (timeline cards, proposal headline, venue hero, etc).
    */
   isCinematic?: boolean;
+  /**
+   * When true, the invitation is rendered with the bespoke Royal Javanese
+   * Wedding Story layout. The standard editor is replaced with a
+   * scene-by-scene editor for cinematic Javanese royal storytelling.
+   */
+  isRoyalJavanese?: boolean;
 }
 
 const defaultSections: TemplateSection[] = [
@@ -143,6 +149,18 @@ const _templates: Template[] = [
     sections: defaultSections,
     style: 'custom',
     isCinematic: true,
+  },
+  {
+    id: 'wedding-royal-javanese-story',
+    name: 'Royal Javanese Wedding Story',
+    description: 'Undangan sinematik bertema keraton Jawa dengan opening video vertikal, milestone timeline, dan motif batik emas',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-royal-javanese.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#B8860B', secondary: '#F5E6C8', background: '#1A1208', text: '#F5E6C8' },
+    sections: defaultSections,
+    style: 'custom',
+    isRoyalJavanese: true,
   },
   {
     id: 'wedding-jawa-classic',
