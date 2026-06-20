@@ -282,8 +282,8 @@ function SceneRSVP({ invitation }: { invitation: InvitationData }) {
       </div>
       {invitation.slug && (
         <div className="max-w-xl mx-auto space-y-6 mt-6">
-          <RSVPForm invitationId={invitation.id || ""} primaryColor={GOLD} backgroundColor="#ffffff" textColor={INK} />
-          <GuestBook invitationId={invitation.id || ""} primaryColor={GOLD} backgroundColor="#ffffff" textColor={INK} />
+          <RSVPForm invitationId={invitation.id || ""} primaryColor={GOLD} backgroundColor="#ffffff" secondaryColor={CHAMPAGNE} />
+          <GuestBook invitationId={invitation.id || ""} primaryColor={GOLD} backgroundColor="#ffffff" secondaryColor={CHAMPAGNE} />
         </div>
       )}
     </section>
