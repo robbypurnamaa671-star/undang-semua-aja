@@ -3,6 +3,7 @@ import { InvitationData } from "@/lib/invitation";
 import { getEventTypeConfig } from "@/lib/event-types";
 import { getTemplateCulturalStyle } from "@/lib/template-styles";
 import { CinematicScrollStory } from "@/components/invitation/CinematicScrollStory";
+import { RoyalJavaneseScrollStory } from "@/components/invitation/RoyalJavaneseScrollStory";
 import { 
   CornerOrnaments, 
   Divider, 
@@ -27,6 +28,13 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
     return (
       <div className="w-full h-full overflow-y-auto">
         <CinematicScrollStory invitation={invitation} />
+      </div>
+    );
+  }
+  if (template.isRoyalJavanese) {
+    return (
+      <div className="w-full h-full overflow-y-auto">
+        <RoyalJavaneseScrollStory invitation={invitation} />
       </div>
     );
   }

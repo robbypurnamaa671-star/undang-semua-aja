@@ -47,6 +47,55 @@ export interface CinematicConfig {
   closingTagline?: string;       // tagline scene 10
 }
 
+// ---- Royal Javanese Wedding Story template-specific config ----
+export interface RoyalJavaneseMilestone {
+  title: string;
+  year: string;
+  description: string;
+  photo?: string;
+}
+
+export interface RoyalJavaneseEventDetail {
+  date?: string;       // YYYY-MM-DD
+  time?: string;       // HH:mm
+  location?: string;
+  mapsUrl?: string;
+}
+
+export interface RoyalJavaneseGift {
+  bankName?: string;
+  accountNumber?: string;
+  accountHolder?: string;
+  qrisImage?: string;
+}
+
+export interface RoyalJavaneseConfig {
+  // Section A — Couple
+  groomFullName?: string;
+  brideFullName?: string;
+  groomNickname?: string;
+  brideNickname?: string;
+  hashtag?: string;
+  // Section B — Opening video (9:16 MP4, max 30MB)
+  openingVideoUrl?: string;
+  // Section C — Opening quote (max 150 chars)
+  openingQuote?: string;
+  // Section D — 4 milestones
+  milestones?: RoyalJavaneseMilestone[];
+  // Section E — Gallery (5–20 photos)
+  gallery?: string[];
+  // Section F — Wedding events
+  akad?: RoyalJavaneseEventDetail;
+  resepsi?: RoyalJavaneseEventDetail;
+  // Section G — RSVP
+  rsvpEnabled?: boolean;
+  // Section H — Gift
+  gift?: RoyalJavaneseGift;
+  // Section I — Music
+  musicUrl?: string;
+  musicLibraryId?: string;
+}
+
 export interface InvitationData {
   id?: string;
   userId?: string;
@@ -88,6 +137,9 @@ export interface InvitationData {
 
   // Cinematic Scroll Story template-specific content (only used by that template)
   cinematic?: CinematicConfig;
+
+  // Royal Javanese Wedding Story template-specific content (only used by that template)
+  royalJavanese?: RoyalJavaneseConfig;
   
   // Guest list for personalized links
   guestList: string[];
@@ -169,6 +221,32 @@ export const createDefaultInvitation = (eventType: EventType, templateId: string
             proposalHeadline: 'Will You Marry Me?',
             venueHeroImage: '',
             closingTagline: 'We Look Forward To Celebrating With You',
+          },
+        }
+      : {}),
+    ...(templateId === 'wedding-royal-javanese-story'
+      ? {
+          royalJavanese: {
+            groomFullName: '',
+            brideFullName: '',
+            groomNickname: '',
+            brideNickname: '',
+            hashtag: '',
+            openingVideoUrl: '',
+            openingQuote: 'Sebuah kisah cinta yang ditulis oleh takdir.',
+            milestones: [
+              { title: 'Pertama Bertemu', year: '', description: 'Awal mula segalanya — sebuah pertemuan yang tidak kami sangka akan mengubah hidup kami selamanya.' },
+              { title: 'Mulai Dekat', year: '', description: 'Hari-hari yang dipenuhi tawa, cerita, dan rasa nyaman yang tak bisa dijelaskan.' },
+              { title: 'Janji Sehidup', year: '', description: 'Momen ketika kami yakin bahwa kami ingin menjalani sisa hidup bersama.' },
+              { title: 'Menuju Pelaminan', year: '', description: 'Persiapan menyongsong hari sakral yang dinanti — keluarga, doa, dan restu menyatu.' },
+            ],
+            gallery: [],
+            akad: { date: '', time: '', location: '', mapsUrl: '' },
+            resepsi: { date: '', time: '', location: '', mapsUrl: '' },
+            rsvpEnabled: true,
+            gift: { bankName: '', accountNumber: '', accountHolder: '', qrisImage: '' },
+            musicUrl: '',
+            musicLibraryId: '',
           },
         }
       : {}),

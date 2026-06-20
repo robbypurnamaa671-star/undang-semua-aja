@@ -14,6 +14,7 @@ import { BankAccountsEditor } from "./BankAccountsEditor";
 import { GuestListEditor } from "./GuestListEditor";
 import { SectionBackgroundsEditor } from "./SectionBackgroundsEditor";
 import { CinematicEditor } from "./CinematicEditor";
+import { RoyalJavaneseEditor } from "./RoyalJavaneseEditor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, Edit, Share2, Smartphone, Clock, Globe } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -43,6 +44,22 @@ export function InvitationBuilder({
   const features = eventConfig.features;
   const isFullCustom = template.isFullCustom === true;
   const isCinematic = template.isCinematic === true;
+  const isRoyalJavanese = template.isRoyalJavanese === true;
+
+  // Validation for royal-javanese template — publish gate.
+  const royalIssues: string[] = [];
+  if (isRoyalJavanese) {
+    const rj = invitation.royalJavanese || {};
+    if (!rj.groomFullName) royalIssues.push("Nama mempelai pria");
+    if (!rj.brideFullName) royalIssues.push("Nama mempelai wanita");
+    if (!rj.openingVideoUrl) royalIssues.push("Opening video");
+    if (!rj.openingQuote) royalIssues.push("Opening quote");
+    const ms = rj.milestones || [];
+    ms.forEach((m, i) => { if (!m.title || !m.year || !m.description) royalIssues.push(`Milestone #${i + 1}`); });
+    if ((rj.gallery?.length || 0) < 5) royalIssues.push("Galeri minimal 5 foto");
+    if (!rj.akad?.date || !rj.akad?.time || !rj.akad?.location) royalIssues.push("Detail Akad");
+  }
+  const publishBlocked = isRoyalJavanese && royalIssues.length > 0;
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
@@ -84,6 +101,13 @@ export function InvitationBuilder({
               Detail Undangan
             </h2>
             
+            {isRoyalJavanese ? (
+              <RoyalJavaneseEditor
+                value={invitation.royalJavanese}
+                onChange={(next) => updateField("royalJavanese", next)}
+              />
+            ) : (
+            <>
             {/* Title */}
             <div className="space-y-2">
               <Label htmlFor="title">{eventConfig.defaultLabels.title}</Label>
@@ -319,6 +343,8 @@ export function InvitationBuilder({
                 </p>
               </div>
             )}
+            </>
+            )}
             
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
@@ -333,12 +359,18 @@ export function InvitationBuilder({
               <Button 
                 className="flex-1 btn-hero" 
                 onClick={onPublish}
-                disabled={isSaving}
+                disabled={isSaving || publishBlocked}
+                title={publishBlocked ? `Lengkapi: ${royalIssues.join(", ")}` : undefined}
               >
                 <Share2 className="w-4 h-4 mr-2" />
                 {isSaving ? "Memproses..." : "Publikasikan"}
               </Button>
             </div>
+            {publishBlocked && (
+              <p className="text-xs text-amber-700 -mt-2">
+                Tombol publikasi terkunci sampai semua bagian wajib di Royal Javanese terisi.
+              </p>
+            )}
           </div>
         </div>
         
