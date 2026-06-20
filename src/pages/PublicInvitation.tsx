@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Watermark } from "@/components/invitation/Watermark";
 import { extractYouTubeId } from "@/lib/youtube-audio";
 import { CinematicScrollStory } from "@/components/invitation/CinematicScrollStory";
+import { RoyalJavaneseScrollStory } from "@/components/invitation/RoyalJavaneseScrollStory";
 
 export default function PublicInvitation() {
   const { slug } = useParams();
@@ -58,6 +59,7 @@ export default function PublicInvitation() {
   const features = eventConfig?.features;
   const isFullCustom = template?.isFullCustom === true;
   const isCinematic = template?.isCinematic === true;
+  const isRoyalJavanese = template?.isRoyalJavanese === true;
   // Merge order: user-uploaded backgrounds override template defaults.
   // This lets new built-in templates ship with high-quality background images
   // while still allowing the user to override any section they wish.
@@ -553,6 +555,13 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
           <Watermark templateColors={{ primary: template.colorScheme.primary, background: template.colorScheme.background }} />
         )}
         <CinematicScrollStory invitation={invitation} />
+      </>
+    ) : isRoyalJavanese ? (
+      <>
+        {!invitation.isPaid && (
+          <Watermark templateColors={{ primary: template.colorScheme.primary, background: template.colorScheme.background }} />
+        )}
+        <RoyalJavaneseScrollStory invitation={invitation} />
       </>
     ) : (
     <div 
