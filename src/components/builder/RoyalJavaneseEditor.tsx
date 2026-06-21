@@ -8,7 +8,7 @@ import type { RoyalJavaneseConfig, RoyalJavaneseMilestone, RoyalJavaneseEventDet
 import { ROYAL_JAVANESE_MUSIC } from "@/lib/royal-javanese-music";
 import { Crown, Film, Quote, BookHeart, Images, Calendar, MessageSquare, Gift, Music, AlertTriangle } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import defaultOpeningVideo from "@/assets/royal-javanese-opening.mp4.asset.json";
+import defaultOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
 
 interface Props {
   value: RoyalJavaneseConfig | undefined;
@@ -133,7 +133,7 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
             loop
             playsInline
             autoPlay
-            preload="metadata"
+            preload="auto"
             className="w-full max-w-[180px] mx-auto rounded aspect-[9/16] object-cover bg-black"
           />
         </div>
