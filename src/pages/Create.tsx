@@ -239,7 +239,7 @@ export default function Create() {
       acc[c] = (acc[c] || 0) + 1;
       return acc;
     },
-    { suku: 0, premium: 0, game: 0 } as Record<TemplateCategory, number>,
+    { suku: 0, premium: 0, video: 0, game: 0 } as Record<TemplateCategory, number>,
   );
 
   if (authLoading || isLoadingEdit) {
@@ -376,7 +376,7 @@ export default function Create() {
               </div>
 
               <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
-                {(["suku", "premium", "game"] as TemplateCategory[]).map((cat) => {
+                {(["suku", "premium", "video", "game"] as TemplateCategory[]).map((cat) => {
                   const meta = CATEGORY_META[cat];
                   const Icon = meta.icon;
                   const count = categoryCounts[cat];
