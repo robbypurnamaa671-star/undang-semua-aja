@@ -52,7 +52,6 @@ export function InvitationBuilder({
     const rj = invitation.royalJavanese || {};
     if (!rj.groomFullName) royalIssues.push("Nama mempelai pria");
     if (!rj.brideFullName) royalIssues.push("Nama mempelai wanita");
-    if (!rj.openingVideoUrl) royalIssues.push("Opening video");
     if (!rj.openingQuote) royalIssues.push("Opening quote");
     const ms = rj.milestones || [];
     ms.forEach((m, i) => { if (!m.title || !m.year || !m.description) royalIssues.push(`Milestone #${i + 1}`); });

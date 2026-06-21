@@ -4,11 +4,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { ImageUpload } from "./ImageUpload";
 import { GalleryUpload } from "./GalleryUpload";
-import { VideoUpload } from "./VideoUpload";
 import type { RoyalJavaneseConfig, RoyalJavaneseMilestone, RoyalJavaneseEventDetail } from "@/lib/invitation";
 import { ROYAL_JAVANESE_MUSIC } from "@/lib/royal-javanese-music";
 import { Crown, Film, Quote, BookHeart, Images, Calendar, MessageSquare, Gift, Music, AlertTriangle } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import defaultOpeningVideo from "@/assets/royal-javanese-opening.mp4.asset.json";
 
 interface Props {
   value: RoyalJavaneseConfig | undefined;
@@ -66,7 +66,6 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
   const issues: string[] = [];
   if (!v.groomFullName) issues.push("Nama lengkap mempelai pria belum diisi");
   if (!v.brideFullName) issues.push("Nama lengkap mempelai wanita belum diisi");
-  if (!v.openingVideoUrl) issues.push("Opening video (Scene 1) belum diunggah");
   if (!v.openingQuote) issues.push("Opening quote (Scene 2) belum diisi");
   milestones.forEach((m, i) => {
     if (!m.title || !m.year || !m.description) issues.push(`Milestone #${i + 1} belum lengkap (judul / tahun / deskripsi)`);
@@ -121,12 +120,23 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
           <Label>Wedding Hashtag</Label>
           <Input value={v.hashtag || ""} onChange={(e) => set("hashtag", e.target.value)} placeholder="#AjiAyu2026" maxLength={40} />
         </div>
-        <VideoUpload
-          label="Opening Video *"
-          value={v.openingVideoUrl}
-          onChange={(url) => set("openingVideoUrl", url || "")}
-          helper="MP4 vertikal (9:16), maksimal 30MB. Hanya digunakan di Scene 1."
-        />
+        <div className="rounded-md border border-amber-300/60 bg-amber-50/60 p-3 space-y-2">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-800">
+            <Film className="w-3.5 h-3.5" /> Opening Video Sinematik (sudah disiapkan)
+          </div>
+          <p className="text-xs text-amber-900/80 leading-relaxed">
+            Template ini sudah memakai opening video premium bertema keraton Jawa yang dioptimalkan untuk mobile & desktop. Anda tidak perlu mengunggah video sendiri.
+          </p>
+          <video
+            src={defaultOpeningVideo.url}
+            muted
+            loop
+            playsInline
+            autoPlay
+            preload="metadata"
+            className="w-full max-w-[180px] mx-auto rounded aspect-[9/16] object-cover bg-black"
+          />
+        </div>
       </SceneCard>
 
       {/* Scene 2 */}
