@@ -80,7 +80,9 @@ function formatDate(s?: string) {
 
 function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
   const posterUrl = defaultOpeningPoster.url;
-  const [videoUrl, setVideoUrl] = useState(mobileOpeningVideo.url);
+  const [videoUrl, setVideoUrl] = useState(() => (
+    typeof window !== "undefined" && window.innerWidth >= 768 ? desktopOpeningVideo.url : mobileOpeningVideo.url
+  ));
   const [videoReady, setVideoReady] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
