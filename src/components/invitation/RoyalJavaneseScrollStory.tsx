@@ -80,6 +80,7 @@ function formatDate(s?: string) {
 
 function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
   const posterUrl = defaultOpeningPoster.url;
+  const [videoUrl, setVideoUrl] = useState(mobileOpeningVideo.url);
   const [videoReady, setVideoReady] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -91,8 +92,16 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
     : `${cfg.groomFullName || "Mempelai Pria"} & ${cfg.brideFullName || "Mempelai Wanita"}`;
 
   useEffect(() => {
+    const chooseVideo = () => setVideoUrl(window.innerWidth < 768 ? mobileOpeningVideo.url : desktopOpeningVideo.url);
+    chooseVideo();
+    window.addEventListener("resize", chooseVideo);
+    return () => window.removeEventListener("resize", chooseVideo);
+  }, []);
+
+  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    setVideoReady(false);
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
@@ -101,7 +110,7 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
       video.play().catch(() => undefined);
     }, 120);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [videoUrl]);
 
   return (
     <section ref={ref} className="relative min-h-screen w-full overflow-hidden flex items-center justify-center" style={{ background: INK }}>
@@ -116,16 +125,15 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
       />
       <motion.video
         ref={videoRef}
+        key={videoUrl}
+        src={videoUrl}
         poster={posterUrl}
         autoPlay muted loop playsInline preload="auto"
         onCanPlay={() => setVideoReady(true)}
         onLoadedData={() => setVideoReady(true)}
         style={{ y, opacity, willChange: "transform, opacity" }}
         className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src={mobileOpeningVideo.url} media="(max-width: 767px)" type="video/mp4" />
-        <source src={desktopOpeningVideo.url} type="video/mp4" />
-      </motion.video>
+      />
       <div aria-hidden className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${INK}50 0%, ${INK}90 70%, ${INK} 100%)` }} />
       <BatikBorder />
       <motion.div
