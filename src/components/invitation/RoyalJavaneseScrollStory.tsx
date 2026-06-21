@@ -110,7 +110,6 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
         src={posterUrl}
         alt=""
         aria-hidden
-        fetchpriority="high"
         decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ opacity: videoReady ? 0 : 1, transition: "opacity 600ms ease" }}
