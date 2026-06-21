@@ -8,6 +8,7 @@ import { RSVPForm } from "@/components/invitation/RSVPForm";
 import { GuestBook } from "@/components/invitation/GuestBook";
 import { getMusicTrack } from "@/lib/royal-javanese-music";
 import defaultOpeningVideo from "@/assets/royal-javanese-opening.mp4.asset.json";
+import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
 
 const GOLD = "#C9A227";
 const GOLD_SOFT = "#E5C870";
@@ -78,6 +79,8 @@ function formatDate(s?: string) {
 
 function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
   const videoUrl = cfg.openingVideoUrl || defaultOpeningVideo.url;
+  const posterUrl = defaultOpeningPoster.url;
+  const [videoReady, setVideoReady] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], perf.parallax ? [0, 120] : [0, 0]);
@@ -88,11 +91,24 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
 
   return (
     <section ref={ref} className="relative min-h-screen w-full overflow-hidden flex items-center justify-center" style={{ background: INK }}>
+      {/* Instant poster — paints immediately, ~47KB. Video fades in once buffered. */}
+      <img
+        src={posterUrl}
+        alt=""
+        aria-hidden
+        fetchPriority="high"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ opacity: videoReady ? 0 : 1, transition: "opacity 600ms ease" }}
+      />
       <motion.video
         key={videoUrl}
         src={videoUrl}
+        poster={posterUrl}
         autoPlay muted loop playsInline preload="metadata"
-        style={{ y, opacity }}
+        onCanPlay={() => setVideoReady(true)}
+        onLoadedData={() => setVideoReady(true)}
+        style={{ y, opacity, willChange: "transform, opacity" }}
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div aria-hidden className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${INK}50 0%, ${INK}90 70%, ${INK} 100%)` }} />
