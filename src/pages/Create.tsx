@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, Crown, Sparkles, Gamepad2, Palette } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Crown, Sparkles, Gamepad2, Palette, Film } from "lucide-react";
 import { eventTypes, EventType } from "@/lib/event-types";
 import { getTemplatesByEventType, Template, templates as allTemplates } from "@/lib/templates";
 import logo from "@/assets/logo.svg";
@@ -20,7 +20,7 @@ import { useSubscription } from "@/hooks/use-subscription";
 import { supabase } from "@/integrations/supabase/client";
 
 type Step = "event" | "category" | "template" | "builder";
-type TemplateCategory = "suku" | "premium" | "game";
+type TemplateCategory = "suku" | "premium" | "video" | "game";
 
 const SUKU_KEYWORDS = [
   "jawa","sunda","madura","batak","minang","betawi","bugis","banten","banjar",
@@ -30,6 +30,7 @@ const SUKU_KEYWORDS = [
 
 function getTemplateCategory(t: Template): TemplateCategory {
   if (t.gameType) return "game";
+  if (t.isCinematic || t.isRoyalJavanese) return "video";
   const hay = `${t.id} ${t.name} ${t.description}`.toLowerCase();
   if (SUKU_KEYWORDS.some((k) => hay.includes(k))) return "suku";
   return "premium";
@@ -47,6 +48,12 @@ const CATEGORY_META: Record<TemplateCategory, { label: string; description: stri
     description: "Desain elegan, minimalis, dan kontemporer untuk tampilan eksklusif",
     icon: Sparkles,
     gradient: "from-primary/15 to-fuchsia-500/15",
+  },
+  video: {
+    label: "Template Video",
+    description: "Undangan sinematik scroll-driven dengan opening video premium, cocok untuk pernikahan mewah",
+    icon: Film,
+    gradient: "from-amber-500/15 to-rose-500/15",
   },
   game: {
     label: "Game Interaktif",
