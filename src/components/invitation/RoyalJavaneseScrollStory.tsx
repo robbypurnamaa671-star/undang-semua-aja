@@ -81,7 +81,9 @@ function formatDate(s?: string) {
 function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
   const posterUrl = defaultOpeningPoster.url;
   const [videoUrl, setVideoUrl] = useState(() => (
-    typeof window !== "undefined" && window.innerWidth >= 768 ? desktopOpeningVideo.url : mobileOpeningVideo.url
+    typeof window !== "undefined" && Math.min(window.innerWidth, document.documentElement.clientWidth || window.innerWidth, window.visualViewport?.width || window.innerWidth) >= 768
+      ? desktopOpeningVideo.url
+      : mobileOpeningVideo.url
   ));
   const [videoReady, setVideoReady] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -94,7 +96,10 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
     : `${cfg.groomFullName || "Mempelai Pria"} & ${cfg.brideFullName || "Mempelai Wanita"}`;
 
   useEffect(() => {
-    const chooseVideo = () => setVideoUrl(window.innerWidth < 768 ? mobileOpeningVideo.url : desktopOpeningVideo.url);
+    const chooseVideo = () => {
+      const viewportWidth = Math.min(window.innerWidth, document.documentElement.clientWidth || window.innerWidth, window.visualViewport?.width || window.innerWidth);
+      setVideoUrl(viewportWidth < 768 ? mobileOpeningVideo.url : desktopOpeningVideo.url);
+    };
     chooseVideo();
     window.addEventListener("resize", chooseVideo);
     return () => window.removeEventListener("resize", chooseVideo);
