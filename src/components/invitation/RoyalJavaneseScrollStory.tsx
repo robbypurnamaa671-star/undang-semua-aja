@@ -7,7 +7,8 @@ import { id as idLocale } from "date-fns/locale";
 import { RSVPForm } from "@/components/invitation/RSVPForm";
 import { GuestBook } from "@/components/invitation/GuestBook";
 import { getMusicTrack } from "@/lib/royal-javanese-music";
-import defaultOpeningVideo from "@/assets/royal-javanese-opening.mp4.asset.json";
+import mobileOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
+import desktopOpeningVideo from "@/assets/royal-javanese-opening-optimized.mp4.asset.json";
 import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
 
 const GOLD = "#C9A227";
@@ -78,16 +79,29 @@ function formatDate(s?: string) {
 // ============================ Scenes ============================
 
 function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
-  const videoUrl = cfg.openingVideoUrl || defaultOpeningVideo.url;
   const posterUrl = defaultOpeningPoster.url;
   const [videoReady, setVideoReady] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], perf.parallax ? [0, 120] : [0, 0]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.2]);
   const couple = cfg.groomNickname && cfg.brideNickname
     ? `${cfg.groomNickname} & ${cfg.brideNickname}`
     : `${cfg.groomFullName || "Mempelai Pria"} & ${cfg.brideFullName || "Mempelai Wanita"}`;
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.load();
+    const timer = window.setTimeout(() => {
+      video.play().catch(() => undefined);
+    }, 120);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <section ref={ref} className="relative min-h-screen w-full overflow-hidden flex items-center justify-center" style={{ background: INK }}>
@@ -96,21 +110,23 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
         src={posterUrl}
         alt=""
         aria-hidden
-        fetchPriority="high"
+        fetchpriority="high"
         decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ opacity: videoReady ? 0 : 1, transition: "opacity 600ms ease" }}
       />
       <motion.video
-        key={videoUrl}
-        src={videoUrl}
+        ref={videoRef}
         poster={posterUrl}
-        autoPlay muted loop playsInline preload="metadata"
+        autoPlay muted loop playsInline preload="auto"
         onCanPlay={() => setVideoReady(true)}
         onLoadedData={() => setVideoReady(true)}
         style={{ y, opacity, willChange: "transform, opacity" }}
         className="absolute inset-0 w-full h-full object-cover"
-      />
+      >
+        <source src={mobileOpeningVideo.url} media="(max-width: 767px)" type="video/mp4" />
+        <source src={desktopOpeningVideo.url} type="video/mp4" />
+      </motion.video>
       <div aria-hidden className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${INK}50 0%, ${INK}90 70%, ${INK} 100%)` }} />
       <BatikBorder />
       <motion.div
