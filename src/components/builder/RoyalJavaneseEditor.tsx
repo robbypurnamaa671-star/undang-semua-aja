@@ -10,6 +10,7 @@ import { Crown, Film, Quote, BookHeart, Images, Calendar, MessageSquare, Gift, M
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import defaultOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
 import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
+import { resolveLovableAssetUrl } from "@/lib/asset-url";
 
 interface Props {
   value: RoyalJavaneseConfig | undefined;
@@ -62,6 +63,8 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
 
   const quoteLen = (v.openingQuote || "").length;
   const galleryCount = v.gallery?.length || 0;
+  const openingVideoUrl = resolveLovableAssetUrl(defaultOpeningVideo.url);
+  const openingPosterUrl = resolveLovableAssetUrl(defaultOpeningPoster.url);
   const handleOpeningVideoReady = (event: React.SyntheticEvent<HTMLVideoElement>) => {
     event.currentTarget.classList.remove("opacity-0");
   };
@@ -133,15 +136,15 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
           </p>
           <div className="relative w-full max-w-[180px] mx-auto rounded aspect-[9/16] overflow-hidden bg-muted">
             <img
-              src={defaultOpeningPoster.url}
+              src={openingPosterUrl}
               alt="Preview opening video Royal Javanese"
               loading="eager"
               decoding="async"
               className="absolute inset-0 w-full h-full object-cover"
             />
             <video
-              src={defaultOpeningVideo.url}
-              poster={defaultOpeningPoster.url}
+              src={openingVideoUrl}
+              poster={openingPosterUrl}
               muted
               loop
               playsInline

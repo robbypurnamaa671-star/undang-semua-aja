@@ -10,6 +10,7 @@ import { getMusicTrack } from "@/lib/royal-javanese-music";
 import mobileOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
 import desktopOpeningVideo from "@/assets/royal-javanese-opening-optimized.mp4.asset.json";
 import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
+import { resolveLovableAssetUrl } from "@/lib/asset-url";
 
 const GOLD = "#C9A227";
 const GOLD_SOFT = "#E5C870";
@@ -79,11 +80,13 @@ function formatDate(s?: string) {
 // ============================ Scenes ============================
 
 function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
-  const posterUrl = defaultOpeningPoster.url;
+  const mobileVideoUrl = resolveLovableAssetUrl(mobileOpeningVideo.url);
+  const desktopVideoUrl = resolveLovableAssetUrl(desktopOpeningVideo.url);
+  const posterUrl = resolveLovableAssetUrl(defaultOpeningPoster.url);
   const [videoUrl, setVideoUrl] = useState(() => (
     typeof window !== "undefined" && Math.min(window.innerWidth, document.documentElement.clientWidth || window.innerWidth, window.visualViewport?.width || window.innerWidth) >= 768
-      ? desktopOpeningVideo.url
-      : mobileOpeningVideo.url
+      ? desktopVideoUrl
+      : mobileVideoUrl
   ));
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
@@ -99,7 +102,7 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
   useEffect(() => {
     const chooseVideo = () => {
       const viewportWidth = Math.min(window.innerWidth, document.documentElement.clientWidth || window.innerWidth, window.visualViewport?.width || window.innerWidth);
-      setVideoUrl(viewportWidth < 768 ? mobileOpeningVideo.url : desktopOpeningVideo.url);
+      setVideoUrl(viewportWidth < 768 ? mobileVideoUrl : desktopVideoUrl);
     };
     chooseVideo();
     window.addEventListener("resize", chooseVideo);
