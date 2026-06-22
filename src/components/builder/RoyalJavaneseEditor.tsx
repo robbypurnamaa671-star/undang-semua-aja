@@ -9,6 +9,7 @@ import { ROYAL_JAVANESE_MUSIC } from "@/lib/royal-javanese-music";
 import { Crown, Film, Quote, BookHeart, Images, Calendar, MessageSquare, Gift, Music, AlertTriangle } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import defaultOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
+import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
 
 interface Props {
   value: RoyalJavaneseConfig | undefined;
@@ -61,6 +62,9 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
 
   const quoteLen = (v.openingQuote || "").length;
   const galleryCount = v.gallery?.length || 0;
+  const handleOpeningVideoReady = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    event.currentTarget.classList.remove("opacity-0");
+  };
 
   // Validation summary
   const issues: string[] = [];
@@ -127,15 +131,27 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
           <p className="text-xs text-amber-900/80 leading-relaxed">
             Template ini sudah memakai opening video premium bertema keraton Jawa yang dioptimalkan untuk mobile & desktop. Anda tidak perlu mengunggah video sendiri.
           </p>
-          <video
-            src={defaultOpeningVideo.url}
-            muted
-            loop
-            playsInline
-            autoPlay
-            preload="auto"
-            className="w-full max-w-[180px] mx-auto rounded aspect-[9/16] object-cover bg-black"
-          />
+          <div className="relative w-full max-w-[180px] mx-auto rounded aspect-[9/16] overflow-hidden bg-muted">
+            <img
+              src={defaultOpeningPoster.url}
+              alt="Preview opening video Royal Javanese"
+              loading="eager"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <video
+              src={defaultOpeningVideo.url}
+              poster={defaultOpeningPoster.url}
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="auto"
+              onCanPlay={handleOpeningVideoReady}
+              onLoadedData={handleOpeningVideoReady}
+              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500"
+            />
+          </div>
         </div>
       </SceneCard>
 
