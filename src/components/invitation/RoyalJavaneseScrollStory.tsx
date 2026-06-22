@@ -86,11 +86,12 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
       : mobileOpeningVideo.url
   ));
   const [videoReady, setVideoReady] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], perf.parallax ? [0, 120] : [0, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.2]);
+  const backgroundOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.2]);
   const couple = cfg.groomNickname && cfg.brideNickname
     ? `${cfg.groomNickname} & ${cfg.brideNickname}`
     : `${cfg.groomFullName || "Mempelai Pria"} & ${cfg.brideFullName || "Mempelai Wanita"}`;
@@ -109,38 +110,42 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
     const video = videoRef.current;
     if (!video) return;
     setVideoReady(false);
+    setVideoFailed(false);
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
     video.load();
     const timer = window.setTimeout(() => {
       video.play().catch(() => undefined);
+      if (video.readyState >= 2) setVideoReady(true);
     }, 120);
     return () => window.clearTimeout(timer);
   }, [videoUrl]);
 
   return (
     <section ref={ref} className="relative min-h-screen w-full overflow-hidden flex items-center justify-center" style={{ background: INK }}>
-      {/* Instant poster — paints immediately, ~47KB. Video fades in once buffered. */}
-      <img
-        src={posterUrl}
-        alt=""
-        aria-hidden
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: videoReady ? 0 : 1, transition: "opacity 600ms ease" }}
-      />
-      <motion.video
-        ref={videoRef}
-        key={videoUrl}
-        src={videoUrl}
-        poster={posterUrl}
-        autoPlay muted loop playsInline preload="auto"
-        onCanPlay={() => setVideoReady(true)}
-        onLoadedData={() => setVideoReady(true)}
-        style={{ y, opacity, willChange: "transform, opacity" }}
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+      <motion.div className="absolute inset-0" style={{ y, opacity: backgroundOpacity, willChange: "transform, opacity" }}>
+        {/* Poster stays visible until the first real video frame is ready, preventing a black mobile frame. */}
+        <img
+          src={posterUrl}
+          alt=""
+          aria-hidden
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <video
+          ref={videoRef}
+          key={videoUrl}
+          src={videoUrl}
+          poster={posterUrl}
+          autoPlay muted loop playsInline preload="auto"
+          onCanPlay={() => setVideoReady(true)}
+          onLoadedData={() => setVideoReady(true)}
+          onError={() => setVideoFailed(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${videoReady && !videoFailed ? "opacity-100" : "opacity-0"}`}
+        />
+      </motion.div>
       <div aria-hidden className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${INK}50 0%, ${INK}90 70%, ${INK} 100%)` }} />
       <BatikBorder />
       <motion.div
