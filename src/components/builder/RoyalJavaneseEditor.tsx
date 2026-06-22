@@ -131,7 +131,7 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
           <p className="text-xs text-amber-900/80 leading-relaxed">
             Template ini sudah memakai opening video premium bertema keraton Jawa yang dioptimalkan untuk mobile & desktop. Anda tidak perlu mengunggah video sendiri.
           </p>
-          <div className="relative w-full max-w-[180px] mx-auto rounded aspect-[9/16] overflow-hidden bg-amber-100">
+          <div className="relative w-full max-w-[180px] mx-auto rounded aspect-[9/16] overflow-hidden bg-muted">
             <img
               src={defaultOpeningPoster.url}
               alt="Preview opening video Royal Javanese"
