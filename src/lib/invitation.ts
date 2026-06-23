@@ -250,6 +250,32 @@ export const createDefaultInvitation = (eventType: EventType, templateId: string
           },
         }
       : {}),
+    ...(templateId === 'wedding-royal-sundanese-story'
+      ? {
+          royalJavanese: {
+            groomFullName: '',
+            brideFullName: '',
+            groomNickname: '',
+            brideNickname: '',
+            hashtag: '',
+            openingVideoUrl: '',
+            openingQuote: 'Hiji carita asih nu ditulis ku takdir.',
+            milestones: [
+              { title: 'Mimiti Patepang', year: '', description: 'Awal mula sagalana — hiji patepang anu teu disangka bakal ngarobih hirup.' },
+              { title: 'Mimiti Deukeut', year: '', description: 'Poé-poé pinuh ku seuri, carita, jeung rasa tengtrem.' },
+              { title: 'Jangji Salamina', year: '', description: 'Momen nalika kami yakin hayang ngalakonan sésa hirup babarengan.' },
+              { title: 'Nuju Palaminan', year: '', description: 'Nyiapkeun poé sakral anu didagoan — kulawarga, doa, sareng restu.' },
+            ],
+            gallery: [],
+            akad: { date: '', time: '', location: '', mapsUrl: '' },
+            resepsi: { date: '', time: '', location: '', mapsUrl: '' },
+            rsvpEnabled: true,
+            gift: { bankName: '', accountNumber: '', accountHolder: '', qrisImage: '' },
+            musicUrl: '',
+            musicLibraryId: '',
+          },
+        }
+      : {}),
   };
 };
 
