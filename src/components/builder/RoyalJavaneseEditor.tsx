@@ -8,13 +8,12 @@ import type { RoyalJavaneseConfig, RoyalJavaneseMilestone, RoyalJavaneseEventDet
 import { ROYAL_JAVANESE_MUSIC } from "@/lib/royal-javanese-music";
 import { Crown, Film, Quote, BookHeart, Images, Calendar, MessageSquare, Gift, Music, AlertTriangle } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import defaultOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
-import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
-import { resolveLovableAssetUrl } from "@/lib/asset-url";
+import { getRoyalVariant, type RoyalVariant } from "@/lib/royal-variants";
 
 interface Props {
   value: RoyalJavaneseConfig | undefined;
   onChange: (next: RoyalJavaneseConfig) => void;
+  variant?: RoyalVariant;
 }
 
 const EMPTY_MILESTONES: RoyalJavaneseMilestone[] = [
@@ -42,7 +41,8 @@ function SceneCard({ index, icon: Icon, title, subtitle, children }: { index: nu
   );
 }
 
-export function RoyalJavaneseEditor({ value, onChange }: Props) {
+export function RoyalJavaneseEditor({ value, onChange, variant }: Props) {
+  const theme = getRoyalVariant(variant);
   const v: RoyalJavaneseConfig = value || {};
   const set = <K extends keyof RoyalJavaneseConfig>(k: K, val: RoyalJavaneseConfig[K]) => onChange({ ...v, [k]: val });
 
@@ -63,8 +63,8 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
 
   const quoteLen = (v.openingQuote || "").length;
   const galleryCount = v.gallery?.length || 0;
-  const openingVideoUrl = resolveLovableAssetUrl(defaultOpeningVideo.url);
-  const openingPosterUrl = resolveLovableAssetUrl(defaultOpeningPoster.url);
+  const openingVideoUrl = theme.mobileVideoUrl;
+  const openingPosterUrl = theme.posterUrl;
   const handleOpeningVideoReady = (event: React.SyntheticEvent<HTMLVideoElement>) => {
     event.currentTarget.classList.remove("opacity-0");
   };
@@ -84,7 +84,7 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
     <div className="space-y-5 pt-4 border-t border-border">
       <div className="flex items-center gap-2">
         <Crown className="w-5 h-5 text-amber-600" />
-        <h3 className="font-serif text-lg font-semibold">Royal Javanese Wedding Story</h3>
+        <h3 className="font-serif text-lg font-semibold">{theme.label}</h3>
       </div>
       <p className="text-xs text-muted-foreground -mt-3">
         Template ini punya 7 scene sinematik. Setiap kartu di bawah memetakan langsung ke scene yang akan dilihat tamu Anda saat scroll undangan.
@@ -132,7 +132,7 @@ export function RoyalJavaneseEditor({ value, onChange }: Props) {
             <Film className="w-3.5 h-3.5" /> Opening Video Sinematik (sudah disiapkan)
           </div>
           <p className="text-xs text-amber-900/80 leading-relaxed">
-            Template ini sudah memakai opening video premium bertema keraton Jawa yang dioptimalkan untuk mobile & desktop. Anda tidak perlu mengunggah video sendiri.
+            Template ini sudah memakai opening video premium yang dioptimalkan untuk mobile & desktop. Anda tidak perlu mengunggah video sendiri.
           </p>
           <div className="relative w-full max-w-[180px] mx-auto rounded aspect-[9/16] overflow-hidden bg-muted">
             <img
