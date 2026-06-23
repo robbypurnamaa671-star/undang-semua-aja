@@ -7,16 +7,26 @@ import { id as idLocale } from "date-fns/locale";
 import { RSVPForm } from "@/components/invitation/RSVPForm";
 import { GuestBook } from "@/components/invitation/GuestBook";
 import { getMusicTrack } from "@/lib/royal-javanese-music";
-import mobileOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
-import desktopOpeningVideo from "@/assets/royal-javanese-opening-optimized.mp4.asset.json";
-import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
-import { resolveLovableAssetUrl } from "@/lib/asset-url";
+import { getRoyalVariant, type RoyalVariant, type RoyalVariantConfig } from "@/lib/royal-variants";
 
-const GOLD = "#C9A227";
-const GOLD_SOFT = "#E5C870";
-const CHAMPAGNE = "#F5E6C8";
-const INK = "#1A1208";
-const PARCHMENT = "#FBF4DF";
+// Theme tokens are module-level so existing JSX (which freely uses
+// template literals like `${GOLD}40` for alpha) keeps working. The main
+// component reassigns these from the active RoyalVariantConfig at the top
+// of every render — safe because only one RoyalJavaneseScrollStory mounts
+// per page (either preview OR live).
+let GOLD = "#C9A227";
+let GOLD_SOFT = "#E5C870";
+let CHAMPAGNE = "#F5E6C8";
+let INK = "#1A1208";
+let PARCHMENT = "#FBF4DF";
+
+function applyTheme(theme: RoyalVariantConfig) {
+  GOLD = theme.gold;
+  GOLD_SOFT = theme.goldSoft;
+  CHAMPAGNE = theme.champagne;
+  INK = theme.ink;
+  PARCHMENT = theme.parchment;
+}
 
 const FALLBACK_GALLERY = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=70",
@@ -79,10 +89,10 @@ function formatDate(s?: string) {
 
 // ============================ Scenes ============================
 
-function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
-  const mobileVideoUrl = resolveLovableAssetUrl(mobileOpeningVideo.url);
-  const desktopVideoUrl = resolveLovableAssetUrl(desktopOpeningVideo.url);
-  const posterUrl = resolveLovableAssetUrl(defaultOpeningPoster.url);
+function SceneOpening({ cfg, perf, theme }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf>; theme: RoyalVariantConfig }) {
+  const mobileVideoUrl = theme.mobileVideoUrl;
+  const desktopVideoUrl = theme.desktopVideoUrl;
+  const posterUrl = theme.posterUrl;
   const [videoUrl, setVideoUrl] = useState(() => (
     typeof window !== "undefined" && Math.min(window.innerWidth, document.documentElement.clientWidth || window.innerWidth, window.visualViewport?.width || window.innerWidth) >= 768
       ? desktopVideoUrl
@@ -157,7 +167,7 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
         transition={{ delay: 0.6, duration: 1.2 }}
         className="relative z-10 text-center px-6 max-w-xl"
       >
-        <p className="text-xs uppercase tracking-[0.5em]" style={{ color: GOLD_SOFT }}>The Wedding Of</p>
+        <p className="text-xs uppercase tracking-[0.5em]" style={{ color: GOLD_SOFT }}>{theme.heroEyebrow}</p>
         <GoldDivider width={80} />
         <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-tight" style={{ color: CHAMPAGNE, fontFamily: '"Playfair Display", serif' }}>
           {couple}
@@ -196,15 +206,15 @@ function SceneQuote({ quote }: { quote: string }) {
   );
 }
 
-function SceneTimeline({ milestones }: { milestones: RoyalJavaneseMilestone[] }) {
+function SceneTimeline({ milestones, theme }: { milestones: RoyalJavaneseMilestone[]; theme: RoyalVariantConfig }) {
   return (
     <section className="relative py-20 px-6" style={{ background: INK }}>
       <BatikBorder />
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
-          <p className="text-xs uppercase tracking-[0.4em]" style={{ color: GOLD_SOFT }}>Royal Love Story</p>
+          <p className="text-xs uppercase tracking-[0.4em]" style={{ color: GOLD_SOFT }}>{theme.storyEyebrow}</p>
           <h2 className="font-serif text-3xl sm:text-4xl mt-2" style={{ color: CHAMPAGNE, fontFamily: '"Playfair Display", serif' }}>
-            Perjalanan Cinta Kami
+            {theme.storyTitle}
           </h2>
           <GoldDivider />
         </div>
@@ -384,7 +394,7 @@ function SceneGift({ cfg }: { cfg: RoyalJavaneseConfig }) {
   );
 }
 
-function SceneClosing({ cfg }: { cfg: RoyalJavaneseConfig }) {
+function SceneClosing({ cfg, theme }: { cfg: RoyalJavaneseConfig; theme: RoyalVariantConfig }) {
   const couple = `${cfg.groomFullName || "Mempelai Pria"} & ${cfg.brideFullName || "Mempelai Wanita"}`;
   return (
     <section className="relative py-24 px-6" style={{ background: INK }}>
@@ -397,7 +407,7 @@ function SceneClosing({ cfg }: { cfg: RoyalJavaneseConfig }) {
         </p>
         <p className="font-serif text-2xl mt-6" style={{ color: CHAMPAGNE, fontFamily: '"Playfair Display", serif' }}>{couple}</p>
         {cfg.hashtag && <p className="mt-3 text-xs tracking-[0.3em]" style={{ color: GOLD_SOFT }}>{cfg.hashtag}</p>}
-        <p className="mt-10 text-[10px] uppercase tracking-[0.4em] opacity-50" style={{ color: GOLD_SOFT }}>Royal Javanese Wedding Story</p>
+        <p className="mt-10 text-[10px] uppercase tracking-[0.4em] opacity-50" style={{ color: GOLD_SOFT }}>{theme.label}</p>
       </div>
     </section>
   );
@@ -405,7 +415,9 @@ function SceneClosing({ cfg }: { cfg: RoyalJavaneseConfig }) {
 
 // ============================ Main ============================
 
-export function RoyalJavaneseScrollStory({ invitation }: { invitation: InvitationData }) {
+export function RoyalJavaneseScrollStory({ invitation, variant }: { invitation: InvitationData; variant?: RoyalVariant }) {
+  const theme = getRoyalVariant(variant);
+  applyTheme(theme);
   const [perf] = useState(detectPerf);
   const cfg: RoyalJavaneseConfig = invitation.royalJavanese || {};
   const milestones: RoyalJavaneseMilestone[] = (cfg.milestones && cfg.milestones.length > 0 ? cfg.milestones : [
@@ -465,14 +477,14 @@ export function RoyalJavaneseScrollStory({ invitation }: { invitation: Invitatio
         </button>
       )}
 
-      <SceneOpening cfg={cfg} perf={perf} />
+      <SceneOpening cfg={cfg} perf={perf} theme={theme} />
       <SceneQuote quote={quote} />
-      <SceneTimeline milestones={milestones.slice(0, 4)} />
+      <SceneTimeline milestones={milestones.slice(0, 4)} theme={theme} />
       <SceneGallery photos={gallery} />
       <SceneDetails cfg={cfg} />
       {cfg.rsvpEnabled !== false && <SceneRSVP invitation={invitation} />}
       <SceneGift cfg={cfg} />
-      <SceneClosing cfg={cfg} />
+      <SceneClosing cfg={cfg} theme={theme} />
     </div>
   );
 }

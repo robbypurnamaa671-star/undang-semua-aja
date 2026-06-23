@@ -61,6 +61,12 @@ export interface Template {
    * scene-by-scene editor for cinematic Javanese royal storytelling.
    */
   isRoyalJavanese?: boolean;
+  /**
+   * When true, the invitation is rendered with the bespoke Royal Sundanese
+   * Wedding Story layout. Reuses the Royal Javanese editor & renderer with a
+   * Sundanese variant (palette, opening video, label).
+   */
+  isRoyalSundanese?: boolean;
 }
 
 const defaultSections: TemplateSection[] = [
@@ -161,6 +167,18 @@ const _templates: Template[] = [
     sections: defaultSections,
     style: 'custom',
     isRoyalJavanese: true,
+  },
+  {
+    id: 'wedding-royal-sundanese-story',
+    name: 'Royal Sundanese Wedding Story',
+    description: 'Undangan sinematik bertema adat Sunda Parahyangan dengan opening video vertikal, milestone timeline, dan nuansa hijau emas',
+    eventTypes: ['wedding'],
+    previewImage: '/templates/wedding-royal-sundanese.jpg',
+    isPremium: true,
+    colorScheme: { primary: '#1F6B3A', secondary: '#F0E4C2', background: '#0F2418', text: '#F0E4C2' },
+    sections: defaultSections,
+    style: 'custom',
+    isRoyalSundanese: true,
   },
   {
     id: 'wedding-jawa-classic',

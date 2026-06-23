@@ -60,6 +60,9 @@ export default function PublicInvitation() {
   const isFullCustom = template?.isFullCustom === true;
   const isCinematic = template?.isCinematic === true;
   const isRoyalJavanese = template?.isRoyalJavanese === true;
+  const isRoyalSundanese = template?.isRoyalSundanese === true;
+  const isRoyalStory = isRoyalJavanese || isRoyalSundanese;
+  const royalVariant: "javanese" | "sundanese" = isRoyalSundanese ? "sundanese" : "javanese";
   // Merge order: user-uploaded backgrounds override template defaults.
   // This lets new built-in templates ship with high-quality background images
   // while still allowing the user to override any section they wish.
@@ -556,12 +559,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         )}
         <CinematicScrollStory invitation={invitation} />
       </>
-    ) : isRoyalJavanese ? (
+    ) : isRoyalStory ? (
       <>
         {!invitation.isPaid && (
           <Watermark templateColors={{ primary: template.colorScheme.primary, background: template.colorScheme.background }} />
         )}
-        <RoyalJavaneseScrollStory invitation={invitation} />
+        <RoyalJavaneseScrollStory invitation={invitation} variant={royalVariant} />
       </>
     ) : (
     <div 

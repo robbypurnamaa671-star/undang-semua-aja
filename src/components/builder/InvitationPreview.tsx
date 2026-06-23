@@ -31,10 +31,11 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
       </div>
     );
   }
-  if (template.isRoyalJavanese) {
+  if (template.isRoyalJavanese || template.isRoyalSundanese) {
+    const variant = template.isRoyalSundanese ? "sundanese" : "javanese";
     return (
       <div className="w-full h-full overflow-y-auto">
-        <RoyalJavaneseScrollStory invitation={invitation} />
+        <RoyalJavaneseScrollStory invitation={invitation} variant={variant} />
       </div>
     );
   }
