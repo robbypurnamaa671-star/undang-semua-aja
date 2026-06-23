@@ -89,10 +89,10 @@ function formatDate(s?: string) {
 
 // ============================ Scenes ============================
 
-function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf> }) {
-  const mobileVideoUrl = resolveLovableAssetUrl(mobileOpeningVideo.url);
-  const desktopVideoUrl = resolveLovableAssetUrl(desktopOpeningVideo.url);
-  const posterUrl = resolveLovableAssetUrl(defaultOpeningPoster.url);
+function SceneOpening({ cfg, perf, theme }: { cfg: RoyalJavaneseConfig; perf: ReturnType<typeof detectPerf>; theme: RoyalVariantConfig }) {
+  const mobileVideoUrl = theme.mobileVideoUrl;
+  const desktopVideoUrl = theme.desktopVideoUrl;
+  const posterUrl = theme.posterUrl;
   const [videoUrl, setVideoUrl] = useState(() => (
     typeof window !== "undefined" && Math.min(window.innerWidth, document.documentElement.clientWidth || window.innerWidth, window.visualViewport?.width || window.innerWidth) >= 768
       ? desktopVideoUrl
@@ -167,7 +167,7 @@ function SceneOpening({ cfg, perf }: { cfg: RoyalJavaneseConfig; perf: ReturnTyp
         transition={{ delay: 0.6, duration: 1.2 }}
         className="relative z-10 text-center px-6 max-w-xl"
       >
-        <p className="text-xs uppercase tracking-[0.5em]" style={{ color: GOLD_SOFT }}>The Wedding Of</p>
+        <p className="text-xs uppercase tracking-[0.5em]" style={{ color: GOLD_SOFT }}>{theme.heroEyebrow}</p>
         <GoldDivider width={80} />
         <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-tight" style={{ color: CHAMPAGNE, fontFamily: '"Playfair Display", serif' }}>
           {couple}
