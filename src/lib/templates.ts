@@ -61,6 +61,12 @@ export interface Template {
    * scene-by-scene editor for cinematic Javanese royal storytelling.
    */
   isRoyalJavanese?: boolean;
+  /**
+   * When true, the invitation is rendered with the bespoke Royal Sundanese
+   * Wedding Story layout. Reuses the Royal Javanese editor & renderer with a
+   * Sundanese variant (palette, opening video, label).
+   */
+  isRoyalSundanese?: boolean;
 }
 
 const defaultSections: TemplateSection[] = [
