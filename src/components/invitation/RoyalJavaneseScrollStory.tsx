@@ -206,15 +206,15 @@ function SceneQuote({ quote }: { quote: string }) {
   );
 }
 
-function SceneTimeline({ milestones }: { milestones: RoyalJavaneseMilestone[] }) {
+function SceneTimeline({ milestones, theme }: { milestones: RoyalJavaneseMilestone[]; theme: RoyalVariantConfig }) {
   return (
     <section className="relative py-20 px-6" style={{ background: INK }}>
       <BatikBorder />
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
-          <p className="text-xs uppercase tracking-[0.4em]" style={{ color: GOLD_SOFT }}>Royal Love Story</p>
+          <p className="text-xs uppercase tracking-[0.4em]" style={{ color: GOLD_SOFT }}>{theme.storyEyebrow}</p>
           <h2 className="font-serif text-3xl sm:text-4xl mt-2" style={{ color: CHAMPAGNE, fontFamily: '"Playfair Display", serif' }}>
-            Perjalanan Cinta Kami
+            {theme.storyTitle}
           </h2>
           <GoldDivider />
         </div>
@@ -394,7 +394,7 @@ function SceneGift({ cfg }: { cfg: RoyalJavaneseConfig }) {
   );
 }
 
-function SceneClosing({ cfg }: { cfg: RoyalJavaneseConfig }) {
+function SceneClosing({ cfg, theme }: { cfg: RoyalJavaneseConfig; theme: RoyalVariantConfig }) {
   const couple = `${cfg.groomFullName || "Mempelai Pria"} & ${cfg.brideFullName || "Mempelai Wanita"}`;
   return (
     <section className="relative py-24 px-6" style={{ background: INK }}>
@@ -407,7 +407,7 @@ function SceneClosing({ cfg }: { cfg: RoyalJavaneseConfig }) {
         </p>
         <p className="font-serif text-2xl mt-6" style={{ color: CHAMPAGNE, fontFamily: '"Playfair Display", serif' }}>{couple}</p>
         {cfg.hashtag && <p className="mt-3 text-xs tracking-[0.3em]" style={{ color: GOLD_SOFT }}>{cfg.hashtag}</p>}
-        <p className="mt-10 text-[10px] uppercase tracking-[0.4em] opacity-50" style={{ color: GOLD_SOFT }}>Royal Javanese Wedding Story</p>
+        <p className="mt-10 text-[10px] uppercase tracking-[0.4em] opacity-50" style={{ color: GOLD_SOFT }}>{theme.label}</p>
       </div>
     </section>
   );
@@ -415,7 +415,9 @@ function SceneClosing({ cfg }: { cfg: RoyalJavaneseConfig }) {
 
 // ============================ Main ============================
 
-export function RoyalJavaneseScrollStory({ invitation }: { invitation: InvitationData }) {
+export function RoyalJavaneseScrollStory({ invitation, variant }: { invitation: InvitationData; variant?: RoyalVariant }) {
+  const theme = getRoyalVariant(variant);
+  applyTheme(theme);
   const [perf] = useState(detectPerf);
   const cfg: RoyalJavaneseConfig = invitation.royalJavanese || {};
   const milestones: RoyalJavaneseMilestone[] = (cfg.milestones && cfg.milestones.length > 0 ? cfg.milestones : [
@@ -475,14 +477,14 @@ export function RoyalJavaneseScrollStory({ invitation }: { invitation: Invitatio
         </button>
       )}
 
-      <SceneOpening cfg={cfg} perf={perf} />
+      <SceneOpening cfg={cfg} perf={perf} theme={theme} />
       <SceneQuote quote={quote} />
-      <SceneTimeline milestones={milestones.slice(0, 4)} />
+      <SceneTimeline milestones={milestones.slice(0, 4)} theme={theme} />
       <SceneGallery photos={gallery} />
       <SceneDetails cfg={cfg} />
       {cfg.rsvpEnabled !== false && <SceneRSVP invitation={invitation} />}
       <SceneGift cfg={cfg} />
-      <SceneClosing cfg={cfg} />
+      <SceneClosing cfg={cfg} theme={theme} />
     </div>
   );
 }
