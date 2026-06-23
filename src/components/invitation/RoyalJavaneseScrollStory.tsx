@@ -7,16 +7,16 @@ import { id as idLocale } from "date-fns/locale";
 import { RSVPForm } from "@/components/invitation/RSVPForm";
 import { GuestBook } from "@/components/invitation/GuestBook";
 import { getMusicTrack } from "@/lib/royal-javanese-music";
-import mobileOpeningVideo from "@/assets/royal-javanese-opening-mobile.mp4.asset.json";
-import desktopOpeningVideo from "@/assets/royal-javanese-opening-optimized.mp4.asset.json";
-import defaultOpeningPoster from "@/assets/royal-javanese-opening-poster.jpg.asset.json";
-import { resolveLovableAssetUrl } from "@/lib/asset-url";
+import { getRoyalVariant, type RoyalVariant, type RoyalVariantConfig } from "@/lib/royal-variants";
 
-const GOLD = "#C9A227";
-const GOLD_SOFT = "#E5C870";
-const CHAMPAGNE = "#F5E6C8";
-const INK = "#1A1208";
-const PARCHMENT = "#FBF4DF";
+// Theme tokens are resolved per-variant via CSS custom properties set on the
+// root wrapper. Components read `var(--rj-*)` so the same JSX renders the
+// Javanese (warm amber) or Sundanese (parahyangan green) palette.
+const GOLD = "var(--rj-gold)";
+const GOLD_SOFT = "var(--rj-gold-soft)";
+const CHAMPAGNE = "var(--rj-champagne)";
+const INK = "var(--rj-ink)";
+const PARCHMENT = "var(--rj-parchment)";
 
 const FALLBACK_GALLERY = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=70",
