@@ -9,14 +9,24 @@ import { GuestBook } from "@/components/invitation/GuestBook";
 import { getMusicTrack } from "@/lib/royal-javanese-music";
 import { getRoyalVariant, type RoyalVariant, type RoyalVariantConfig } from "@/lib/royal-variants";
 
-// Theme tokens are resolved per-variant via CSS custom properties set on the
-// root wrapper. Components read `var(--rj-*)` so the same JSX renders the
-// Javanese (warm amber) or Sundanese (parahyangan green) palette.
-const GOLD = "var(--rj-gold)";
-const GOLD_SOFT = "var(--rj-gold-soft)";
-const CHAMPAGNE = "var(--rj-champagne)";
-const INK = "var(--rj-ink)";
-const PARCHMENT = "var(--rj-parchment)";
+// Theme tokens are module-level so existing JSX (which freely uses
+// template literals like `${GOLD}40` for alpha) keeps working. The main
+// component reassigns these from the active RoyalVariantConfig at the top
+// of every render — safe because only one RoyalJavaneseScrollStory mounts
+// per page (either preview OR live).
+let GOLD = "#C9A227";
+let GOLD_SOFT = "#E5C870";
+let CHAMPAGNE = "#F5E6C8";
+let INK = "#1A1208";
+let PARCHMENT = "#FBF4DF";
+
+function applyTheme(theme: RoyalVariantConfig) {
+  GOLD = theme.gold;
+  GOLD_SOFT = theme.goldSoft;
+  CHAMPAGNE = theme.champagne;
+  INK = theme.ink;
+  PARCHMENT = theme.parchment;
+}
 
 const FALLBACK_GALLERY = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=70",
