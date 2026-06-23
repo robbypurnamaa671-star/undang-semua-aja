@@ -559,12 +559,12 @@ Merupakan kehormatan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir. Terim
         )}
         <CinematicScrollStory invitation={invitation} />
       </>
-    ) : isRoyalJavanese ? (
+    ) : isRoyalStory ? (
       <>
         {!invitation.isPaid && (
           <Watermark templateColors={{ primary: template.colorScheme.primary, background: template.colorScheme.background }} />
         )}
-        <RoyalJavaneseScrollStory invitation={invitation} />
+        <RoyalJavaneseScrollStory invitation={invitation} variant={royalVariant} />
       </>
     ) : (
     <div 
