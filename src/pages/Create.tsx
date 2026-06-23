@@ -30,7 +30,7 @@ const SUKU_KEYWORDS = [
 
 function getTemplateCategory(t: Template): TemplateCategory {
   if (t.gameType) return "game";
-  if (t.isCinematic || t.isRoyalJavanese) return "video";
+  if (t.isCinematic || t.isRoyalJavanese || t.isRoyalSundanese) return "video";
   const hay = `${t.id} ${t.name} ${t.description}`.toLowerCase();
   if (SUKU_KEYWORDS.some((k) => hay.includes(k))) return "suku";
   return "premium";
