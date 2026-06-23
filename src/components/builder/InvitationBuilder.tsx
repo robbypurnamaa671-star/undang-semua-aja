@@ -45,10 +45,13 @@ export function InvitationBuilder({
   const isFullCustom = template.isFullCustom === true;
   const isCinematic = template.isCinematic === true;
   const isRoyalJavanese = template.isRoyalJavanese === true;
+  const isRoyalSundanese = template.isRoyalSundanese === true;
+  const isRoyalStory = isRoyalJavanese || isRoyalSundanese;
+  const royalVariant: "javanese" | "sundanese" | undefined = isRoyalSundanese ? "sundanese" : isRoyalJavanese ? "javanese" : undefined;
 
-  // Validation for royal-javanese template — publish gate.
+  // Validation for royal story templates (javanese & sundanese share the same config shape).
   const royalIssues: string[] = [];
-  if (isRoyalJavanese) {
+  if (isRoyalStory) {
     const rj = invitation.royalJavanese || {};
     if (!rj.groomFullName) royalIssues.push("Nama mempelai pria");
     if (!rj.brideFullName) royalIssues.push("Nama mempelai wanita");
@@ -58,7 +61,7 @@ export function InvitationBuilder({
     if ((rj.gallery?.length || 0) < 5) royalIssues.push("Galeri minimal 5 foto");
     if (!rj.akad?.date || !rj.akad?.time || !rj.akad?.location) royalIssues.push("Detail Akad");
   }
-  const publishBlocked = isRoyalJavanese && royalIssues.length > 0;
+  const publishBlocked = isRoyalStory && royalIssues.length > 0;
   
   const updateField = <K extends keyof InvitationData>(field: K, value: InvitationData[K]) => {
     onInvitationChange({ ...invitation, [field]: value });
@@ -100,10 +103,11 @@ export function InvitationBuilder({
               Detail Undangan
             </h2>
             
-            {isRoyalJavanese ? (
+            {isRoyalStory ? (
               <RoyalJavaneseEditor
                 value={invitation.royalJavanese}
                 onChange={(next) => updateField("royalJavanese", next)}
+                variant={royalVariant}
               />
             ) : (
             <>
