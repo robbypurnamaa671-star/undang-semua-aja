@@ -4,6 +4,7 @@ import { EventTypesSection } from "@/components/landing/EventTypesSection";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
 import { TemplatesSection } from "@/components/landing/TemplatesSection";
 import { GameTemplatesSection } from "@/components/landing/GameTemplatesSection";
+import { VideoTemplatesSection } from "@/components/landing/VideoTemplatesSection";
 import { HowItWorksSection } from "@/components/landing/HowItWorksSection";
 import { PricingSection } from "@/components/landing/PricingSection";
 import { FAQSection } from "@/components/landing/FAQSection";
@@ -39,6 +40,7 @@ const Index = () => {
       <EventTypesSection />
       <FeaturesSection />
       <TemplatesSection />
+      <VideoTemplatesSection />
       <GameTemplatesSection />
       <HowItWorksSection />
       <PricingSection />
