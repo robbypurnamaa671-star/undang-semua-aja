@@ -276,6 +276,58 @@ export const createDefaultInvitation = (eventType: EventType, templateId: string
           },
         }
       : {}),
+    ...(templateId === 'wedding-royal-minangkabau-story'
+      ? {
+          royalJavanese: {
+            groomFullName: '',
+            brideFullName: '',
+            groomNickname: '',
+            brideNickname: '',
+            hashtag: '',
+            openingVideoUrl: '',
+            openingQuote: 'Sabuah carito cinto nan ditulih dek takdir.',
+            milestones: [
+              { title: 'Partamu Basuo', year: '', description: 'Awa mulo sagalonyo — sabuah patamuan nan indak disangko ka maubah iduik.' },
+              { title: 'Mulai Lakek', year: '', description: 'Hari-hari panuah jo galak, carito, jo raso sanang nan indak tabilang.' },
+              { title: 'Janji Saumua Iduik', year: '', description: 'Saat kami yakin nak manjalani siso iduik basamo.' },
+              { title: 'Manuju Palaminan', year: '', description: 'Manyambuik hari sakral nan dinanti — kaluarga, doa, jo restu basatu.' },
+            ],
+            gallery: [],
+            akad: { date: '', time: '', location: '', mapsUrl: '' },
+            resepsi: { date: '', time: '', location: '', mapsUrl: '' },
+            rsvpEnabled: true,
+            gift: { bankName: '', accountNumber: '', accountHolder: '', qrisImage: '' },
+            musicUrl: '',
+            musicLibraryId: '',
+          },
+        }
+      : {}),
+    ...(templateId === 'wedding-royal-bugis-story'
+      ? {
+          royalJavanese: {
+            groomFullName: '',
+            brideFullName: '',
+            groomNickname: '',
+            brideNickname: '',
+            hashtag: '',
+            openingVideoUrl: '',
+            openingQuote: "Séddi curita pammase iya naukirengngi takdir.",
+            milestones: [
+              { title: 'Pammulanna Sicokkong', year: '', description: 'Pammulanna sininna — séddi assicokkongeng iya tenrisengnge maéloi pabbalu atuwong.' },
+              { title: 'Mappakkaramé', year: '', description: 'Esso-esso penno cawa, curita, sibawa rasa masennang.' },
+              { title: 'Janci Tuli', year: '', description: 'Wettu naéloréng massibawa salama atuwong.' },
+              { title: 'Lao ri Pakkawaru', year: '', description: 'Mappasadia esso mappakaraja — kaluarga, doang, sibawa barakka masséddi.' },
+            ],
+            gallery: [],
+            akad: { date: '', time: '', location: '', mapsUrl: '' },
+            resepsi: { date: '', time: '', location: '', mapsUrl: '' },
+            rsvpEnabled: true,
+            gift: { bankName: '', accountNumber: '', accountHolder: '', qrisImage: '' },
+            musicUrl: '',
+            musicLibraryId: '',
+          },
+        }
+      : {}),
   };
 };
 
