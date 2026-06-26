@@ -67,6 +67,16 @@ export interface Template {
    * Sundanese variant (palette, opening video, label).
    */
   isRoyalSundanese?: boolean;
+  /**
+   * When true, the invitation is rendered with the bespoke Royal Minangkabau
+   * Wedding Story layout (Royal variant: red & gold with Minang opening video).
+   */
+  isRoyalMinangkabau?: boolean;
+  /**
+   * When true, the invitation is rendered with the bespoke Royal Bugis
+   * Wedding Story layout (Royal variant: maroon & gold with Bugis opening video).
+   */
+  isRoyalBugis?: boolean;
 }
 
 const defaultSections: TemplateSection[] = [
