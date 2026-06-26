@@ -61,8 +61,16 @@ export default function PublicInvitation() {
   const isCinematic = template?.isCinematic === true;
   const isRoyalJavanese = template?.isRoyalJavanese === true;
   const isRoyalSundanese = template?.isRoyalSundanese === true;
-  const isRoyalStory = isRoyalJavanese || isRoyalSundanese;
-  const royalVariant: "javanese" | "sundanese" = isRoyalSundanese ? "sundanese" : "javanese";
+  const isRoyalMinangkabau = template?.isRoyalMinangkabau === true;
+  const isRoyalBugis = template?.isRoyalBugis === true;
+  const isRoyalStory = isRoyalJavanese || isRoyalSundanese || isRoyalMinangkabau || isRoyalBugis;
+  const royalVariant: "javanese" | "sundanese" | "minangkabau" | "bugis" = isRoyalBugis
+    ? "bugis"
+    : isRoyalMinangkabau
+    ? "minangkabau"
+    : isRoyalSundanese
+    ? "sundanese"
+    : "javanese";
   // Merge order: user-uploaded backgrounds override template defaults.
   // This lets new built-in templates ship with high-quality background images
   // while still allowing the user to override any section they wish.

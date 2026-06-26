@@ -31,8 +31,14 @@ export function InvitationPreview({ template, invitation }: InvitationPreviewPro
       </div>
     );
   }
-  if (template.isRoyalJavanese || template.isRoyalSundanese) {
-    const variant = template.isRoyalSundanese ? "sundanese" : "javanese";
+  if (template.isRoyalJavanese || template.isRoyalSundanese || template.isRoyalMinangkabau || template.isRoyalBugis) {
+    const variant = template.isRoyalBugis
+      ? "bugis"
+      : template.isRoyalMinangkabau
+      ? "minangkabau"
+      : template.isRoyalSundanese
+      ? "sundanese"
+      : "javanese";
     return (
       <div className="w-full h-full overflow-y-auto">
         <RoyalJavaneseScrollStory invitation={invitation} variant={variant} />

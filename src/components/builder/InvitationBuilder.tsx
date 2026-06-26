@@ -46,8 +46,18 @@ export function InvitationBuilder({
   const isCinematic = template.isCinematic === true;
   const isRoyalJavanese = template.isRoyalJavanese === true;
   const isRoyalSundanese = template.isRoyalSundanese === true;
-  const isRoyalStory = isRoyalJavanese || isRoyalSundanese;
-  const royalVariant: "javanese" | "sundanese" | undefined = isRoyalSundanese ? "sundanese" : isRoyalJavanese ? "javanese" : undefined;
+  const isRoyalMinangkabau = template.isRoyalMinangkabau === true;
+  const isRoyalBugis = template.isRoyalBugis === true;
+  const isRoyalStory = isRoyalJavanese || isRoyalSundanese || isRoyalMinangkabau || isRoyalBugis;
+  const royalVariant: "javanese" | "sundanese" | "minangkabau" | "bugis" | undefined = isRoyalBugis
+    ? "bugis"
+    : isRoyalMinangkabau
+    ? "minangkabau"
+    : isRoyalSundanese
+    ? "sundanese"
+    : isRoyalJavanese
+    ? "javanese"
+    : undefined;
 
   // Validation for royal story templates (javanese & sundanese share the same config shape).
   const royalIssues: string[] = [];
