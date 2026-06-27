@@ -92,9 +92,16 @@ export function TemplatePreviewCard({ template }: Props) {
 
   return (
     <>
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={() => setOpen(true)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setOpen(true);
+        }
+      }}
       className="card-interactive group overflow-hidden relative max-w-[240px] mx-auto w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
       aria-label={`Lihat preview ${template.name}`}
     >
@@ -193,7 +200,7 @@ export function TemplatePreviewCard({ template }: Props) {
           atau klik kartu untuk preview penuh
         </p>
       </div>
-    </button>
+    </div>
 
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-sm p-0 gap-0 overflow-hidden max-h-[92vh] flex flex-col">
