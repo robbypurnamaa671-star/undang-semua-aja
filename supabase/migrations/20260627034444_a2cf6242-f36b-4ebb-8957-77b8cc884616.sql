@@ -1,0 +1,1 @@
+ALTER TABLE public.subscriptions ALTER COLUMN amount SET DEFAULT 22000;

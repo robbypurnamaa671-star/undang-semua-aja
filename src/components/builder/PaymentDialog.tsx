@@ -117,7 +117,7 @@ export function PaymentDialog({
             <div className="flex items-baseline justify-center gap-1 mb-2">
               <span className="text-sm text-muted-foreground">Rp</span>
               <span className="font-serif text-4xl font-bold text-primary">
-                12.000
+                22.000
               </span>
               <span className="text-sm text-muted-foreground">/bulan</span>
             </div>
@@ -164,7 +164,7 @@ export function PaymentDialog({
               ) : (
                 <>
                   <CreditCard className="w-5 h-5 mr-2" />
-                  Bayar Rp 12.000/bulan
+                  Bayar Rp 22.000/bulan
                 </>
               )}
             </Button>

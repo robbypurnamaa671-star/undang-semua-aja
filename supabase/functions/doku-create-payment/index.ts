@@ -93,7 +93,7 @@ Deno.serve(async (req: Request) => {
     const now = new Date();
     const invoiceNumber = `INV-${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
 
-    const amount = 12000;
+    const amount = 22000;
 
     // Build DOKU request body
     const dokuBody = JSON.stringify({
