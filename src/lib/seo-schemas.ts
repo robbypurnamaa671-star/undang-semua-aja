@@ -32,7 +32,7 @@ export const productSchema = {
     "Undangan digital premium tanpa watermark dengan semua template eksklusif, RSVP, buku tamu digital, galeri foto, dan fitur lengkap lainnya.",
   offers: {
     "@type": "Offer",
-    price: "12000",
+    price: "22000",
     priceCurrency: "IDR",
     availability: "https://schema.org/InStock",
     url: `${BASE_URL}/#harga`,
@@ -53,7 +53,7 @@ export const homepageFaqItems = [
   {
     question: "Berapa harga paket Premium?",
     answer:
-      "Paket Premium hanya Rp 12.000 per bulan (langganan bulanan). Sudah termasuk semua template, undangan unlimited, tanpa watermark, RSVP lengkap, buku tamu digital, galeri foto, amplop digital, dan semua fitur premium lainnya.",
+      "Paket Premium hanya Rp 22.000 per bulan (langganan bulanan). Sudah termasuk semua template, undangan unlimited, tanpa watermark, RSVP lengkap, buku tamu digital, galeri foto, amplop digital, dan semua fitur premium lainnya.",
   },
   {
     question: "Bagaimana cara membagikan undangan?",

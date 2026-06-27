@@ -96,7 +96,7 @@ export function PricingSection() {
                     </th>
                     <th className="text-center p-4 min-w-[100px] bg-primary/5">
                       <span className="font-semibold text-primary">Premium</span>
-                      <div className="text-xs text-primary mt-1">Rp 12.000/bln</div>
+                      <div className="text-xs text-primary mt-1">Rp 22.000/bln</div>
                     </th>
                   </tr>
                 </thead>
@@ -141,7 +141,7 @@ export function PricingSection() {
               <h3 className="font-serif text-xl font-bold mb-1">Premium</h3>
               <div className="flex items-baseline justify-center gap-1">
                 <span className="text-sm opacity-80">Rp</span>
-                <span className="font-serif text-4xl font-bold">12.000</span>
+                <span className="font-serif text-4xl font-bold">22.000</span>
               </div>
               <p className="mt-1 text-sm opacity-80">per bulan</p>
             </div>
