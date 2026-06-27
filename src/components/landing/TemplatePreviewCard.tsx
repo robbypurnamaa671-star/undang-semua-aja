@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useLayoutEffect, useMemo } from "react";
-import { Crown, Eye, Music, Pause, Play } from "lucide-react";
+import { Crown, Eye, Music, Pause, Play, Wand2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Template } from "@/lib/templates";
@@ -92,9 +92,16 @@ export function TemplatePreviewCard({ template }: Props) {
 
   return (
     <>
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={() => setOpen(true)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setOpen(true);
+        }
+      }}
       className="card-interactive group overflow-hidden relative max-w-[240px] mx-auto w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
       aria-label={`Lihat preview ${template.name}`}
     >
@@ -178,11 +185,22 @@ export function TemplatePreviewCard({ template }: Props) {
             {template.style}
           </Badge>
         </div>
-        <p className="text-[11px] text-primary mt-2 font-medium">
-          Klik untuk lihat preview penuh →
+        <Button
+          asChild
+          size="sm"
+          className="w-full mt-3 btn-hero"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Link to={`/create?template=${template.id}`}>
+            <Wand2 className="w-3.5 h-3.5 mr-1" />
+            Buat Undangan dari Template
+          </Link>
+        </Button>
+        <p className="text-[11px] text-muted-foreground mt-2 text-center">
+          atau klik kartu untuk preview penuh
         </p>
       </div>
-    </button>
+    </div>
 
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-sm p-0 gap-0 overflow-hidden max-h-[92vh] flex flex-col">
@@ -224,8 +242,9 @@ export function TemplatePreviewCard({ template }: Props) {
         </div>
         <div className="p-3 border-t bg-card">
           <Button asChild className="w-full btn-hero">
-            <Link to={`/register?template=${template.id}`}>
-              Pakai Template Ini
+            <Link to={`/create?template=${template.id}`}>
+              <Wand2 className="w-4 h-4 mr-1" />
+              Buat Undangan dari Template
             </Link>
           </Button>
         </div>
