@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Film, Play, Sparkles, X, Crown } from "lucide-react";
+import { Film, Play, Sparkles, X, Crown, Wand2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -114,9 +114,9 @@ function VideoCard({
             className="mt-1 w-full h-7 text-[10px]"
             style={{ background: colors.primary, color: "#fff" }}
           >
-            <Link to={`/register?template=${templateId}`}>
-              <Sparkles className="w-3 h-3 mr-1" />
-              Pilih
+            <Link to={`/create?template=${templateId}`}>
+              <Wand2 className="w-3 h-3 mr-1" />
+              Buat dari Template
             </Link>
           </Button>
         </div>
@@ -151,9 +151,9 @@ function VideoCard({
               className="w-full"
               style={{ background: colors.primary, color: "#fff" }}
             >
-              <Link to={`/register?template=${templateId}`}>
-                <Sparkles className="w-4 h-4 mr-1" />
-                Pakai Template Ini
+              <Link to={`/create?template=${templateId}`}>
+                <Wand2 className="w-4 h-4 mr-1" />
+                Buat Undangan dari Template
               </Link>
             </Button>
           </div>
