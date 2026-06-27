@@ -18,6 +18,7 @@ const registerSchema = z.object({
 export default function Register() {
   const [searchParams] = useSearchParams();
   const preselectedEvent = searchParams.get("event");
+  const preselectedTemplate = searchParams.get("template");
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,9 +33,15 @@ export default function Register() {
   // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && user) {
-      navigate("/dashboard");
+      if (preselectedTemplate) {
+        navigate(`/create?template=${preselectedTemplate}${preselectedEvent ? `&event=${preselectedEvent}` : ""}`);
+      } else if (preselectedEvent) {
+        navigate(`/create?event=${preselectedEvent}`);
+      } else {
+        navigate("/dashboard");
+      }
     }
-  }, [user, authLoading, navigate]);
+  }, [user, authLoading, navigate, preselectedTemplate, preselectedEvent]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,7 +86,9 @@ export default function Register() {
       description: "Selamat datang di Undanganlink!",
     });
     
-    if (preselectedEvent) {
+    if (preselectedTemplate) {
+      navigate(`/create?template=${preselectedTemplate}${preselectedEvent ? `&event=${preselectedEvent}` : ""}`);
+    } else if (preselectedEvent) {
       navigate(`/create?event=${preselectedEvent}`);
     } else {
       navigate("/dashboard");

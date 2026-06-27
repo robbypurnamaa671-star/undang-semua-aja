@@ -66,6 +66,7 @@ const CATEGORY_META: Record<TemplateCategory, { label: string; description: stri
 export default function Create() {
   const [searchParams] = useSearchParams();
   const preselectedEvent = searchParams.get("event") as EventType | null;
+  const preselectedTemplateId = searchParams.get("template");
   const editId = searchParams.get("edit");
   
   const [step, setStep] = useState<Step>(preselectedEvent ? "category" : "event");
@@ -85,9 +86,28 @@ export default function Create() {
   // Redirect if not logged in
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate("/login");
+      // Preserve template/event params so user returns to the correct template
+      const params = new URLSearchParams();
+      if (preselectedTemplateId) params.set("template", preselectedTemplateId);
+      if (preselectedEvent) params.set("event", preselectedEvent);
+      const qs = params.toString();
+      navigate(`/register${qs ? `?${qs}` : ""}`);
     }
-  }, [user, authLoading, navigate]);
+  }, [user, authLoading, navigate, preselectedTemplateId, preselectedEvent]);
+
+  // Preselect template from ?template= query (from homepage cards)
+  useEffect(() => {
+    if (!user || editId || !preselectedTemplateId) return;
+    if (selectedTemplate?.id === preselectedTemplateId) return;
+    const tpl = allTemplates.find((t) => t.id === preselectedTemplateId);
+    if (!tpl) return;
+    const eventType = (preselectedEvent || tpl.eventTypes[0]) as EventType;
+    setSelectedEventType(eventType);
+    setSelectedCategory(getTemplateCategory(tpl));
+    setSelectedTemplate(tpl);
+    setInvitation(createDefaultInvitation(eventType, tpl.id));
+    setStep("builder");
+  }, [user, editId, preselectedTemplateId, preselectedEvent, selectedTemplate]);
 
   // Load existing invitation for editing
   useEffect(() => {

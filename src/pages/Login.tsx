@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,9 @@ const loginSchema = z.object({
 });
 
 export default function Login() {
+  const [searchParams] = useSearchParams();
+  const preselectedTemplate = searchParams.get("template");
+  const preselectedEvent = searchParams.get("event");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,12 +29,18 @@ export default function Login() {
   const { toast } = useToast();
   const { signIn, user, isLoading: authLoading } = useAuth();
 
+  const postAuthPath = preselectedTemplate
+    ? `/create?template=${preselectedTemplate}${preselectedEvent ? `&event=${preselectedEvent}` : ""}`
+    : preselectedEvent
+      ? `/create?event=${preselectedEvent}`
+      : "/dashboard";
+
   // Redirect if already logged in
   useEffect(() => {
     if (!authLoading && user) {
-      navigate("/dashboard");
+      navigate(postAuthPath);
     }
-  }, [user, authLoading, navigate]);
+  }, [user, authLoading, navigate, postAuthPath]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +84,7 @@ export default function Login() {
       title: "Berhasil Masuk",
       description: "Selamat datang kembali!",
     });
-    navigate("/dashboard");
+    navigate(postAuthPath);
   };
 
   if (authLoading) {
